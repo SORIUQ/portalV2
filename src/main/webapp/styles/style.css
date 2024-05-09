@@ -1,0 +1,150 @@
+* {
+	font-family: "Jost", sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 15vh;
+	background-color: white;
+	color: #A100FF;
+	border-bottom: 3px solid #A100FF;
+}
+
+.imagenNombreCentro {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: space-around;
+	width: 30vw;
+}
+
+header .tarjetaAlumno {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 12vh;
+	width: 40vh;
+	border-radius: 10px;
+	color: #A100FF;
+	margin-right: 30px;
+	background-color: white;
+	box-shadow: 2px 2px 5px 1px grey;
+	}
+
+header h1 {
+	margin-top: 2vh;
+	color: black;
+}
+
+.tarjetaAlumno img {
+	height: 9vh;
+	border-radius: 80px;
+	margin-right: 10px;
+}
+
+.tarjetaAlumno p {
+	color: #A100FF;
+	font-size: 20px;
+	padding: 2px;
+}
+
+.nombreCurso {
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+}
+
+.contenedor {
+	display: flex;
+}
+
+.menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	height: 100vh;
+	width: 15vw;
+	background-color: white;
+	color: #A100FF;
+}
+
+.menuOpcion p {
+	padding: 3vh;
+}
+
+.menuOpcion:hover {
+	box-sizing: border-box;
+	background-color: #A100FF;
+	color: white;
+}
+
+.menuOpcion:hover path {
+	fill: white;
+}
+
+.menuOpcion {
+	display: flex;
+	align-items: center;
+	width: 15vw;
+	padding-left: 8px;
+	transition: 0.1s;
+}
+
+.menuOpcion svg {
+	height: 5vh;
+	width: 4vw;
+}
+
+.menuOpciones {
+	height: 60vh;
+	width: 15vw;
+}
+
+.cerrarSesion {
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	height: 45vh;
+	color: #7501b8;
+}
+
+.cerrarSesion p {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #7501b8;
+	width: 15vw;
+	height: 7vh;
+	color: white;
+}
+
+.contenedorPrincipal {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 85vw;
+	height: 100vh;
+	overflow: auto;
+	box-shadow: inset 11px 9px 21px -17px rgba(0, 0, 0, 0.75);
+	background-image: url("../images/landingBackground.png");
+}
+
+footer {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: 10vh;
+	color: white;
+	background-color: black;
+}

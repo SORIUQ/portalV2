@@ -3,11 +3,10 @@
 
 <%@ page import="java.sql.*,utils.*,models.*"%>
 <%
-
-	User activeUser = (User) session.getAttribute("user");
-	School sch=Util.getInfoSchool(activeUser.getId_school());
-	String imagen=Util.defineImage(sch.getIdSchool());
-	
+User activeUser = (User) session.getAttribute("user");
+School sch = Util.getInfoSchool(activeUser.getId_school());
+String imagen = Util.defineImage(sch.getIdSchool());
+String mapLink = Util.defineMap(sch.getIdSchool());
 %>
 <!DOCTYPE html>
 <html>
@@ -24,28 +23,34 @@
 </head>
 <body>
 
-	<div class="contenedorPrincipal">	
-		
-		<h2 id="schoolTitle"><%=sch.getNombreSchool()%></h2>
-		<h3>Informacion de contacto</h3>
-		<table>
-			<tr>
-				<th>Numero de telefono:</th>
-				<th><%=sch.getTlfSchool() %></th>
-			</tr>
-			<tr>
-				<th>Email :</th>
-				<th><%=sch.getEmail() %></th>
-			</tr>
-			<tr>
-				<th>Horarios de Secretaria :</th>
-				<th><%=sch.getScheduleSchool() %></th>
-			</tr>
-			<tr>
-				<th>Municipio :</th>
-				<th><%=sch.getLocSchool() %></th>
-			</tr>
-		</table>
-	</div>
+	<div class="contenedorPrincipal">
+		<div class="headerContenedor">
+			<h2 id="schoolTitle"><%=sch.getNombreSchool()%></h2>
+			<img src=<%=imagen%>>
+		</div>
+			<h4>Informacion de contacto</h4>
+			<table>
+				<tr>
+					<th>Número de teléfono:</th>
+					<th class="tableContent"><%=sch.getTlfSchool()%></th>
+				</tr>
+				<tr>
+					<th>Email :</th>
+					<th class="tableContent"><%=sch.getEmail()%></th>
+				</tr>
+				<tr>
+					<th>Horarios de Secretaría :</th>
+					<th class="tableContent"><%=sch.getScheduleSchool()%></th>
+				</tr>
+				<tr>
+					<th>Municipio :</th>
+					<th class="tableContent"><%=sch.getLocSchool()%></th>
+				</tr>
+			</table>
+			<h4>¿Cómo llegar?</h4>
+			<iframe src=<%=mapLink%> class="mapaEscuela" width="1000" height="500"
+				style="border: 0;" allowfullscreen="" loading="lazy"
+				referrerpolicy="no-referrer-when-downgrade"></iframe>
+		</div>
 </body>
 </html>

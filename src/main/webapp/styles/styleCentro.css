@@ -1,23 +1,65 @@
 @charset "ISO-8859-1";
 
+* {
+	font-family: "Jost", sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
 .contenedorPrincipal {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
-	width: 85vw;
+	height: 150vh;
+	width: 100vw;
 	overflow: auto;
 }
+
+.headerContenedor{
+	display:flex;
+	flex-direction:row;
+	width:75vw;
+	justify-content: center;
+	align-items: center;
+}
+
+.headerContenedor img{
+	height:30vh;
+	margin-top: 10px;
+}
+
+.mapaEscuela{
+	margin:20px;
+	margin-top: 0px;
+}
+
 
 h2{
 	margin-top:10vh;
 	font-size: 4.5rem;
 }
 
+h4{
+	margin-top:5vh;
+	font-size: 1.85rem;
+	background-color: #217491;
+	color:white;
+	width:120vh;
+	text-align:center;
+	margin-bottom: 2vh;
+	box-shadow: 0px 3px 5px 0px rgba(26,83,102,1);
+	
+}
+
 table{
 	text-align:left;
-	margin-top: 5vh;
+	margin-top: 2vh;
 	font-size: 1.7rem;
 	background-color:white;
 	border-collapse: collapse;
@@ -26,5 +68,13 @@ table{
 
 table th{
 	border:1px solid black;
-	padding:5px;
+	padding:1vw;
+	padding-bottom:0.3vh;
+}
+
+.tableContent{
+	padding-left:2vw;
+	font-size:1rem;
+	text-align:right;
+	font-weight:400;
 }

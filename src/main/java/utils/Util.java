@@ -123,6 +123,30 @@ public class Util {
     	return imagen;
     }
     
+    public static String defineID(int id){
+    	String nombre="";
+
+    	switch(id){
+    	case 1->{
+    		nombre="./jsp/noticiasCesur.jsp";
+    	}
+    	case 2->{
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
+    	}
+    	case 3->{
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
+    	}
+    	case 4->{
+    		nombre="./jsp/noticiasAlanTuring.jsp";
+    	}
+    	case 5->{
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
+    		}
+    	}
+    	
+    	return nombre;
+    }
+    
     public static School getInfoSchool(int idSchool){
 
 		int idSchoolConstr=idSchool;

@@ -1,11 +1,51 @@
+<%@page import="java.util.concurrent.ScheduledFuture"%>
 <%@ page import="models.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 
+<%@ page import="java.sql.*,utils.*,models.*" %>
+
 <%
-	if (request.getSession().getAttribute("user") == null)
+	Integer idSchool;
+	String imagen="";
+	School sch=null;
+	User activeUser=null;
+	String contentTarjeta="";
+	String courseName="";
+	Course crs=null;
+	String centroUsuario="";
+	
+	if (request.getSession().getAttribute("user") == null){
 		response.sendRedirect("./jsp/login.jsp");
-	User user = (User) session.getAttribute("user");
+		return;
+	}else{
+		activeUser = (User) session.getAttribute("user");
+		idSchool= activeUser.getId_school();
+		imagen=Util.defineImageIndex(idSchool);
+		sch=Util.getInfoSchool(idSchool);
+		crs=Util.getCourseInfo(activeUser.getId_course());
+		centroUsuario=sch.getNombreSchool();
+		
+		switch (activeUser.getUserType()){
+		case "02" : {
+			contentTarjeta="Profesor "+sch.getNombreSchool();
+			break;
+
+		}
+		case "01" : {
+			contentTarjeta="Alumno de "+crs.getNameCourse();
+			break;
+
+		}
+		case "03" : {
+			contentTarjeta="Empleado/a de Accenture";
+			centroUsuario="Accenture";
+			imagen="./images/logos/LOGOTIPO-ACCENTURE.png";
+			break;
+		}
+	}
+}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -25,13 +65,14 @@
 <body>
 	<header>
 		<div class="imagenNombreCentro">
-			<img src="./images/LOGOTIPO-IES-SAN-JOSE.png" alt="imagenCentro" style="height: 10vh">
-			<h1>Centro nombre</h1>
+			<img src=<%=imagen %> alt="imagenCentro"
+				style="height: 10vh">
+			<h1><%=centroUsuario %></h1>
 		</div>
 		<div class="tarjetaAlumno">
 			<div class="nombreCurso">
-				<p>Nombre:</p>
-				<p>Curso:</p>
+				<p><%=activeUser.getName() %></p>
+				<p><%=contentTarjeta %></p>
 			</div>
 			<img src="./images/imageUser.png" alt="imagenAlumno">
 		</div>
@@ -41,7 +82,7 @@
 		<article class="menu">
 			<div class="menuOpciones">
 				<%
-					if(user != null && (user.getUserType().equals("01") || user.getUserType().equals("02"))) {
+					if(activeUser != null && (activeUser.getUserType().equals("01") || activeUser.getUserType().equals("02"))) {
 				%>
 				<div class="menuOpcion" id="0" onclick="selectedMenu(0)" onclick="cambiarContenido('jsp/noticiasPabloPicasso.jsp')">
 					<svg xmlns="http://www.w3.org/2000/svg" width="125" height="125"

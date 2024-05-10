@@ -1,12 +1,14 @@
 package utils;
 
-import connections.Conector;
+import connections.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import models.User;
 
 import java.sql.*;
 import java.util.HashMap;
+
+import models.*;
+
 
 public class Util {
 
@@ -56,7 +58,128 @@ public class Util {
         return user;
     }
 
+    public static String defineImage(int id){
+    	String imagen="";
 
+    	switch(id){
+    	case 1->{
+    		imagen="../images/logos/LOGOTIPO-CESUR.png";
+    	}
+    	case 2->{
+    		imagen="../images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";
+    	}
+    	case 3->{
+    		imagen="../images/logos/LOGOTIPO-IES-BELEN.png";
+    	}
+    	case 4->{
+    		imagen="../images/logos/LOGOTIPO-ALAN-TURING.png";
+    	}
+    	case 5->{
+    		imagen="../images/logos/LOGOTIPO-IES-SAN-JOSE.png";
+    	}
+    	}
+    	return imagen;
+    }
+
+    public static String defineImageIndex(int id){
+    	String imagen="";
+
+    	switch(id){
+    	case 1->{
+    		imagen="./images/logos/LOGOTIPO-CESUR.png";
+    	}
+    	case 2->{
+    		imagen="./images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";
+    	}
+    	case 3->{
+    		imagen="./images/logos/LOGOTIPO-IES-BELEN.png";
+    	}
+    	case 4->{
+    		imagen="./images/logos/LOGOTIPO-ALAN-TURING.png";
+    	}
+    	case 5->{
+    		imagen="./images/logos/LOGOTIPO-IES-SAN-JOSE.png";
+    		}
+    	}
+    	
+    	return imagen;
+    }
+    
+    public static School getInfoSchool(int idSchool){
+
+		int idSchoolConstr=idSchool;
+		String nombreSchool="";
+		String tlfSchool= "";
+		String email= "";
+		String scheduleSchool= "";
+		String locSchool="";
+
+		Conector conector = new Conector();
+
+		try(Connection conx = conector.getMySqlConnection()){
+
+			if (conx != null) {
+				System.out.println("Conexión OK");
+
+				String sql = "SELECT * FROM school where id="+idSchool;
+				Statement sentencia = conx.createStatement();
+
+				try (ResultSet rs = sentencia.executeQuery(sql)) {
+
+					while (rs.next()) {
+						idSchoolConstr=rs.getInt(1);
+						nombreSchool=rs.getString(2);
+						tlfSchool= rs.getString(3);
+						email= rs.getString(4);
+						scheduleSchool= rs.getString(5);
+						locSchool=rs.getString(6);
+
+					}
+
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new School(idSchoolConstr, nombreSchool, tlfSchool, email, scheduleSchool, locSchool);
+	}
+    
+    public static Course getCourseInfo(int idCourse){
+
+		int idCourseConstr=idCourse;
+		String nameCourse="";
+
+		Conector conector = new Conector();
+
+		try(Connection conx = conector.getMySqlConnection()){
+
+			if (conx != null) {
+				System.out.println("Conexión OK");
+
+				String sql = "SELECT * FROM course where id="+idCourse;
+				Statement sentencia = conx.createStatement();
+
+				try (ResultSet rs = sentencia.executeQuery(sql)) {
+
+					while (rs.next()) {
+						nameCourse=rs.getString(2);
+					}
+
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new Course(idCourseConstr, nameCourse);
+	}
 
 //    public static Map<String, String> errorMap(String name, String lastName, String email, String dnie, String school, String course, String pass, String doubleCheckPass) {
 //        Map<String, String> errorMap = new HashMap<>();

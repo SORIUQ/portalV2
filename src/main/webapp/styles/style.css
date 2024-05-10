@@ -24,7 +24,7 @@ header {
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: space-around;
-	width: 30vw;
+	width: fit-content;
 }
 
 header .tarjetaAlumno {
@@ -32,7 +32,7 @@ header .tarjetaAlumno {
 	justify-content: space-between;
 	align-items: center;
 	height: 12vh;
-	width: 45vh;
+	width: fit-content;
 	border-radius: 10px;
 	color: #A100FF;
 	margin-right: 30px;
@@ -109,6 +109,16 @@ header h1 {
 .menuOpciones {
 	height: 60vh;
 	width: 15vw;
+}
+
+.selected {
+    box-sizing: border-box;
+    background-color: #A100FF;
+    color: white;
+}
+
+.selected path {
+    fill: white;
 }
 
 .cerrarSesion {

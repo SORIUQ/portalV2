@@ -4,48 +4,33 @@
 		 pageEncoding="UTF-8"%>
 
 <%@ page import="java.sql.*,utils.*,models.*" %>
+<%@ page import="java.io.IOException" %>
 
 <%
-	Integer idSchool;
+	User activeUser= (User) request.getSession().getAttribute("user");
+	Integer idSchool = (activeUser != null) ? activeUser.getId_school() : null;
 	String imagen="";
 	School sch=null;
-	User activeUser=null;
 	String contentTarjeta="";
 	String courseName="";
 	Course crs=null;
 	String centroUsuario="";
-	
-	if (request.getSession().getAttribute("user") == null){
+
+	if (activeUser == null) {
 		response.sendRedirect("./jsp/login.jsp");
 		return;
-	}else{
-		activeUser = (User) session.getAttribute("user");
-		idSchool= activeUser.getId_school();
-		imagen=Util.defineImageIndex(idSchool);
-		sch=Util.getInfoSchool(idSchool);
-		crs=Util.getCourseInfo(activeUser.getId_course());
-		centroUsuario=sch.getNombreSchool();
-		
-		switch (activeUser.getUserType()){
-		case "02" : {
-			contentTarjeta="Profesor "+sch.getNombreSchool();
-			break;
-
-		}
-		case "01" : {
-			contentTarjeta="Alumno de "+crs.getNameCourse();
-			break;
-
-		}
-		case "03" : {
-			contentTarjeta="Empleado/a de Accenture";
-			centroUsuario="Accenture";
-			imagen="./images/logos/LOGOTIPO-ACCENTURE.png";
-			break;
-		}
+	} else {
+		idSchool = activeUser.getId_school();
+		imagen = Util.defineImageIndex(idSchool);
+		sch = Util.getInfoSchool(idSchool);
+		if (activeUser.getId_course() != null)
+			crs = Util.getCourseInfo(activeUser.getId_course());
+		if (sch.getNombreSchool() != null)
+			centroUsuario = sch.getNombreSchool();
+		else
+			centroUsuario = "Accenture";
+		contentTarjeta = Util.getContentTarjetaIndex(activeUser,centroUsuario,crs);
 	}
-}
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -67,12 +52,12 @@
 		<div class="imagenNombreCentro">
 			<img src=<%=imagen %> alt="imagenCentro"
 				style="height: 10vh">
-			<h1><%=centroUsuario %></h1>
+			<h1><%=centroUsuario%></h1>
 		</div>
 		<div class="tarjetaAlumno">
 			<div class="nombreCurso">
-				<p><%=activeUser.getName() %></p>
-				<p><%=contentTarjeta %></p>
+				<p><%=activeUser.getName()%></p>
+				<p><%=contentTarjeta%></p>
 			</div>
 			<img src="./images/imageUser.png" alt="imagenAlumno">
 		</div>

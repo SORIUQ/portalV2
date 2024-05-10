@@ -2,8 +2,10 @@ package utils;
 
 import connections.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
 
@@ -52,12 +54,26 @@ public class Util {
             user.setUserType(resultSet.getString("user_type"));
             user.setName(resultSet.getString("user_name"));
             user.setId_school(resultSet.getInt("school_id"));
-            user.setId_course(resultSet.getInt("course_id"));
+            user.setId_course((Integer) resultSet.getObject("course_id"));
         }
-        System.out.println(user);
         return user;
     }
 
+	public static String getContentTarjetaIndex(User activeUser, String centroUsuario, Course crs) {
+		String result = "";
+		switch (activeUser.getUserType()) {
+			case "01" -> {
+				result = "Alumno de " + crs.getNameCourse();
+			}
+			case "02" -> {
+				result = "Profesor " + centroUsuario;
+			}
+			case "03" -> {
+				result = "Empleado/a de Accenture";
+			}
+		}
+		return result;
+	}
     public static String defineImage(int id){
     	String imagen="";
 
@@ -81,27 +97,29 @@ public class Util {
     	return imagen;
     }
 
-    public static String defineImageIndex(int id){
+    public static String defineImageIndex(Integer id){
     	String imagen="";
 
-    	switch(id){
-    	case 1->{
-    		imagen="./images/logos/LOGOTIPO-CESUR.png";
-    	}
-    	case 2->{
-    		imagen="./images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";
-    	}
-    	case 3->{
-    		imagen="./images/logos/LOGOTIPO-IES-BELEN.png";
-    	}
-    	case 4->{
-    		imagen="./images/logos/LOGOTIPO-ALAN-TURING.png";
-    	}
-    	case 5->{
-    		imagen="./images/logos/LOGOTIPO-IES-SAN-JOSE.png";
-    		}
-    	}
-    	
+    	switch(id) {
+			case 1 -> {
+				imagen = "./images/logos/LOGOTIPO-CESUR.png";
+			}
+			case 2 -> {
+				imagen = "./images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";
+			}
+			case 3 -> {
+				imagen = "./images/logos/LOGOTIPO-IES-BELEN.png";
+			}
+			case 4 -> {
+				imagen = "./images/logos/LOGOTIPO-ALAN-TURING.png";
+			}
+			case 5 -> {
+				imagen = "./images/logos/LOGOTIPO-IES-SAN-JOSE.png";
+			}
+			default -> {
+				imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";
+			}
+		}
     	return imagen;
     }
     
@@ -119,13 +137,10 @@ public class Util {
 		try(Connection conx = conector.getMySqlConnection()){
 
 			if (conx != null) {
-				System.out.println("Conexión OK");
-
 				String sql = "SELECT * FROM school where id="+idSchool;
 				Statement sentencia = conx.createStatement();
 
 				try (ResultSet rs = sentencia.executeQuery(sql)) {
-
 					while (rs.next()) {
 						idSchoolConstr=rs.getInt(1);
 						nombreSchool=rs.getString(2);
@@ -133,9 +148,7 @@ public class Util {
 						email= rs.getString(4);
 						scheduleSchool= rs.getString(5);
 						locSchool=rs.getString(6);
-
 					}
-
 				}
 			}
 		} catch (ClassNotFoundException e) {
@@ -181,6 +194,40 @@ public class Util {
 		return new Course(idCourseConstr, nameCourse);
 	}
 
+	public static void indexGetValues(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+							   Integer idSchool, String imagen, School sch, User activeUser, String contentTarjeta,
+							   String courseName, Course crs, String centroUsuario) {
+
+			System.out.println("entro a dar valores");
+			System.out.println(activeUser);
+			idSchool = activeUser.getId_school();
+			System.out.println(idSchool);
+			imagen = Util.defineImageIndex(idSchool);
+			sch = Util.getInfoSchool(idSchool);
+			crs = Util.getCourseInfo(activeUser.getId_course());
+			System.out.println(crs);
+			centroUsuario = sch.getNombreSchool();
+			System.out.println(centroUsuario);
+
+			switch (activeUser.getUserType()) {
+				case "01": {
+					contentTarjeta = "Alumno de " + crs.getNameCourse();
+					break;
+
+				}
+				case "02": {
+					contentTarjeta = "Profesor " + centroUsuario;
+					break;
+
+				}
+				case "03": {
+					contentTarjeta = "Empleado/a de Accenture";
+					centroUsuario = "Accenture";
+					imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";
+					break;
+				}
+			}
+	}
 //    public static Map<String, String> errorMap(String name, String lastName, String email, String dnie, String school, String course, String pass, String doubleCheckPass) {
 //        Map<String, String> errorMap = new HashMap<>();
 //        String nameErr, lastNameErr, emailErr, birthDateErr, dniErr, schoolErr, courseErr, passErr, doubleCheckPassErr;

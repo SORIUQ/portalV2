@@ -83,7 +83,7 @@ public class Util {
 
     public static String defineImageIndex(int id){
     	String imagen="";
-
+    	
     	switch(id){
     	case 1->{
     		imagen="./images/logos/LOGOTIPO-CESUR.png";
@@ -99,10 +99,34 @@ public class Util {
     	}
     	case 5->{
     		imagen="./images/logos/LOGOTIPO-IES-SAN-JOSE.png";
-    		}
+    	}
     	}
     	
     	return imagen;
+    }
+    
+    public static String defineID(int id){
+    	String nombre="";
+
+    	switch(id){
+    	case 1->{
+    		nombre="./jsp/noticiasCesur.jsp";
+    	}
+    	case 2->{
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
+    	}
+    	case 3->{
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
+    	}
+    	case 4->{
+    		nombre="./jsp/noticiasAlanTuring.jsp";
+    	}
+    	case 5->{
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
+    		}
+    	}
+    	
+    	return nombre;
     }
     
     public static School getInfoSchool(int idSchool){

@@ -3,11 +3,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 
-<%@ page import="java.sql.*,utils.*,models.*" %>
 
+<%@ page import="java.sql.*, utils.*,models.*" %>
 <%
 	Integer idSchool;
 	String imagen="";
+	String scrCentro="";
 	School sch=null;
 	User activeUser=null;
 	String contentTarjeta="";
@@ -22,6 +23,7 @@
 		activeUser = (User) session.getAttribute("user");
 		idSchool= activeUser.getId_school();
 		imagen=Util.defineImageIndex(idSchool);
+		scrCentro=Util.defineID(idSchool);
 		sch=Util.getInfoSchool(idSchool);
 		crs=Util.getCourseInfo(activeUser.getId_course());
 		centroUsuario=sch.getNombreSchool();
@@ -84,7 +86,7 @@
 				<%
 					if(activeUser != null && (activeUser.getUserType().equals("01") || activeUser.getUserType().equals("02"))) {
 				%>
-				<div class="menuOpcion" id="0" onclick="cambiarContenido('jsp/noticiasPabloPicasso.jsp', id)">
+				<div class="menuOpcion" id="0" onclick="cambiarContenido('<%= scrCentro %>', id)">
        <svg xmlns="http://www.w3.org/2000/svg" width="125" height="125"
           viewBox="0 0 24 24">
           <path fill="#a100ff"

@@ -159,6 +159,8 @@
 	}
 	
 	function irLogin() {
+		<% session.invalidate(); %>
+		
 		window.location.href = "./jsp/login.jsp";
 	}
 	function selectedMenu(id){

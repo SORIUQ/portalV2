@@ -119,6 +119,11 @@ header h1 {
 	color: #7501b8;
 }
 
+.cerrarSesion p:hover{
+    background-color: red;
+}
+
+
 .cerrarSesion p {
 	display: flex;
 	justify-content: center;
@@ -127,6 +132,8 @@ header h1 {
 	width: 15vw;
 	height: 7vh;
 	color: white;
+	cursor: pointer;
+	transition: all 0.4s ease;
 }
 
 .contenedorPrincipal {

@@ -24,6 +24,7 @@
 		idSchool = activeUser.getId_school();
 		imagen = Util.defineImageIndex(idSchool);
 		sch = Util.getInfoSchool(idSchool);
+		scrCentro = Util.defineID(idSchool);
 		if (activeUser.getId_course() != null)
 			crs = Util.getCourseInfo(activeUser.getId_course());
 		if (sch.getNombreSchool() != null)

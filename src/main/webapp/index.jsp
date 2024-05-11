@@ -21,7 +21,6 @@
 		return;
 	} else {
 		idSchool = activeUser.getId_school();
-		System.out.println(idSchool);
 		if (idSchool != 0) {
 			imagen = Util.defineImageIndex(idSchool);
 			sch = Util.getInfoSchool(idSchool);

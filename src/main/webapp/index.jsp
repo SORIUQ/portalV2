@@ -21,14 +21,18 @@
 		return;
 	} else {
 		idSchool = activeUser.getId_school();
-		imagen = Util.defineImageIndex(idSchool);
-		sch = Util.getInfoSchool(idSchool);
+		System.out.println(idSchool);
+		if (idSchool != null) {
+			imagen = Util.defineImageIndex(idSchool);
+			sch = Util.getInfoSchool(idSchool);
+			centroUsuario = sch.getNameSchool();
+		} else {
+			centroUsuario = "Accenture";
+			imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";
+		}
 		if (activeUser.getId_course() != null)
 			crs = Util.getCourseInfo(activeUser.getId_course());
-		if (sch.getNombreSchool() != null)
-			centroUsuario = sch.getNombreSchool();
-		else
-			centroUsuario = "Accenture";
+
 		contentTarjeta = Util.getContentTarjetaIndex(activeUser,centroUsuario,crs);
 	}
 %>
@@ -50,7 +54,7 @@
 <body>
 	<header>
 		<div class="imagenNombreCentro">
-			<img src=<%=imagen %> alt="imagenCentro"
+			<img src=<%=imagen%> alt="imagenCentro"
 				style="height: 10vh">
 			<h1><%=centroUsuario%></h1>
 		</div>

@@ -25,7 +25,7 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 
 	<div class="contenedorPrincipal">
 		<div class="headerContenedor">
-			<h2 id="schoolTitle"><%=sch.getNombreSchool()%></h2>
+			<h2 id="schoolTitle"><%=sch.getSchoolName()%></h2>
 			<img src=<%=imagen%>>
 		</div>
 			<h4>Informacion de contacto</h4>

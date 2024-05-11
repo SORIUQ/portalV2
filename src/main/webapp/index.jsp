@@ -27,8 +27,8 @@
 		scrCentro = Util.defineID(idSchool);
 		if (activeUser.getId_course() != null)
 			crs = Util.getCourseInfo(activeUser.getId_course());
-		if (sch.getNombreSchool() != null)
-			centroUsuario = sch.getNombreSchool();
+		if (sch.getSchoolName() != null)
+			centroUsuario = sch.getSchoolName();
 		else
 			centroUsuario = "Accenture";
 		contentTarjeta = Util.getContentTarjetaIndex(activeUser,centroUsuario,crs);

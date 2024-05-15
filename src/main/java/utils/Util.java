@@ -18,6 +18,7 @@ public class Util {
         boolean landing = false;
         Conector conector = new Conector();
         Connection con = null;
+		String error = "";
         try {
             con = conector.getMySqlConnection();
             String email = req.getParameter("email");
@@ -25,11 +26,15 @@ public class Util {
             PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM credentials WHERE email = ?");
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next() && resultSet.getString("pass").equals(password)) {
-                User user = createUser(con, resultSet);
-                session.setAttribute("user", user);
-                landing = true;
-            }
+            if (resultSet.next()) {
+				if (resultSet.getString("pass").equals(password)) {
+					User user = createUser(con, resultSet);
+					session.setAttribute("user", user);
+					landing = true;
+				} else
+					error = "La contraseña es incorrecta";
+            } else
+				error = "No existe el usuario";
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -41,6 +46,8 @@ public class Util {
                 throw new RuntimeException(e);
             }
         }
+		if (!error.isEmpty())
+			session.setAttribute("error",error);
         return landing;
     }
 

@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Conector {
-
     @Getter
     @Setter
     Properties prop = new Properties();

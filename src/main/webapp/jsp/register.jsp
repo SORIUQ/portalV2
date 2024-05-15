@@ -34,7 +34,7 @@
 		<img src="../images/logoAccenture.svg" id="logoAccenture">
 		
 		<!-- FORM -->
-		<form action="" method="post" class="login" onsubmit=" return userValidation()">
+		<form action="../register" method="post" class="login" onsubmit=" return userValidation()">
 			<!-- NOMBRE -->
 			<div class="input_container" id="nameContainer">
 				<input type="text" name="user_name" id="nameInput" required> <label>Nombre</label>
@@ -46,23 +46,29 @@
 			</div>
 			
 			<!-- EMAIL -->
-			<div class="input_container" id="emailContainer">
-				<input type="email" name="user_email" id="emailInput" required> <label>Email</label>
+			<div class="input_container">
+				<input type="text" name="user_email" required> <label>Email</label>
+				<% if(session.getAttribute("dniExists") != null) { %>
+				<p class="errorMsg"> <%= session.getAttribute("dniExists") %> </p>
+				<% } %>
 			</div>
-			
+
 			<!-- FECHA NACIMIENTO -->
-			<div class="input_container" id="dateContainer">
-				<input type="date" class="date" id="dateInput" name="user_birthday" required>
+			<div class="input_container">
+				<input type="date" class="date" name="user_birthday" max="2008-05-15" required>
 			</div>
 			
 			<!-- NIF -->
-			<div class="input_container" id="dnieContainer">
-				<input type="text" name="user_nif" id="dnieInput" required> <label>NIF</label>
+			<div class="input_container">
+				<input type="text" name="user_nif" required> <label>NIF</label>
+				<% if(session.getAttribute("dniExists") != null) { %>
+					<p class="errorMsg"> <%= session.getAttribute("dniExists") %> </p>
+				<% } %>
 			</div>
-			
-			<!-- CENTRO -->
-			<div class="input_container" id="schoolContainer">
-				<select name="user_center" id="schoolInput" required>
+
+		<!-- CENTRO -->
+			<div class="input_container">
+				<select name="user_center">
 					<option value="0" disabled selected>-- Seleccione un centro --</option>
 					<%for(int i = 0; i < schools.size(); i++) { %>
 					<option value="<%= schools.get(i).getIdSchool()%>"><%= schools.get(i).getSchoolName()%></option>
@@ -80,17 +86,17 @@
 				</select>
 			</div>
 			
-			<!-- CONTRASEÑA -->
+			<!-- CONTRASEÃ‘A -->
 			<div class="input_container" id="passContainer">
-				<input type="password" name="user_password" id="passInput" minlength="8" required> <label>Contraseña</label>
+				<input type="password" name="user_password" id="passInput" minlength="8" required> <label>ContraseÃ±a</label>
 			</div>
 			
-			<!-- REPITE CONTRASEÑA -->
+			<!-- REPITE CONTRASEÃ‘A -->
 			<div class="input_container" id="pass2Container">
-				<input type="password" name="user_password2" id="passInput2" minlength="8" required> <label>Repetir contraseña</label>
+				<input type="password" name="user_password2" id="passInput2" minlength="8" required> <label>Repetir contraseÃ±a</label>
 			</div>
 			
-			<!-- BOTÓN REGISTRO -->
+			<!-- BOTÃ“N REGISTRO -->
 			<button type="submit" class="register-button container-button">Registrar</button>
 
 			<!-- LOGIN LINK -->
@@ -102,7 +108,7 @@
 
 	<!-- FOOTER -->
 	<footer>
-		<p>Aplicación creada por <strong>Grupo La Rubia & co</strong></p>
+		<p>AplicaciÃ³n creada por <strong>Grupo La Rubia & co</strong></p>
 	</footer>
 	<script src="../scripts/register.js"></script>
 	<script>

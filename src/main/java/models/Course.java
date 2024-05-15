@@ -2,17 +2,16 @@ package models;
 
 public class Course {
 	
-	Integer id_course;
+	int id_course;
 	String nameCourse;
 	
-	public Course() {}
-
-	public Course(Integer id_course, String nameCourse) {
+	
+	public Course(int id_course, String nameCourse) {
 		this.id_course = id_course;
 		this.nameCourse = nameCourse;
 	}
 	
-	public Integer getId_course() {
+	public int getId_course() {
 		return id_course;
 	}
 	public void setId_course(int id_course) {
@@ -24,12 +23,6 @@ public class Course {
 	public void setNameCourse(String nameCourse) {
 		this.nameCourse = nameCourse;
 	}
-
-	@Override
-	public String toString() {
-		return "Course{" +
-				"id_course=" + id_course +
-				", nameCourse='" + nameCourse + '\'' +
-				'}';
-	}
+	
+	
 }

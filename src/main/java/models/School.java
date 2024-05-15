@@ -5,18 +5,16 @@ package models;
 public class School {
 	
 	int idSchool;
-	String nameSchool;
+	String nombreSchool;
 	String tlfSchool; 
 	String email;
 	String scheduleSchool;
 	String locSchool;
-
-	public School() {}
-
+	
 	public School(int idSchool, String nombreSchool, String tlfSchool, String email, String scheduleSchool,
 			String locSchool) {
 		this.idSchool = idSchool;
-		this.nameSchool = nombreSchool;
+		this.nombreSchool = nombreSchool;
 		this.tlfSchool = tlfSchool;
 		this.email = email;
 		this.scheduleSchool = scheduleSchool;
@@ -35,12 +33,12 @@ public class School {
 		this.idSchool = idSchool;
 	}
 
-	public String getNameSchool() {
-		return nameSchool;
+	public String getNombreSchool() {
+		return nombreSchool;
 	}
 
-	public void setNameSchool(String nombreSchool) {
-		this.nameSchool = nombreSchool;
+	public void setNombreSchool(String nombreSchool) {	
+		this.nombreSchool = nombreSchool;
 	}
 
 	public String getTlfSchool() {
@@ -74,17 +72,6 @@ public class School {
 	public void setLocSchool(String locSchool) {
 		this.locSchool = locSchool;
 	}
-
-
-	@Override
-	public String toString() {
-		return "School{" +
-				"idSchool=" + idSchool +
-				", nameSchool='" + nameSchool + '\'' +
-				", tlfSchool='" + tlfSchool + '\'' +
-				", email='" + email + '\'' +
-				", scheduleSchool='" + scheduleSchool + '\'' +
-				", locSchool='" + locSchool + '\'' +
-				'}';
-	}
+	
+	
 }

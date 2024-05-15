@@ -3,11 +3,12 @@
 
 <%@ page import="java.sql.*,utils.*,models.*"%>
 <%
+
 User activeUser = (User) session.getAttribute("user");
 School sch = Util.getInfoSchool(activeUser.getId_school());
-// Se coloca el punto al principio porque el método devuelve la ruta relativa al index.jsp
-String imagen = "." + Util.defineImageIndex(sch.getIdSchool());
+String imagen = Util.defineImage(sch.getIdSchool());
 String mapLink = Util.defineMap(sch.getIdSchool());
+
 %>
 <!DOCTYPE html>
 <html>
@@ -26,7 +27,7 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 
 	<div class="contenedorPrincipal">
 		<div class="headerContenedor">
-			<h2 id="schoolTitle"><%=sch.getNameSchool()%></h2>
+			<h2 id="schoolTitle"><%=sch.getNombreSchool()%></h2>
 			<img src=<%=imagen%>>
 		</div>
 			<h4>Informacion de contacto</h4>

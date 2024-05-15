@@ -24,7 +24,7 @@ header {
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: space-around;
-	width: fit-content;
+	width: 30vw;
 }
 
 header .tarjetaAlumno {
@@ -32,7 +32,7 @@ header .tarjetaAlumno {
 	justify-content: space-between;
 	align-items: center;
 	height: 12vh;
-	width: fit-content;
+	width: 45vh;
 	border-radius: 10px;
 	color: #A100FF;
 	margin-right: 30px;
@@ -111,16 +111,6 @@ header h1 {
 	width: 15vw;
 }
 
-.selected {
-    box-sizing: border-box;
-    background-color: #A100FF;
-    color: white;
-}
-
-.selected path {
-    fill: white;
-}
-
 .cerrarSesion {
 	display: flex;
 	justify-content: center;
@@ -128,6 +118,11 @@ header h1 {
 	height: 45vh;
 	color: #7501b8;
 }
+
+.cerrarSesion p:hover{
+    background-color: red;
+}
+
 
 .cerrarSesion p {
 	display: flex;
@@ -137,6 +132,8 @@ header h1 {
 	width: 15vw;
 	height: 7vh;
 	color: white;
+	cursor: pointer;
+	transition: all 0.4s ease;
 }
 
 .contenedorPrincipal {

@@ -8,7 +8,7 @@
 
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
-	Integer idSchool = (activeUser != null) ? activeUser.getId_school() : null;
+	Integer idSchool = null;
 	String imagen="";
 	String scrCentro="";
 	School sch=null;

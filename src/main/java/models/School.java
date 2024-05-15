@@ -80,7 +80,7 @@ public class School {
 	public String toString() {
 		return "School{" +
 				"idSchool=" + idSchool +
-				", nameSchool='" + nameSchool + '\'' +
+				", nameSchool='" + schoolName + '\'' +
 				", tlfSchool='" + tlfSchool + '\'' +
 				", email='" + email + '\'' +
 				", scheduleSchool='" + scheduleSchool + '\'' +

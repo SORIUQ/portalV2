@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%@ page import="java.sql.*,utils.*,models.*"%>
 <%
 User activeUser = (User) session.getAttribute("user");
 School sch = Util.getInfoSchool(activeUser.getId_school());
-// Se coloca el punto al principio porque el método devuelve la ruta relativa al index.jsp
+// Se coloca el punto al principio porque el mÃ©todo devuelve la ruta relativa al index.jsp
 String imagen = "." + Util.defineImageIndex(sch.getIdSchool());
 String mapLink = Util.defineMap(sch.getIdSchool());
 %>
@@ -19,7 +19,7 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 	href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
 	rel="stylesheet">
 <link rel="icon" type="image/x-icon" href="./images/accFavicon.jpg">
-<meta charset="UTF-8	">
+<meta charset="UTF-8">
 <title>Portal - Inicio</title>
 </head>
 <body>
@@ -29,7 +29,7 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 			<h2 id="schoolTitle"><%=sch.getSchoolName()%></h2>
 			<img src=<%=imagen%>>
 		</div>
-			<h4>Informacion de contacto</h4>
+			<h4>Información de contacto</h4>
 			<table>
 				<tr>
 					<th>Número de teléfono:</th>

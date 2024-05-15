@@ -25,7 +25,7 @@
 		if (idSchool != 0) {
 			imagen = Util.defineImageIndex(idSchool);
 			sch = Util.getInfoSchool(idSchool);
-			centroUsuario = sch.getNameSchool();
+			centroUsuario = sch.getSchoolName();
 		} else {
 			centroUsuario = "Accenture";
 			imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";

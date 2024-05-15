@@ -119,7 +119,7 @@ public class Util {
 				Statement statement = con.createStatement();
 				ResultSet rs = statement.executeQuery(sql);
 				if (rs.next()) {
-					school.setNameSchool(rs.getString(2));
+					school.setSchoolName(rs.getString(2));
 					school.setTlfSchool(rs.getString(3));
 					school.setEmail(rs.getString(4));
 					school.setScheduleSchool(rs.getString(5));

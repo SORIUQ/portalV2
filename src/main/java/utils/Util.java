@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import models.*;
 
@@ -78,6 +80,30 @@ public class Util {
 			case 5->{imagen="./images/logos/LOGOTIPO-IES-SAN-JOSE.png";}
     	}
     	return imagen;
+    }
+    
+    public static String defineID(int id){
+    	String nombre="";
+
+    	switch(id){
+    	case 1->{
+    		nombre="./jsp/noticiasCesur.jsp";
+    	}
+    	case 2->{
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
+    	}
+    	case 3->{
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
+    	}
+    	case 4->{
+    		nombre="./jsp/noticiasAlanTuring.jsp";
+    	}
+    	case 5->{
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
+    		}
+    	}
+    	
+    	return nombre;
     }
     
     public static School getInfoSchool(int idSchool){
@@ -153,58 +179,102 @@ public class Util {
     	return mapLink;
     }
 
-//    public static Map<String, String> errorMap(String name, String lastName, String email, String dnie, String school, String course, String pass, String doubleCheckPass) {
-//        Map<String, String> errorMap = new HashMap<>();
-//        String nameErr, lastNameErr, emailErr, birthDateErr, dniErr, schoolErr, courseErr, passErr, doubleCheckPassErr;
-//        nameErr = validName(name) ? null : "Nombre incorrecto!";
-//        lastNameErr = validName(lastName) ? null : "Apellido incorrecto!";
-//        emailErr = emailValidator(email) ? null : "Email invalido!";
-//        dniErr = detectIdType(dnie) ? null : "Dni/Nie incorrecto!";
-//        schoolErr = schoolEnumBool(school) ? null : "Debes seleccionar un centro!";
-//        courseErr = courseEnumBool(course) ? null : "Debes seleccionar un curso!";
-//        passErr = passValidator(pass) ? null : "La contraseña no es correcta debe contener numeros, mayusculas y minusculas";
-//        doubleCheckPassErr = pass.equals(doubleCheckPass) ? null : "Las contraseñas debes ser iguales!";
-//
-//        errorMap.put("nameErr", nameErr);
-//        errorMap.put("lastNameErr", lastNameErr);
-//        errorMap.put("emailErr", emailErr);
-//        errorMap.put("dniErr", dniErr);
-//        errorMap.put("schoolErr", schoolErr);
-//        errorMap.put("courseErr", courseErr);
-//        errorMap.put("passErr", passErr);
-//        errorMap.put("doubleCheckPassErr", doubleCheckPassErr);
-//
-//        return errorMap;
-//    }
+	public static void indexGetValues(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+							   Integer idSchool, String imagen, School sch, User activeUser, String contentTarjeta,
+							   String courseName, Course crs, String centroUsuario) {
 
-//    public static boolean detectIdType(String id) {
-//        char[] idArr = id.toCharArray();
-//        if (Character.isAlphabetic(idArr[0])) {
-//            return nieValidator(id);
-//        } else {
-//            return dniValidator(id);
-//        }
-//    }
+			System.out.println("entro a dar valores");
+			System.out.println(activeUser);
+			idSchool = activeUser.getId_school();
+			System.out.println(idSchool);
+			imagen = Util.defineImageIndex(idSchool);
+			sch = Util.getInfoSchool(idSchool);
+			crs = Util.getCourseInfo(activeUser.getId_course());
+			System.out.println(crs);
+			centroUsuario = sch.getSchoolName();
+			System.out.println(centroUsuario);
 
-//    public static User validateUser(String name,String lastName,String email,String birthDate,String dnie,String school,String course,String pass, Map<String, String> errMap) {
-//        boolean validUser = true;
-//        User u;
-//        Iterator<Map.Entry<String, String>> mapIter = errMap.entrySet().iterator();
-//        while(mapIter.hasNext() && validUser) {
-//            Map.Entry<String, String> entry = mapIter.next();
-//            if(entry.getValue() != null)
-//                validUser = false;
-//        }
-//        if(validUser)
-//            u = new User(name, lastName, email, birthDate, dnie, school, course, hashPassword(pass));
-//        else
-//            u = null;
-//        return u;
-//    }
+			switch (activeUser.getUserType()) {
+				case "01": {
+					contentTarjeta = "Alumno de " + crs.getNameCourse();
+					break;
 
+				}
+				case "02": {
+					contentTarjeta = "Profesor " + centroUsuario;
+					break;
 
-//    public static String hashPassword(String pass) {
-//        return BCrypt.hashpw(pass, BCrypt.gensalt());
-//    }
+				}
+				case "03": {
+					contentTarjeta = "Empleado/a de Accenture";
+					centroUsuario = "Accenture";
+					imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";
+					break;
+				}
+			}
+	}
 
+	public static List<School> getAllSchools() {
+		List<School> schools = new ArrayList<>();
+		Connection con = null;
+		try {
+			con = new Conector().getMySqlConnection();
+			try {
+				PreparedStatement ps = con.prepareStatement("select * from school");
+				ResultSet result = ps.executeQuery();
+				while (result.next()) {
+					int id = result.getInt("id");
+					String name = result.getString("school_name");
+					String telephone = result.getString("tel");
+					String email = result.getString("email");
+					String secretarySchedule = result.getString("secretarySchedule");
+					String location = result.getString("loc");
+					schools.add(new School(id, name, telephone, email, secretarySchedule, location));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return schools;
+	}
+
+	public static List<Course> getAllCourses() {
+		List<Course> courses = new ArrayList<>();
+		Connection con = null;
+		try {
+			con = new Conector().getMySqlConnection();
+			try {
+				PreparedStatement ps = con.prepareStatement("select id, course_name from course;");
+				ResultSet result = ps.executeQuery();
+				while (result.next()) {
+					int id = result.getInt("id");
+					String name = result.getString("course_name");
+					courses.add(new Course(id, name));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return courses;
+	}
 }

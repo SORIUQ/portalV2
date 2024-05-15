@@ -5,7 +5,7 @@ package models;
 public class School {
 	
 	int idSchool;
-	String nameSchool;
+	String schoolName;
 	String tlfSchool; 
 	String email;
 	String scheduleSchool;
@@ -16,7 +16,7 @@ public class School {
 	public School(int idSchool, String nombreSchool, String tlfSchool, String email, String scheduleSchool,
 			String locSchool) {
 		this.idSchool = idSchool;
-		this.nameSchool = nombreSchool;
+		this.schoolName = nombreSchool;
 		this.tlfSchool = tlfSchool;
 		this.email = email;
 		this.scheduleSchool = scheduleSchool;
@@ -35,12 +35,12 @@ public class School {
 		this.idSchool = idSchool;
 	}
 
-	public String getNameSchool() {
-		return nameSchool;
+	public String getSchoolName() {
+		return schoolName;
 	}
 
-	public void setNameSchool(String nombreSchool) {
-		this.nameSchool = nombreSchool;
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
 	}
 
 	public String getTlfSchool() {

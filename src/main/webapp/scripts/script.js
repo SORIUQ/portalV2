@@ -1,3 +1,7 @@
+
+
+
+
 function cambiarContenido(url, id) {
 
     let element;

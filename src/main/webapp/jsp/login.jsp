@@ -30,9 +30,7 @@
                         <input id="input2" type="password" name="password" required> <label for="input2">Contraseña</label>
                     </div>
                     <br>
-                    <%if (session.getAttribute("error") != null) {%>
-                    <p class="errorMessage"><%=session.getAttribute("error")%></p>
-                    <%}%>
+
                     <div class="input-submit">
                         <input type="submit" value="Acceder">
                     </div>

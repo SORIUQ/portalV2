@@ -21,7 +21,7 @@
         <div class="contenedorLogin">
         <br>
                 <form action="../login" method="POST">
-
+						
                     <div class="input-field">
                         <input id="input1" type="text" name="email" required> <label for="input1">Email</label>
                     </div>

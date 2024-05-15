@@ -1,5 +1,15 @@
+<%@ page import="models.Course" %>
+<%@ page import="models.School" %>
+<%@ page import="java.util.List" %>
+<%@ page import="utils.Util" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+		 pageEncoding="ISO-8859-1"%>
+
+<%
+	List<School> schools = Util.getAllSchools();
+	List<Course> courses = Util.getAllCourses();
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,15 +34,15 @@
 		<img src="../images/logoAccenture.svg" id="logoAccenture">
 		
 		<!-- FORM -->
-		<form action="../register" method="post" class="login">
+		<form action="../register" method="post" class="login" onsubmit=" return userValidation()">
 			<!-- NOMBRE -->
-			<div class="input_container">
-				<input type="text" name="user_name" required> <label>Nombre</label>
+			<div class="input_container" id="nameContainer">
+				<input type="text" name="user_name" id="nameInput" required> <label>Nombre</label>
 			</div>
 			
 			<!-- APELLIDOS -->
-			<div class="input_container">
-				<input type="text" name="user_lastname" required> <label>Apellidos</label>
+			<div class="input_container" id="lastNameContainer">
+				<input type="text" name="user_lastname" id="lastNameInput" required> <label>Apellidos</label>
 			</div>
 			
 			<!-- EMAIL -->
@@ -60,31 +70,33 @@
 			<div class="input_container">
 				<select name="user_center">
 					<option value="0" disabled selected>-- Seleccione un centro --</option>
-					<option value="1">CPIFP Alan Turing</option>
-					<option value="2">SAN JOSE</option>
+					<%for(int i = 0; i < schools.size(); i++) { %>
+					<option value="<%= schools.get(i).getIdSchool()%>"><%= schools.get(i).getSchoolName()%></option>
+					<% } %>
 				</select>
 			</div>
 			
 			<!-- CURSO -->
-			<div class="input_container">
-				<select name="user_course">
+			<div class="input_container" id="courseContainer">
+				<select name="user_course" id="courseInput" required>
 					<option value="0" disabled selected>-- Seleccione un curso --</option>
-					<option value="1">DAM</option>
-					<option value="2">DAW</option>
+					<%for(int i = 0; i < courses.size(); i++) { %>
+					<option value="<%= courses.get(i).getId_course()%>"><%= courses.get(i).getNameCourse()%></option>
+					<% } %>
 				</select>
 			</div>
 			
-			<!-- CONTRASEÑA -->
-			<div class="input_container">
-				<input type="password" name="user_password" required> <label>Contraseña</label>
+			<!-- CONTRASEÃ‘A -->
+			<div class="input_container" id="passContainer">
+				<input type="password" name="user_password" id="passInput" minlength="8" required> <label>ContraseÃ±a</label>
 			</div>
 			
-			<!-- REPITE CONTRASEÑA -->
-			<div class="input_container">
-				<input type="password" name="user_password2" required> <label>Repetir contraseña</label>
+			<!-- REPITE CONTRASEÃ‘A -->
+			<div class="input_container" id="pass2Container">
+				<input type="password" name="user_password2" id="passInput2" minlength="8" required> <label>Repetir contraseÃ±a</label>
 			</div>
 			
-			<!-- BOTÓN REGISTRO -->
+			<!-- BOTÃ“N REGISTRO -->
 			<button type="submit" class="register-button container-button">Registrar</button>
 
 			<!-- LOGIN LINK -->
@@ -96,7 +108,24 @@
 
 	<!-- FOOTER -->
 	<footer>
-		<p>Aplicación creada por <strong>Grupo La Rubia & co</strong></p>
+		<p>AplicaciÃ³n creada por <strong>Grupo La Rubia & co</strong></p>
 	</footer>
+	<script src="../scripts/register.js"></script>
+	<script>
+		let validationResults = {};
+
+		function userValidation() {
+			validationResults = {
+				name: checkNameInput(),
+				lastName: checkLastNameInput(),
+				email: checkEmailInput(),
+				dnie: checkDnieInput(),
+				password: checkPassInput(),
+				password2: checkPass2Input()
+			};
+
+			return Object.values(validationResults).every(result => result);
+		}
+	</script>
 </body>
 </html>

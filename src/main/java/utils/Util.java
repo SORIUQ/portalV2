@@ -75,6 +75,51 @@ public class Util {
 		}
 		return result;
 	}
+
+	public static List<String> getUserInfo(int id) {
+
+		List<String> usuario = new ArrayList<>();
+
+		try (Connection con = new Conector().getMySqlConnection()) {
+			
+			PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM user_obj WHERE id = ?");
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				usuario.add(resultSet.getString("user_name"));
+				usuario.add(resultSet.getString("user_surname"));
+				usuario.add(resultSet.getString("dnie"));
+				usuario.add(resultSet.getString("birthDate"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		return usuario;
+	}
+	
+	/**
+	 * Método que formatea la fecha tipo aaaa-dd-mm a dd/mm/aaaa
+	 * Sólo funciona si la fecha es tipo aaaa-dd-mm
+	 * @param date - fecha a cambiar
+	 * @return fecha cambiada
+	 */
+	public static String dateFormat(String date) {
+		
+		String fecha = date;
+		
+		String año = date.substring(0,4);
+		String mes = date.substring(5, 7);
+		String dia = date.substring(8,10);
+		
+		fecha = dia + "/" + mes + "/" + año;
+		
+		return fecha;
+	}
+	
+
+
     public static String defineImage(int id){
     	String imagen="";
 

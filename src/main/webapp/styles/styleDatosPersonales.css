@@ -1,3 +1,55 @@
 * {
 	font-family: "Jost", sans-serif;
 }
+
+body {
+	height: 90vh; display : flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+
+.tarjetaPersonal {
+	display: flex;
+	width: 45vw;
+	height: 35vh;
+	border: 2px solid #a100ff;																																		
+	border-radius: 15px;
+	padding: 10px;
+    box-shadow: 0px 0px 6px 3px #a100ff;
+    font-size: large;
+}
+
+h1{
+	font-size: 40px;
+	margin-bottom: 50px;
+	color: #a100ff;
+}
+
+
+.ladoIzquierdoTarjeta {
+	display: flex;
+	justify-content: space-around;
+	width: 30vw;
+	color: #a100ff;
+}
+
+.columna1 {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.columna2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.ladoDerechoTarjeta {
+	display: flex;
+	width: 15vw;
+	justify-content: center;
+	align-items: center;
+}

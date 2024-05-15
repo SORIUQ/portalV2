@@ -1,9 +1,6 @@
-
-
-
-
+ 
 function cambiarContenido(url, id) {
-
+ 
     let element;
     
     for (let i = 0; i < 6; i++){
@@ -12,18 +9,18 @@ function cambiarContenido(url, id) {
             element.classList.remove("selected");
         }
     }
-
+ 
     document.getElementById(id).classList.add("selected");
-
-
+ 
+ 
     let iframe = document.getElementById("contenido");
     iframe.src = url;
 }
-
+ 
 function irLogin() {
     window.location.href = "./jsp/login.jsp";
 }
-
+ 
 function determinarColores(id){
 	
 var headerElement = document.getElementsByTagName('header')[0];
@@ -31,8 +28,9 @@ var tarjetaElement = document.getElementsByClassName('tarjetaAlumno')[0];
 var menuElement = document.getElementsByClassName('menu')[0];
 var menuOpcionElements = document.getElementsByClassName('menuOpcion');
 var cerrarElement = document.getElementsByClassName('cerrarSesion')[0];
-var selectedElement = document.getElementsByClassName('selected');
-
+		var elementoCurso=document.selectQuery("user_center")
+		elementoCurso.addEventListener("change", selecc)
+ 
 	switch (id) {
   case 1:
     headerElement.classList.add('cesurColor');
@@ -112,5 +110,5 @@ var selectedElement = document.getElementsByClassName('selected');
     
     default : break;
 	}
-
+ 
 }

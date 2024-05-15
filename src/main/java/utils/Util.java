@@ -69,15 +69,9 @@ public class Util {
 	public static String getContentTarjetaIndex(User activeUser, String centroUsuario, Course crs) {
 		String result = "";
 		switch (activeUser.getUserType()) {
-			case "01" -> {
-				result = "Alumno de " + crs.getNameCourse();
-			}
-			case "02" -> {
-				result = "Profesor " + centroUsuario;
-			}
-			case "03" -> {
-				result = "Empleado/a de Accenture";
-			}
+			case "01" -> {result = "Alumno de " + crs.getNameCourse();}
+			case "02" -> {result = "Profesor " + centroUsuario;}
+			case "03" -> {result = "Empleado/a de Accenture";}
 		}
 		return result;
 	}
@@ -85,21 +79,11 @@ public class Util {
     	String imagen="";
 
     	switch(id){
-    	case 1->{
-    		imagen="../images/logos/LOGOTIPO-CESUR.png";
-    	}
-    	case 2->{
-    		imagen="../images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";
-    	}
-    	case 3->{
-    		imagen="../images/logos/LOGOTIPO-IES-BELEN.png";
-    	}
-    	case 4->{
-    		imagen="../images/logos/LOGOTIPO-ALAN-TURING.png";
-    	}
-    	case 5->{
-    		imagen="../images/logos/LOGOTIPO-IES-SAN-JOSE.png";
-    	}
+			case 1 -> {imagen="../images/logos/LOGOTIPO-CESUR.png";}
+			case 2 -> {imagen="../images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";}
+			case 3 -> {imagen="../images/logos/LOGOTIPO-IES-BELEN.png";}
+			case 4 -> {imagen="../images/logos/LOGOTIPO-ALAN-TURING.png";}
+			case 5 -> {imagen="../images/logos/LOGOTIPO-IES-SAN-JOSE.png";}
     	}
     	return imagen;
     }
@@ -108,27 +92,27 @@ public class Util {
     	String imagen="";
 
     	switch(id) {
-			case 1 -> {
-				imagen = "./images/logos/LOGOTIPO-CESUR.png";
-			}
-			case 2 -> {
-				imagen = "./images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";
-			}
-			case 3 -> {
-				imagen = "./images/logos/LOGOTIPO-IES-BELEN.png";
-			}
-			case 4 -> {
-				imagen = "./images/logos/LOGOTIPO-ALAN-TURING.png";
-			}
-			case 5 -> {
-				imagen = "./images/logos/LOGOTIPO-IES-SAN-JOSE.png";
-			}
-			default -> {
-				imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";
-			}
+			case 1 -> {imagen = "./images/logos/LOGOTIPO-CESUR.png";}
+			case 2 -> {imagen = "./images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";}
+			case 3 -> {imagen = "./images/logos/LOGOTIPO-IES-BELEN.png";}
+			case 4 -> {imagen = "./images/logos/LOGOTIPO-ALAN-TURING.png";}
+			case 5 -> {imagen = "./images/logos/LOGOTIPO-IES-SAN-JOSE.png";}
+			default -> {imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";}
 		}
     	return imagen;
     }
+
+	public static String defineID(int id){
+		String nombre="";
+		switch(id){
+			case 1->{nombre="./jsp/noticiasCesur.jsp";}
+			case 2->{nombre="./jsp/noticiasPabloPicasso.jsp";}
+			case 3->{nombre="./jsp/noticiasPabloPicasso.jsp";}
+			case 4->{nombre="./jsp/noticiasAlanTuring.jsp";}
+			case 5->{nombre="./jsp/noticiasPabloPicasso.jsp";}
+		}
+		return nombre;
+	}
     
     public static School getInfoSchool(int idSchool){
 
@@ -237,7 +221,7 @@ public class Util {
 			sch = Util.getInfoSchool(idSchool);
 			crs = Util.getCourseInfo(activeUser.getId_course());
 			System.out.println(crs);
-			centroUsuario = sch.getNombreSchool();
+			centroUsuario = sch.getSchoolName();
 			System.out.println(centroUsuario);
 
 			switch (activeUser.getUserType()) {

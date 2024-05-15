@@ -2,10 +2,10 @@ package utils;
 
 import connections.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.*;
-import java.util.HashMap;
 
 import models.*;
 
@@ -13,21 +13,23 @@ import models.*;
 public class Util {
 
     public static boolean loginProcess(HttpServletRequest req, HttpSession session) {
-        boolean landing = false;
+        boolean logged = false;
         Conector conector = new Conector();
         Connection con = null;
         try {
             con = conector.getMySqlConnection();
-            String email = req.getParameter("email");
-            String password = req.getParameter("password");
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM credentials WHERE email = ?");
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next() && resultSet.getString("pass").equals(password)) {
-                User user = createUser(con, resultSet);
-                session.setAttribute("user", user);
-                landing = true;
-            }
+			if (con != null) {
+				String email = req.getParameter("email");
+				String password = req.getParameter("password");
+				PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM credentials WHERE email = '" + email + "'");
+				ResultSet resultSet = preparedStatement.executeQuery();
+				if (resultSet.next() && resultSet.getString("pass").equals(password)) {
+					User user = createUserLogin(con, resultSet);
+					session.setAttribute("user", user);
+					logged = true;
+				}
+			} else
+				System.out.println("No se ha podido establecer la conexión");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -39,168 +41,138 @@ public class Util {
                 throw new RuntimeException(e);
             }
         }
-        return landing;
+        return logged;
     }
 
-    public static User createUser(Connection con, ResultSet resultSet) throws SQLException {
+    public static User createUserLogin(Connection con, ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt("id"));
-        PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM user_obj WHERE id = ?");
-        preparedStatement.setInt(1, user.getId());
-        resultSet = preparedStatement.executeQuery();
+        Statement preparedStatement = con.createStatement();
+        resultSet = preparedStatement.executeQuery("SELECT * FROM user_obj WHERE id = " + user.getId());
         if (resultSet.next()) {
             user.setUserType(resultSet.getString("user_type"));
             user.setName(resultSet.getString("user_name"));
             user.setId_school(resultSet.getInt("school_id"));
-            user.setId_course(resultSet.getInt("course_id"));
+            user.setId_course((Integer) resultSet.getObject("course_id"));
         }
-        System.out.println(user);
         return user;
     }
 
-    public static String defineImage(int id){
-    	String imagen="";
-
-    	switch(id){
-    	case 1->{
-    		imagen="../images/logos/LOGOTIPO-CESUR.png";
-    	}
-    	case 2->{
-    		imagen="../images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";
-    	}
-    	case 3->{
-    		imagen="../images/logos/LOGOTIPO-IES-BELEN.png";
-    	}
-    	case 4->{
-    		imagen="../images/logos/LOGOTIPO-ALAN-TURING.png";
-    	}
-    	case 5->{
-    		imagen="../images/logos/LOGOTIPO-IES-SAN-JOSE.png";
-    	}
-    	}
-    	return imagen;
-    }
+	public static String getContentTarjetaIndex(User activeUser, String centroUsuario, Course crs) {
+		String result = "";
+		switch (activeUser.getUserType()) {
+			case "01" -> {result = "Alumno de " + crs.getNameCourse();}
+			case "02" -> {result = "Profesor " + centroUsuario;}
+			case "03" -> {result = "Empleado/a de Accenture";}
+		}
+		return result;
+	}
 
     public static String defineImageIndex(int id){
     	String imagen="";
+    	switch(id) {
+			case 1->{imagen="./images/logos/LOGOTIPO-CESUR.png";}
+			case 2->{imagen="./images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";}
+			case 3->{imagen="./images/logos/LOGOTIPO-IES-BELEN.png";}
+			case 4->{imagen="./images/logos/LOGOTIPO-ALAN-TURING.png";}
+			case 5->{imagen="./images/logos/LOGOTIPO-IES-SAN-JOSE.png";}
+    	}
+    	return imagen;
+    }
+    
+    public static String defineID(int id){
+    	String nombre="";
 
     	switch(id){
     	case 1->{
-    		imagen="./images/logos/LOGOTIPO-CESUR.png";
+    		nombre="./jsp/noticiasCesur.jsp";
     	}
     	case 2->{
-    		imagen="./images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
     	}
     	case 3->{
-    		imagen="./images/logos/LOGOTIPO-IES-BELEN.png";
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
     	}
     	case 4->{
-    		imagen="./images/logos/LOGOTIPO-ALAN-TURING.png";
+    		nombre="./jsp/noticiasAlanTuring.jsp";
     	}
     	case 5->{
-    		imagen="./images/logos/LOGOTIPO-IES-SAN-JOSE.png";
+    		nombre="./jsp/noticiasPabloPicasso.jsp";
     		}
     	}
     	
-    	return imagen;
+    	return nombre;
     }
     
     public static School getInfoSchool(int idSchool){
 
-		int idSchoolConstr=idSchool;
-		String nombreSchool="";
-		String tlfSchool= "";
-		String email= "";
-		String scheduleSchool= "";
-		String locSchool="";
-
+		School school = new School();
+		school.setIdSchool(idSchool);
 		Conector conector = new Conector();
-
-		try(Connection conx = conector.getMySqlConnection()){
-
-			if (conx != null) {
-				System.out.println("Conexión OK");
-
-				String sql = "SELECT * FROM school where id="+idSchool;
-				Statement sentencia = conx.createStatement();
-
-				try (ResultSet rs = sentencia.executeQuery(sql)) {
-
-					while (rs.next()) {
-						idSchoolConstr=rs.getInt(1);
-						nombreSchool=rs.getString(2);
-						tlfSchool= rs.getString(3);
-						email= rs.getString(4);
-						scheduleSchool= rs.getString(5);
-						locSchool=rs.getString(6);
-
-					}
-
+		Connection con = null;
+		try {
+			con = conector.getMySqlConnection();
+			if (con != null) {
+				String sql = "SELECT * FROM school where id = " + idSchool;
+				Statement statement = con.createStatement();
+				ResultSet rs = statement.executeQuery(sql);
+				if (rs.next()) {
+					school.setNameSchool(rs.getString(2));
+					school.setTlfSchool(rs.getString(3));
+					school.setEmail(rs.getString(4));
+					school.setScheduleSchool(rs.getString(5));
+					school.setLocSchool(rs.getString(6));
 				}
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			} else
+				System.out.println("No se ha podido establecer la conexión");
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new School(idSchoolConstr, nombreSchool, tlfSchool, email, scheduleSchool, locSchool);
+		} finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+		return school;
 	}
     
     public static Course getCourseInfo(int idCourse){
 
-		int idCourseConstr=idCourse;
-		String nameCourse="";
-
+		Course course = new Course();
+		course.setId_course(idCourse);
 		Conector conector = new Conector();
-
-		try(Connection conx = conector.getMySqlConnection()){
-
-			if (conx != null) {
-				System.out.println("Conexión OK");
-
-				String sql = "SELECT * FROM course where id="+idCourse;
-				Statement sentencia = conx.createStatement();
-
-				try (ResultSet rs = sentencia.executeQuery(sql)) {
-
-					while (rs.next()) {
-						nameCourse=rs.getString(2);
-					}
-
+		Connection con = null;
+		try {
+			con = conector.getMySqlConnection();
+			if (con != null) {
+				Statement sentencia = con.createStatement();
+				ResultSet rs = sentencia.executeQuery("SELECT * FROM course where id = " + idCourse);
+				if (rs.next()) {
+					course.setNameCourse(rs.getString(2));
 				}
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			} else
+				System.out.println("No se ha podido establecer la conexión");
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new Course(idCourseConstr, nameCourse);
+		} finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+		return course;
 	}
     
     public static String defineMap(int idSchool) {
     	String mapLink="";
-    	
     	switch(idSchool){
-    	case 1->{
-    		mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10757.374130614628!2d-4.372041717464043!3d36.71808277803187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7259120bfc4db3%3A0xec0ecedd8dc61902!2sCESUR%20M%C3%A1laga%20Este%20Formaci%C3%B3n%20Profesional!5e0!3m2!1ses!2ses!4v1715334512514!5m2!1ses!2ses";
-;
-    	}
-    	case 2->{
-    		mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6395.717928363966!2d-4.455162806420868!3d36.725948300000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f70c3d574e37%3A0x67343146876c734b!2sIES%20Pablo%20Picasso!5e0!3m2!1ses!2ses!4v1715335018709!5m2!1ses!2ses";
-    	}
-    	case 3->{
-    		mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3199.124902411609!2d-4.459761523439527!3d36.69553637227712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f9dee2ea3131%3A0xe00a7d745fb8b2e3!2sIES%20Bel%C3%A9n!5e0!3m2!1ses!2ses!4v1715335056310!5m2!1ses!2ses";
-    	}
-    	case 4->{
-    		mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3197.2394272377824!2d-4.554430616275409!3d36.740823696739334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f10963ce0f3d%3A0x310ae7d4bb2e8f7b!2sCPIFP%20Alan%20Turing!5e0!3m2!1ses!2ses!4v1715335096355!5m2!1ses!2ses";
-    	}
-    	case 5->{
-    		mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60854.997797710945!2d-4.459410649332534!3d36.715431468654785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f711c56e8bed%3A0x6de2361e88593aeb!2sColegio%20Diocesano%20San%20Jos%C3%A9%20Obrero!5e0!3m2!1ses!2ses!4v1715335137121!5m2!1ses!2ses";
-    		}
+			case 1 -> {mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10757.374130614628!2d-4.372041717464043!3d36.71808277803187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7259120bfc4db3%3A0xec0ecedd8dc61902!2sCESUR%20M%C3%A1laga%20Este%20Formaci%C3%B3n%20Profesional!5e0!3m2!1ses!2ses!4v1715334512514!5m2!1ses!2ses";}
+			case 2 -> {mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6395.717928363966!2d-4.455162806420868!3d36.725948300000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f70c3d574e37%3A0x67343146876c734b!2sIES%20Pablo%20Picasso!5e0!3m2!1ses!2ses!4v1715335018709!5m2!1ses!2ses";}
+			case 3 -> {mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3199.124902411609!2d-4.459761523439527!3d36.69553637227712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f9dee2ea3131%3A0xe00a7d745fb8b2e3!2sIES%20Bel%C3%A9n!5e0!3m2!1ses!2ses!4v1715335056310!5m2!1ses!2ses";}
+			case 4 -> {mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3197.2394272377824!2d-4.554430616275409!3d36.740823696739334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f10963ce0f3d%3A0x310ae7d4bb2e8f7b!2sCPIFP%20Alan%20Turing!5e0!3m2!1ses!2ses!4v1715335096355!5m2!1ses!2ses";}
+			case 5 -> {mapLink="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60854.997797710945!2d-4.459410649332534!3d36.715431468654785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f711c56e8bed%3A0x6de2361e88593aeb!2sColegio%20Diocesano%20San%20Jos%C3%A9%20Obrero!5e0!3m2!1ses!2ses!4v1715335137121!5m2!1ses!2ses";}
     	}
     	return mapLink;
     }

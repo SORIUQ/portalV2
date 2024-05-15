@@ -52,7 +52,7 @@
 <body>
 	<header>
 		<div class="imagenNombreCentro">
-			<img src=<%=imagen %> alt="imagenCentro"
+			<img src=<%=imagen%> alt="imagenCentro"
 				style="height: 10vh">
 			<h1><%=centroUsuario%></h1>
 		</div>

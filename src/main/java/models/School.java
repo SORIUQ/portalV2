@@ -10,7 +10,9 @@ public class School {
 	String email;
 	String scheduleSchool;
 	String locSchool;
-	
+
+	public School() {}
+
 	public School(int idSchool, String nombreSchool, String tlfSchool, String email, String scheduleSchool,
 			String locSchool) {
 		this.idSchool = idSchool;
@@ -72,6 +74,17 @@ public class School {
 	public void setLocSchool(String locSchool) {
 		this.locSchool = locSchool;
 	}
-	
-	
+
+
+	@Override
+	public String toString() {
+		return "School{" +
+				"idSchool=" + idSchool +
+				", nameSchool='" + nameSchool + '\'' +
+				", tlfSchool='" + tlfSchool + '\'' +
+				", email='" + email + '\'' +
+				", scheduleSchool='" + scheduleSchool + '\'' +
+				", locSchool='" + locSchool + '\'' +
+				'}';
+	}
 }

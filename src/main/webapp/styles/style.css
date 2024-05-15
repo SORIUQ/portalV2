@@ -167,3 +167,237 @@ footer {
 	color: white;
 	background-color: black;
 }
+
+/* CLASES QUE AJUSTAN LOS COLORES DEPENDIENDO DEL COLEGIO */
+
+/* CESUR ------------------------------*/
+
+.cesurColor{
+	border-color: #244AA4
+}
+
+
+.tarjetaAlumno.cesurColor p {
+	color: #244AA4
+}
+
+.menu.cesurColor {
+	background-color: white;
+	color: #244AA4;
+}
+
+.menuOpcion.cesurColor:hover svg path {
+    fill: white;
+}
+
+.cesurColor.menuOpcion:hover {
+    box-sizing: border-box;
+    background-color: #244AA4;
+    color: white;
+}
+
+.cerrarSesion.cesurColor p {
+	background-color: #244AA4;
+}
+
+.menuOpcion.cesurColor svg path {
+    fill: #244AA4;
+}
+
+.cerrarSesion.cesurColor p:hover{
+    background-color: red;
+}
+
+.selected.cesurColor {
+    background-color: #244AA4;
+}
+
+.selected.cesurColor svg path {
+    fill: white;
+}
+
+
+
+/* BELEN ------------------------------*/
+
+.belenColor{
+	border-color: #FF8005
+}
+
+.tarjetaAlumno.belenColor p {
+	color: #FF8005
+}
+
+.menu.belenColor {
+	background-color: white;
+	color: #FF8005;
+}
+
+.menuOpcion.belenColor:hover svg path {
+    fill: white;
+}
+
+.belenColor.menuOpcion:hover {
+    box-sizing: border-box;
+    background-color: #FF8005;
+    color: white;
+}
+
+.cerrarSesion.belenColor p {
+	background-color: #FF8005;
+}
+
+.menuOpcion.belenColor svg path {
+    fill: #FF8005;
+}
+
+.cerrarSesion.belenColor p:hover{
+    background-color: red;
+}
+
+.selected.belenColor {
+    background-color: #FF8005;
+}
+
+.selected.belenColor svg path {
+    fill: white;
+}
+
+/* PICASSO ------------------------------*/
+
+.picassoColor{
+	border-color: #461B70
+}
+
+
+.tarjetaAlumno.picassoColor p {
+	color: #461B70
+}
+
+.menu.picassoColor {
+	background-color: white;
+	color: #461B70;
+}
+
+.menuOpcion.picassoColor:hover svg path {
+    fill: white;
+}
+
+.picassoColor.menuOpcion:hover {
+    box-sizing: border-box;
+    background-color: #461B70;
+    color: white;
+}
+
+.cerrarSesion.picassoColor p {
+	background-color: #461B70;
+}
+
+.menuOpcion.picassoColor svg path {
+    fill: #461B70;
+}
+
+.cerrarSesion.picassoColor p:hover{
+    background-color: red;
+}
+
+.selected.picassoColor {
+    background-color: #461B70;
+}
+
+.selected.picassoColor svg path {
+    fill: white;
+}
+
+
+/* JOSE ------------------------------*/
+
+.joseColor{
+	border-color: #006B99
+}
+
+
+.tarjetaAlumno.joseColor p {
+	color: #006B99
+}
+
+.menu.joseColor {
+	background-color: white;
+	color: #006B99;
+}
+
+.menuOpcion.joseColor:hover svg path {
+    fill: white;
+}
+
+.joseColor.menuOpcion:hover {
+    box-sizing: border-box;
+    background-color: #006B99;
+    color: white;
+}
+
+.cerrarSesion.joseColor p {
+	background-color: #006B99;
+}
+
+.menuOpcion.joseColor svg path {
+    fill: #006B99;
+}
+
+.cerrarSesion.joseColor p:hover{
+    background-color: red;
+}
+
+.selected.joseColor {
+    background-color: #006B99;
+}
+
+.selected.joseColor svg path {
+    fill: white;
+}
+
+/* TURING ------------------------------*/
+
+.turingColor{
+	border-color: #43A7DB
+}
+
+.tarjetaAlumno.turingColor p {
+	color: #43A7DB
+}
+
+.menu.turingColor {
+	background-color: white;
+	color: #43A7DB;
+}
+
+.menuOpcion.turingColor:hover svg path {
+    fill: white;
+}
+
+.turingColor.menuOpcion:hover {
+    box-sizing: border-box;
+    background-color: #43A7DB;
+    color: white;
+}
+
+.cerrarSesion.turingColor p {
+	background-color: #43A7DB;
+}
+
+.menuOpcion.turingColor svg path {
+    fill: #43A7DB;
+}
+
+.cerrarSesion.turingColor p:hover{
+    background-color: red;
+}
+
+
+.selected.turingColor {
+    background-color: #43A7DB;
+}
+
+.selected.turingColor svg path {
+    fill: white;
+}

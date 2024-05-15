@@ -21,10 +21,10 @@ body {
     font-size: large;
 }
 
-h1{
+.h1dp{
 	font-size: 40px;
 	margin-bottom: 50px;
-	color: #a100ff;
+	color: #A100FF;
 }
 
 
@@ -52,4 +52,81 @@ h1{
 	width: 15vw;
 	justify-content: center;
 	align-items: center;
+}
+
+/* Colores segun centro */
+
+/*belenColor*/
+
+.h1dp.belenColor{
+	color: #FF8005;
+}
+
+.tarjetaPersonal.belenColor{
+	border-color: #FF8005;
+	box-shadow: 0px 0px 6px 3px #FF8005;
+}
+
+.ladoIzquierdoTarjeta.belenColor {
+	color: #FF8005;
+}
+
+/* PICASSO ------------------------------*/
+
+.h1dp.picassoColor{
+	color: #461B70;
+}
+
+.tarjetaPersonal.picassoColor{
+	border-color: #461B70;
+	box-shadow: 0px 0px 6px 3px #461B70;
+}
+
+.ladoIzquierdoTarjeta.picassoColor {
+	color: #461B70;
+}
+
+/* JOSE ------------------------------*/
+
+.h1dp.joseColor{
+	color: #006B99;
+}
+
+.tarjetaPersonal.joseColor{
+	border-color: #006B99;
+	box-shadow: 0px 0px 6px 3px #006B99;
+}
+
+.ladoIzquierdoTarjeta.joseColor {
+	color: #006B99;
+}
+
+/* TURING ------------------------------*/
+
+.h1dp.turingColor{
+	color: #43A7DB;
+}
+
+.tarjetaPersonal.turingColor{
+	border-color: #43A7DB;
+	box-shadow: 0px 0px 6px 3px #43A7DB;
+}
+
+.ladoIzquierdoTarjeta.turingColor {
+	color: #43A7DB;
+}
+
+/* CESUR ------------------------------*/
+
+.h1dp.cesurColor{
+	color: #244AA4;
+}
+
+.tarjetaPersonal.cesurColor{
+	border-color: #244AA4;
+	box-shadow: 0px 0px 6px 3px #43A7DB;
+}
+
+.ladoIzquierdoTarjeta.cesurColor {
+	color: #244AA4;
 }

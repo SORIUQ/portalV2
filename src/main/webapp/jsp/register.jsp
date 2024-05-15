@@ -2,8 +2,8 @@
 <%@ page import="models.School" %>
 <%@ page import="java.util.List" %>
 <%@ page import="utils.Util" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-		 pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+		 pageEncoding="UTF-8"%>
 
 <%
 	List<School> schools = Util.getAllSchools();
@@ -86,12 +86,12 @@
 				</select>
 			</div>
 			
-			<!-- CONTRASEÑA -->
+			<!-- CONTRASEÃA -->
 			<div class="input_container" id="passContainer">
 				<input type="password" name="user_password" id="passInput" minlength="8" required> <label>Contraseña</label>
 			</div>
 			
-			<!-- REPITE CONTRASEÑA -->
+			<!-- REPITE CONTRASEñA -->
 			<div class="input_container" id="pass2Container">
 				<input type="password" name="user_password2" id="passInput2" minlength="8" required> <label>Repetir contraseña</label>
 			</div>

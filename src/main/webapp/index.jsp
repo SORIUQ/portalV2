@@ -8,7 +8,7 @@
 
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
-	Integer idSchool = (activeUser != null) ? activeUser.getId_school() : null;
+	Integer idSchool = null;
 	String imagen="";
 	String scrCentro="";
 	School sch=null;
@@ -22,7 +22,6 @@
 		return;
 	} else {
 		idSchool = activeUser.getId_school();
-<<<<<<< HEAD
 		if (idSchool != 0) {
 			imagen = Util.defineImageIndex(idSchool);
 			sch = Util.getInfoSchool(idSchool);
@@ -31,14 +30,15 @@
 			centroUsuario = "Accenture";
 			imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";
 		}
-=======
 		imagen = Util.defineImageIndex(idSchool);
 		sch = Util.getInfoSchool(idSchool);
 		scrCentro = Util.defineID(idSchool);
->>>>>>> b1a57fea49fde682f52757dfa8c38a95ac9be12e
 		if (activeUser.getId_course() != null)
 			crs = Util.getCourseInfo(activeUser.getId_course());
-
+		if (sch.getSchoolName() != null)
+			centroUsuario = sch.getSchoolName();
+		else
+			centroUsuario = "Accenture";
 		contentTarjeta = Util.getContentTarjetaIndex(activeUser,centroUsuario,crs);
 	}
 %>

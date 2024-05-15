@@ -22,6 +22,14 @@
 		return;
 	} else {
 		idSchool = activeUser.getId_school();
+		if (idSchool != 0) {
+			imagen = Util.defineImageIndex(idSchool);
+			sch = Util.getInfoSchool(idSchool);
+			centroUsuario = sch.getNameSchool();
+		} else {
+			centroUsuario = "Accenture";
+			imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";
+		}
 		imagen = Util.defineImageIndex(idSchool);
 		sch = Util.getInfoSchool(idSchool);
 		scrCentro = Util.defineID(idSchool);
@@ -49,7 +57,7 @@
 <title>Portal - Inicio</title>
 </head>
 
-<body>
+<body onload="determinarColores(<%=activeUser.getId_school()%>)">
 	<header>
 		<div class="imagenNombreCentro">
 			<img src=<%=imagen%> alt="imagenCentro"

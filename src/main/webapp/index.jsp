@@ -49,7 +49,7 @@
 <title>Portal - Inicio</title>
 </head>
 
-<body>
+<body onload="determinarColores(<%=activeUser.getId_school()%>)">
 	<header>
 		<div class="imagenNombreCentro">
 			<img src=<%=imagen %> alt="imagenCentro"

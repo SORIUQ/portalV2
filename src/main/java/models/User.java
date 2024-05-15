@@ -9,11 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class User {
-
     private int id;
     private String name;
     private String userType;
-    // PODEMOS HACER ESTOS DOS INTEGER PARA QUE PUEDAN SER NULL
     private int id_school;
     private int id_course;
 

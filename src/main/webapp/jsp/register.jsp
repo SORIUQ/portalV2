@@ -24,7 +24,7 @@
 		<img src="../images/logoAccenture.svg" id="logoAccenture">
 		
 		<!-- FORM -->
-		<form action="" method="post" class="login">
+		<form action="../register" method="post" class="login">
 			<!-- NOMBRE -->
 			<div class="input_container">
 				<input type="text" name="user_name" required> <label>Nombre</label>
@@ -79,7 +79,7 @@
 			</div>
 			
 			<!-- BOTÓN REGISTRO -->
-			<a type="submit" class="register-button container-button">Registrar</a>
+			<button type="submit" class="register-button container-button">Registrar</button>
 
 			<!-- LOGIN LINK -->
 			<div class="account-animation">

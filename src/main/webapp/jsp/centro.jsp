@@ -5,7 +5,7 @@
 <%
 User activeUser = (User) session.getAttribute("user");
 School sch = Util.getInfoSchool(activeUser.getId_school());
-// Se coloca el punto al principio porque el mÃ©todo devuelve la ruta relativa al index.jsp
+// Se coloca el punto al principio porque el metodo devuelve la ruta relativa al index.jsp
 String imagen = "." + Util.defineImageIndex(sch.getIdSchool());
 String mapLink = Util.defineMap(sch.getIdSchool());
 %>

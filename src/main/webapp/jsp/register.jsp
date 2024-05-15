@@ -38,19 +38,25 @@
 			<!-- EMAIL -->
 			<div class="input_container">
 				<input type="text" name="user_email" required> <label>Email</label>
+				<% if(session.getAttribute("dniExists") != null) { %>
+				<p class="errorMsg"> <%= session.getAttribute("dniExists") %> </p>
+				<% } %>
 			</div>
-			
+
 			<!-- FECHA NACIMIENTO -->
 			<div class="input_container">
-				<input type="date" class="date" name="user_birthday" required>
+				<input type="date" class="date" name="user_birthday" max="2008-05-15" required>
 			</div>
 			
 			<!-- NIF -->
 			<div class="input_container">
 				<input type="text" name="user_nif" required> <label>NIF</label>
+				<% if(session.getAttribute("dniExists") != null) { %>
+					<p class="errorMsg"> <%= session.getAttribute("dniExists") %> </p>
+				<% } %>
 			</div>
-			
-			<!-- CENTRO -->
+
+		<!-- CENTRO -->
 			<div class="input_container">
 				<select name="user_center">
 					<option value="0" disabled selected>-- Seleccione un centro --</option>

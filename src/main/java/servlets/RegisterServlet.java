@@ -37,7 +37,10 @@ public class RegisterServlet extends HttpServlet {
             conn = new Conector().getMySqlConnection();
             // Insertamos las credenciales del usuario separadas del resto de info.
             if(Util.checkIfEmailExist(conn, userEmail) || Util.checkIfDnieExist(conn, userDnie)) {
-                ses.setAttribute("userExists" , "El usuario ya existe!");
+                if (Util.checkIfEmailExist(conn, userEmail))
+                    ses.setAttribute("emailExists" , "El email ya existe");
+                if (Util.checkIfDnieExist(conn, userDnie))
+                    ses.setAttribute("dniExists", "El dni ya existe");
                 res.sendRedirect("./jsp/register.jsp");
             } else {
                 Util.insertCredentials(conn, userEmail, hashedPass);

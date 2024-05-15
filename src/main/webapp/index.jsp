@@ -8,8 +8,9 @@
 
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
-	Integer idSchool = (activeUser != null) ? activeUser.getId_school() : null;
+	Integer idSchool = null;
 	String imagen="";
+	String scrCentro="";
 	School sch=null;
 	String contentTarjeta="";
 	String courseName="";
@@ -21,12 +22,21 @@
 		return;
 	} else {
 		idSchool = activeUser.getId_school();
+		if (idSchool != 0) {
+			imagen = Util.defineImageIndex(idSchool);
+			sch = Util.getInfoSchool(idSchool);
+			centroUsuario = sch.getSchoolName();
+		} else {
+			centroUsuario = "Accenture";
+			imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";
+		}
 		imagen = Util.defineImageIndex(idSchool);
 		sch = Util.getInfoSchool(idSchool);
+		scrCentro = Util.defineID(idSchool);
 		if (activeUser.getId_course() != null)
 			crs = Util.getCourseInfo(activeUser.getId_course());
-		if (sch.getNombreSchool() != null)
-			centroUsuario = sch.getNombreSchool();
+		if (sch.getSchoolName() != null)
+			centroUsuario = sch.getSchoolName();
 		else
 			centroUsuario = "Accenture";
 		contentTarjeta = Util.getContentTarjetaIndex(activeUser,centroUsuario,crs);
@@ -47,10 +57,10 @@
 <title>Portal - Inicio</title>
 </head>
 
-<body>
+<body onload="determinarColores(<%=activeUser.getId_school()%>)">
 	<header>
 		<div class="imagenNombreCentro">
-			<img src=<%=imagen %> alt="imagenCentro"
+			<img src=<%=imagen%> alt="imagenCentro"
 				style="height: 10vh">
 			<h1><%=centroUsuario%></h1>
 		</div>
@@ -69,7 +79,7 @@
 				<%
 					if(activeUser != null && (activeUser.getUserType().equals("01") || activeUser.getUserType().equals("02"))) {
 				%>
-				<div class="menuOpcion" id="0" onclick="cambiarContenido('jsp/noticiasPabloPicasso.jsp', id)">
+				<div class="menuOpcion" id="0" onclick="cambiarContenido('<%= scrCentro %>', id)">
        <svg xmlns="http://www.w3.org/2000/svg" width="125" height="125"
           viewBox="0 0 24 24">
           <path fill="#a100ff"

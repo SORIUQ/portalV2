@@ -9,4 +9,14 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>cerrarSesion</display-name>
+    <servlet-name>cerrarSesion</servlet-name>
+    <servlet-class>servlets.cerrarSesion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cerrarSesion</servlet-name>
+    <url-pattern>/cerrarSesion</url-pattern>
+  </servlet-mapping>
 </web-app>

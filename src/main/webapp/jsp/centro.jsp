@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%@ page import="java.sql.*,utils.*,models.*"%>
 <%
 User activeUser = (User) session.getAttribute("user");
 School sch = Util.getInfoSchool(activeUser.getId_school());
-String imagen = Util.defineImage(sch.getIdSchool());
+// Se coloca el punto al principio porque el mÃƒÂ©todo devuelve la ruta relativa al index.jsp
+String imagen = "." + Util.defineImageIndex(sch.getIdSchool());
 String mapLink = Util.defineMap(sch.getIdSchool());
 %>
 <!DOCTYPE html>
@@ -18,20 +19,20 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 	href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
 	rel="stylesheet">
 <link rel="icon" type="image/x-icon" href="./images/accFavicon.jpg">
-<meta charset="UTF-8	">
+<meta charset="UTF-8">
 <title>Portal - Inicio</title>
 </head>
 <body>
 
 	<div class="contenedorPrincipal">
 		<div class="headerContenedor">
-			<h2 id="schoolTitle"><%=sch.getNombreSchool()%></h2>
+			<h2 id="schoolTitle"><%=sch.getSchoolName()%></h2>
 			<img src=<%=imagen%>>
 		</div>
-			<h4>Informacion de contacto</h4>
+			<h4>InformaciÃ³n de contacto</h4>
 			<table>
 				<tr>
-					<th>Número de teléfono:</th>
+					<th>NÃºmero de telÃ©fono:</th>
 					<th class="tableContent"><%=sch.getTlfSchool()%></th>
 				</tr>
 				<tr>
@@ -39,7 +40,7 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 					<th class="tableContent"><%=sch.getEmail()%></th>
 				</tr>
 				<tr>
-					<th>Horarios de Secretaría :</th>
+					<th>Horarios de SecretarÃ­a :</th>
 					<th class="tableContent"><%=sch.getScheduleSchool()%></th>
 				</tr>
 				<tr>
@@ -47,7 +48,7 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 					<th class="tableContent"><%=sch.getLocSchool()%></th>
 				</tr>
 			</table>
-			<h4>¿Cómo llegar?</h4>
+			<h4>Â¿CÃ³mo llegar?</h4>
 			<iframe src=<%=mapLink%> class="mapaEscuela" width="1000" height="500"
 				style="border: 0;" allowfullscreen="" loading="lazy"
 				referrerpolicy="no-referrer-when-downgrade"></iframe>

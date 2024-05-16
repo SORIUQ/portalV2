@@ -63,13 +63,11 @@ function irLogin() {
   }
  
 function determinarColores(id){
-
 var headerElement = document.getElementsByTagName('header')[0];
 var tarjetaElement = document.getElementsByClassName('tarjetaAlumno')[0];
 var menuElement = document.getElementsByClassName('menu')[0];
 var menuOpcionElements = document.getElementsByClassName('menuOpcion');
 var cerrarElement = document.getElementsByClassName('cerrarSesion')[0];
-
 	switch (id) {
   case 1:
     headerElement.classList.add('cesurColor');

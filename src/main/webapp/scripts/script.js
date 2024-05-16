@@ -175,5 +175,34 @@ var cerrarElement = document.getElementsByClassName('cerrarSesion')[0];
     
     default : break;
 	}
- 
+}
+	
+function detColorInicio(id){
+	
+  var elementoBorrar=document.getElementsByClassName("divider")[0];
+		
+			switch (id) {
+  case 1:
+    elementoBorrar.classList.add('cesurColor');
+    break;
+    
+  case 2:
+    elementoBorrar.classList.add('picassoColor');
+    break;
+    
+  case 3:
+    elementoBorrar.classList.add('belenColor');
+    break;
+    
+  case 4:
+    elementoBorrar.classList.add('turingColor');
+    break;
+    
+  case 5:
+    elementoBorrar.classList.add('joseColor');
+    break;
+    
+    default : break;
+	}
+	
 }

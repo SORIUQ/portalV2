@@ -86,12 +86,12 @@
 				</select>
 			</div>
 			
-			<!-- CONTRASEÃA -->
+			<!-- CONTRASEÑA -->
 			<div class="input_container" id="passContainer">
 				<input type="password" name="user_password" id="passInput" minlength="8" required> <label>Contraseña</label>
 			</div>
 			
-			<!-- REPITE CONTRASEñA -->
+			<!-- REPITE CONTRASEÑA -->
 			<div class="input_container" id="pass2Container">
 				<input type="password" name="user_password2" id="passInput2" minlength="8" required> <label>Repetir contraseña</label>
 			</div>

@@ -25,6 +25,11 @@ header {
 	justify-content: space-around;
 	align-items: space-around;
 	width: fit-content;
+	padding-left:4vw;
+}
+
+.imagenNombreCentro img{
+	padding-right:2vw;
 }
 
 header .tarjetaAlumno {

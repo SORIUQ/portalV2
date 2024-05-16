@@ -17,6 +17,7 @@ function validInputProcces(inputName, errContent, containerName) {
     errText.style.display = 'block';
     document.getElementById(containerName).appendChild(errText)
 }
+
 function nonValidInputProcces(inputName, containerName) {
     inputName.style.borderColor = "";
     errText.textContent = "";

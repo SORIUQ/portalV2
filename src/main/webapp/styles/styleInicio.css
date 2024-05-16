@@ -25,7 +25,7 @@ h2{
 .divider{
     top: -5px;
     height: 3px;
-    width: 58vw;
+    
     background: blue;
   }
   
@@ -45,3 +45,6 @@ h2{
 	background: #244AA4;
 }
 
+.divider.belenColor{
+	background: #FF8005;
+}

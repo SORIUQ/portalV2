@@ -17,11 +17,14 @@
 </head>
 
 <%
-int id = ((User) session.getAttribute("user")).getId();
+
+User activeUser= (User) request.getSession().getAttribute("user");
+int id = activeUser.getId();
 List<String> user = Util.getUserInfo(id);
 %>
-<body>
-	<h1>Datos Personales</h1>
+
+<body onload="detColoresdp(<%=activeUser.getId_school()%>)">
+	<h1 class="h1dp">Datos Personales</h1>
 
 	<div class="tarjetaPersonal">
 
@@ -65,6 +68,6 @@ List<String> user = Util.getUserInfo(id);
 	</div>
 
 
-
+<script type="text/javascript" src="../scripts/script.js"></script>
 </body>
 </html>

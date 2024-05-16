@@ -35,26 +35,29 @@ public class RegisterServlet extends HttpServlet {
         String hashedPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
         try {
             conn = new Conector().getMySqlConnection();
-            // Insertamos las credenciales del usuario separadas del resto de info.
-            if(Util.checkIfEmailExist(conn, userEmail) || Util.checkIfDnieExist(conn, userDnie)) {
-                if (Util.checkIfEmailExist(conn, userEmail))
-                    ses.setAttribute("emailExists" , "El email ya existe");
-                if (Util.checkIfDnieExist(conn, userDnie))
-                    ses.setAttribute("dniExists", "El dni ya existe");
-                res.sendRedirect("./jsp/register.jsp");
-            } else {
-                Util.insertCredentials(conn, userEmail, hashedPass);
-                Util.insertUserInDb(conn, userName, userLastName, userBirthday, userDnie, userEmail, hashedPass, userSchool, userCourse);
-                res.sendRedirect("./jsp/login.jsp");
+            if (conn == null) {
+                // Insertamos las credenciales del usuario separadas del resto de info.
+                if (Util.checkIfEmailExist(conn, userEmail) || Util.checkIfDnieExist(conn, userDnie)) {
+                    if (Util.checkIfEmailExist(conn, userEmail))
+                        ses.setAttribute("emailExists", "El email ya existe");
+                    if (Util.checkIfDnieExist(conn, userDnie))
+                        ses.setAttribute("dniExists", "El dni ya existe");
+                    res.sendRedirect("./jsp/register.jsp");
+                } else {
+                    Util.insertCredentials(conn, userEmail, hashedPass);
+                    Util.insertUserInDb(conn, userName, userLastName, userBirthday, userDnie, userEmail, hashedPass, userSchool, userCourse);
+                    res.sendRedirect("./jsp/login.jsp");
+                }
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(conn != null)
+            if (conn != null) {
+                try {
                     conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

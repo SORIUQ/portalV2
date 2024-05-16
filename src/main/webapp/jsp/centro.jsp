@@ -5,7 +5,7 @@
 <%
 User activeUser = (User) session.getAttribute("user");
 School sch = Util.getInfoSchool(activeUser.getId_school());
-String imagen = Util.defineImage(sch.getIdSchool());
+String imagen = "." + Util.defineImageIndex(sch.getIdSchool());
 String mapLink = Util.defineMap(sch.getIdSchool());
 %>
 <!DOCTYPE html>

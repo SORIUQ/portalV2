@@ -22,14 +22,11 @@ function irLogin() {
 }
  
 function determinarColores(id){
-	
 var headerElement = document.getElementsByTagName('header')[0];
 var tarjetaElement = document.getElementsByClassName('tarjetaAlumno')[0];
 var menuElement = document.getElementsByClassName('menu')[0];
 var menuOpcionElements = document.getElementsByClassName('menuOpcion');
 var cerrarElement = document.getElementsByClassName('cerrarSesion')[0];
-		var elementoCurso=document.selectQuery("user_center")
-		elementoCurso.addEventListener("change", selecc)
  
 	switch (id) {
   case 1:

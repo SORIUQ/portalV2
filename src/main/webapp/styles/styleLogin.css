@@ -125,3 +125,8 @@ body {
 	text-decoration: none;
 	color: #A100FF;
 }
+
+.errorMsg {
+	color: red;
+	font-weight: 500;
+}

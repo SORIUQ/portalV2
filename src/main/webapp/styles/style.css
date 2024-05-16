@@ -77,7 +77,7 @@ header h1 {
 .menu {
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: space-between;
 	height: 100vh;
 	width: 15vw;
 	background-color: white;
@@ -126,20 +126,13 @@ header h1 {
     fill: white;
 }
 
-.cerrarSesion {
-	display: flex;
-	justify-content: center;
-	align-items: flex-end;
-	height: 45vh;
-	color: #7501b8;
-}
 
-.cerrarSesion p:hover{
+.cerrarSesion input:hover{
     background-color: red;
 }
 
 
-.cerrarSesion p {
+.cerrarSesion input {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -149,6 +142,7 @@ header h1 {
 	color: white;
 	cursor: pointer;
 	transition: all 0.4s ease;
+	border:none;
 }
 
 .contenedorPrincipal {
@@ -201,7 +195,7 @@ footer {
     color: white;
 }
 
-.cerrarSesion.cesurColor p {
+.cerrarSesion.cesurColor input {
 	background-color: #244AA4;
 }
 
@@ -248,7 +242,7 @@ footer {
     color: white;
 }
 
-.cerrarSesion.belenColor p {
+.cerrarSesion.belenColor input {
 	background-color: #FF8005;
 }
 
@@ -256,7 +250,7 @@ footer {
     fill: #FF8005;
 }
 
-.cerrarSesion.belenColor p:hover{
+.cerrarSesion.belenColor input:hover{
     background-color: red;
 }
 
@@ -294,7 +288,7 @@ footer {
     color: white;
 }
 
-.cerrarSesion.picassoColor p {
+.cerrarSesion.picassoColor input {
 	background-color: #461B70;
 }
 
@@ -302,7 +296,7 @@ footer {
     fill: #461B70;
 }
 
-.cerrarSesion.picassoColor p:hover{
+.cerrarSesion.picassoColor input:hover{
     background-color: red;
 }
 
@@ -341,7 +335,7 @@ footer {
     color: white;
 }
 
-.cerrarSesion.joseColor p {
+.cerrarSesion.joseColor input {
 	background-color: #006B99;
 }
 
@@ -349,7 +343,7 @@ footer {
     fill: #006B99;
 }
 
-.cerrarSesion.joseColor p:hover{
+.cerrarSesion.joseColor input:hover{
     background-color: red;
 }
 
@@ -386,7 +380,7 @@ footer {
     color: white;
 }
 
-.cerrarSesion.turingColor p {
+.cerrarSesion.turingColor input {
 	background-color: #43A7DB;
 }
 
@@ -394,7 +388,7 @@ footer {
     fill: #43A7DB;
 }
 
-.cerrarSesion.turingColor p:hover{
+.cerrarSesion.turingColor input:hover{
     background-color: red;
 }
 

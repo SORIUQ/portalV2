@@ -8,10 +8,9 @@ let courseInput = document.getElementById("courseInput");
 let passInput = document.getElementById("passInput");
 let pass2VerifyInput = document.getElementById("passInput2");
 let errText = document.createElement('pre');
-errText.style.color = "red";
-errText.style.marginBottom = '5px';
-nameInput.style.marginBottom = '10px';
+errText.classList.add("errorMsg");
 
+/*ESTA AL REVES VALID = NO VALIDO / NONVALID = VALIDO JE JE */
 function validInputProcces(inputName, errContent, containerName) {
     inputName.style.borderColor = "red";
     errText.textContent = errContent;
@@ -27,7 +26,7 @@ function nonValidInputProcces(inputName, containerName) {
         container.removeChild(errText);
     }
 }
-// Validacion tanto de nombre como apellido.
+// Validación tanto de nombre como apellido.
 function validName(name) {
     let regex = /^[a-zA-Z ]+$/;
     return regex.test(name);
@@ -111,7 +110,6 @@ function courseCheck(course) {
 }
 
 function passValidator(pass) {
-    let res = false;
     let containsUpper = false;
     let containsLower = false;
     let containsNumber = false;
@@ -125,14 +123,13 @@ function passValidator(pass) {
             containsLower = true;
         }
     }
-
     return containsUpper && containsLower && containsNumber && pass.length >= 8
 }
 
 const checkNameInput = () => {
     let res = false;
     if (!validName(nameInput.value.trim()))
-        validInputProcces(nameInput, "Nombre incorrecto!", 'nameContainer');
+        validInputProcces(nameInput, "¡Nombre incorrecto!", 'nameContainer');
     else {
         nonValidInputProcces(nameInput, 'nameContainer');
         res = true;
@@ -140,12 +137,11 @@ const checkNameInput = () => {
     return res;
 }
 nameInput.addEventListener('input', checkNameInput);
-nameInput.addEventListener('blur', checkNameInput);
 
 const checkLastNameInput = () => {
     let res = false;
     if (!validName(lastNameInput.value.trim()))
-        validInputProcces(lastNameInput, "Apellido incorrecto!", 'lastNameContainer');
+        validInputProcces(lastNameInput, "¡Apellido incorrecto!", 'lastNameContainer');
     else {
         nonValidInputProcces(lastNameInput, 'lastNameContainer');
         res = true;
@@ -153,38 +149,35 @@ const checkLastNameInput = () => {
     return res;
 }
 lastNameInput.addEventListener('input', checkLastNameInput);
-lastNameInput.addEventListener('blur', checkLastNameInput);
 
 const checkEmailInput = () => {
     let res = false;
-    if(!emailValidator(emailInput.value.trim()))
-        validInputProcces(emailInput, "Email incorrecto!", 'emailContainer');
-    else {
+    if(!emailValidator(emailInput.value.trim())){
+        validInputProcces(emailInput, "¡Email incorrecto!", 'emailContainer');
+    } else {
         nonValidInputProcces(emailInput, 'emailContainer');
         res = true;
     }
     return res;
 }
 emailInput.addEventListener('input', checkEmailInput);
-emailInput.addEventListener('blur', checkEmailInput);
 
 const checkDnieInput = () => {
     let res = false;
-    if(!detectIdType(dnieInput.value.trim()))
-        validInputProcces(dnieInput, "Dni/Nie incorrecto!", 'dnieContainer');
-    else {
+    if(!detectIdType(dnieInput.value.trim())) {
+        validInputProcces(dnieInput, "¡Dni/Nie incorrecto!", 'dnieContainer');
+    } else {
         nonValidInputProcces(dnieInput, 'dnieContainer');
         res = true;
     }
     return res;
 }
 dnieInput.addEventListener('input', checkDnieInput);
-dnieInput.addEventListener('focusout', checkDnieInput);
 
 const checkPassInput = () => {
     let res = false;
     if(!passValidator(passInput.value.trim()))
-        validInputProcces(passInput, "Password demasiado debil!", 'passContainer');
+        validInputProcces(passInput, "¡Password demasiado débil!", 'passContainer');
     else {
         nonValidInputProcces(passInput, 'passContainer');
         res = true;
@@ -192,17 +185,15 @@ const checkPassInput = () => {
     return res;
 }
 passInput.addEventListener('input', checkPassInput);
-passInput.addEventListener('blur', checkPassInput);
 
 const checkPass2Input = () => {
     let res = false;
     if(passValidator2())
-        validInputProcces(pass2VerifyInput, "Las passwords deben ser iguales!", 'pass2Container');
+        validInputProcces(pass2VerifyInput, "¡Las passwords deben ser iguales!", 'pass2Container');
     else {
         nonValidInputProcces(pass2VerifyInput, 'pass2Container');
         res = true;
     }
     return res;
 }
-pass2VerifyInput.addEventListener('input', checkPass2Input);
-pass2VerifyInput.addEventListener('blur', checkPass2Input);
+pass2VerifyInput.addEventListener('input', checkPass2Input)

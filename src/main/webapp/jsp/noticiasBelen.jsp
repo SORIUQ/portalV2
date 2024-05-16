@@ -10,7 +10,7 @@
     <title>Insert title here</title>
     </head>
     <body>
-        <div class="cont">
+        <div class="cont belenColor">
             <h1>Juan rescata a Fernando de la mafia del IES Belén</h1>
             <h3>Un acto heróico que marcó un antes y un después en los estudiantes</h3>
 

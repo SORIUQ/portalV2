@@ -220,9 +220,13 @@ input, select {
 
 /*Error Styles*/
 .errorMsg {
-	color: red;
-	text-align: left;
-	margin-top: -15px;
+	color: white;
+	background-color: red;
+	padding: 3px;
+	text-align: center;
+	border-radius: 5px;
+	borderRadius: 5px;
+	margin-bottom: 10px;
 }
 
 /* Footer */

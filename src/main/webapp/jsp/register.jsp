@@ -35,6 +35,7 @@
 		
 		<!-- FORM -->
 		<form action="../register" method="post" class="login" onsubmit=" return userValidation()">
+
 			<!-- NOMBRE -->
 			<div class="input_container" id="nameContainer">
 				<input type="text" name="user_name" id="nameInput" required> <label>Nombre</label>
@@ -46,21 +47,21 @@
 			</div>
 			
 			<!-- EMAIL -->
-			<div class="input_container">
-				<input type="text" name="user_email" required> <label>Email</label>
+			<div class="input_container" id="emailContainer">
+				<input type="email" name="user_email" id="emailInput" required> <label>Email</label>
 				<% if(session.getAttribute("dniExists") != null) { %>
-				<p class="errorMsg"> <%= session.getAttribute("dniExists") %> </p>
+				<p class="errorMsg"> <%= session.getAttribute("emailExists") %> </p>
 				<% } %>
 			</div>
 
 			<!-- FECHA NACIMIENTO -->
 			<div class="input_container">
-				<input type="date" class="date" name="user_birthday" max="2008-05-15" required>
+				<input type="date" class="date" name="user_birthday" max="2008-05-15" min="1950-01-01" required>
 			</div>
 			
 			<!-- NIF -->
-			<div class="input_container">
-				<input type="text" name="user_nif" required> <label>NIF</label>
+			<div class="input_container" id="dnieContainer">
+				<input type="text" name="user_nif" id="dnieInput" required> <label>NIF</label>
 				<% if(session.getAttribute("dniExists") != null) { %>
 					<p class="errorMsg"> <%= session.getAttribute("dniExists") %> </p>
 				<% } %>
@@ -113,7 +114,6 @@
 	<script src="../scripts/register.js"></script>
 	<script>
 		let validationResults = {};
-
 		function userValidation() {
 			validationResults = {
 				name: checkNameInput(),

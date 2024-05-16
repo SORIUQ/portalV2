@@ -1,7 +1,5 @@
 @charset "UTF-8";
- 
-/************* stylesheet from register.jsp *************/
- 
+  
 /* Aspectos generales */
  
 * {
@@ -64,7 +62,6 @@ body {
  
 .input_container input, select {
 	width:350px;
-	/*padding: 5px ;*/
 	padding-left: 8px;
 }
  
@@ -97,7 +94,6 @@ input, select {
 }
  
  
-/* Estilo botón */
  
 /* Capa botón */
  
@@ -143,7 +139,7 @@ input, select {
   left: 0;
   width: 0%;
   height: 100%;
-  background-color: #9100e6; /* Adjust color manually */
+  background-color: #9100e6; 
   transition: all 0.3s;
   border-radius: 10rem;
   z-index: -1;
@@ -163,7 +159,7 @@ input, select {
   text-align: center;
 }
  
-/* Account Animation */
+
  
 /* Define la animación */
  

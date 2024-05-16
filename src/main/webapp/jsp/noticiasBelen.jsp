@@ -1,5 +1,10 @@
+<%@ page import="models.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
+
+<%
+    User activeUser= (User) request.getSession().getAttribute("user");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -9,8 +14,8 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
     </head>
-    <body>
-        <div class="cont belenColor">
+    <body onload="detColoresNoticias(<%=activeUser.getId_school()%>)">
+        <div class="cont">
             <h1>Juan rescata a Fernando de la mafia del IES Belén</h1>
             <h3>Un acto heróico que marcó un antes y un después en los estudiantes</h3>
 
@@ -30,5 +35,7 @@
         <article>
 			<div class="espacio">:D</div>
 		</article>
+
+        <script type="text/javascript" src="../scripts/script.js"></script>
     </body>
 </html>

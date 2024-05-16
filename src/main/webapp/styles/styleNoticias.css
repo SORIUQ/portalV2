@@ -2,6 +2,7 @@
 
 * {
 	font-family: "Jost", sans-serif;
+	color: black;
 }
 
 .cont{
@@ -86,7 +87,81 @@ p {
 	display: flex;
 }
 
+
+
+/* Colores según centro */
+
+/*belenColor*/
 .cont.belenColor{
-	color:#FF8005;
+	color: #FF8005;
 	box-shadow: 21px 23px 0 -5px #FF8005;
+}
+
+img.belenColor {
+	border:  #FF8005 2px solid ;
+}
+
+.linea hr.belenColor{
+	color: #FF8005;
+	background-color: #FF8005;
+}
+
+/* PICASSO -----------------------------*/
+.cont.picassoColor{
+	color: #461B70;
+	box-shadow: 21px 23px 0 -5px #461B70;
+}
+
+img.picassoColor {
+	border:  #461B70 2px solid ;
+}
+
+.linea hr.picassoColor{
+	color: #461B70;
+	background-color: #461B70;
+}
+
+/* JOSE ------------------------------*/
+.cont.joseColor{
+	color: #006B99;
+	box-shadow: 21px 23px 0 -5px #006B99;
+}
+
+img.joseColor {
+	border:  #006B99 2px solid ;
+}
+
+.linea hr.joseColor{
+	color: #006B99;
+	background-color: #006B99;
+}
+
+/* TURING ------------------------------*/
+.cont.turingColor{
+	color: #43A7DB;
+	box-shadow: 21px 23px 0 -5px #43A7DB;
+}
+
+img.turingColor {
+	border:  #43A7DB 2px solid ;
+}
+
+.linea hr.turingColor{
+	color: #43A7DB;
+	background-color: #43A7DB;
+}
+
+/* CESUR ------------------------------*/
+.cont.cesurColor{
+	color: #244AA4;
+	box-shadow: 21px 23px 0 -5px #244AA4;
+}
+
+img.cesurColor {
+	border:  #244AA4 2px solid ;
+}
+
+.linea hr.cesurColor{
+	color: #244AA4;
+	background-color: #244AA4;
 }

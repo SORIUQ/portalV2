@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -53,6 +54,6 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/jose.prados.morente/OneDrive - Accenture/Desktop/New folder/mysql-connector-j-8.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/pedro.vigara.haro/Downloads/mysql-connector-j-8.3.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

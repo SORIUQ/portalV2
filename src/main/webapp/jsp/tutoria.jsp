@@ -10,9 +10,10 @@
 	href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
 	rel="stylesheet">
 <meta charset="UTF-8">
-<title>Tutoria</title>
+<title></title>
 </head>
 <body>
-	<h2>Esto es la tutoria</h2>
+	<h1 id="texto" style="text-align: center">Tutoría en construcción...</h1>
+	<img alt="" src="../images/worker3dCarpintero.gif">
 </body>
 </html>

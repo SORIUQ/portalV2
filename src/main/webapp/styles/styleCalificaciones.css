@@ -1,3 +1,7 @@
 * {
 	font-family: "Jost", sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }

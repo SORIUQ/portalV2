@@ -10,9 +10,10 @@
 	href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
 	rel="stylesheet">
 <meta charset="UTF-8">
-<title>Modulo</title>
+<title></title>
 </head>
 <body>
-	<h2>Esto es el modulo</h2>
+	<h1>Módulo en construcción...</h1>
+	<img alt="" src="../images/worker3d.gif">
 </body>
 </html>

@@ -1,5 +1,11 @@
+<%@ page import="models.User" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+		 pageEncoding="ISO-8859-1"%>
+
+<%
+	User activeUser= (User) request.getSession().getAttribute("user");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +14,7 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
+<body onload="detColoresNoticias(<%=activeUser.getId_school()%>)">
 	<div class="cont" >
 		<h1>Cesur detecta una alta demanda de formación en informática</h1>
 		<h3>Los estudiantes tienen la posibilidad de especializarse en disciplinas altamente demandadas, como ciberseguridad y "cloud computing"</h3>
@@ -35,6 +41,6 @@
 	<article>
 	<div class="espacio">:D</div>
 	</article>
-
+	<script type="text/javascript" src="../scripts/script.js"></script>
 </body>
 </html>

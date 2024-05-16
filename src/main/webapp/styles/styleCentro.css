@@ -78,3 +78,31 @@ table th{
 	text-align:right;
 	font-weight:400;
 }
+
+/*Colores Centros*/
+
+/*Belen*/
+.contenedorPrincipal h4.belenColor {
+	background-color: #de6c02;
+	box-shadow: 0px 3px 5px 0px #8a4605;
+}
+
+.contenedorPrincipal h4.picassoColor {
+	background-color: #5b2593;
+	box-shadow: 0px 3px 5px 0px #3e1864;
+}
+
+.contenedorPrincipal h4.joseColor {
+	background-color: #006B99;
+	box-shadow: 0px 3px 5px 0px #004964;
+}
+
+.contenedorPrincipal h4.turingColor {
+	background-color: #378eb6;
+	box-shadow: 0px 3px 5px 0px #245a75;
+}
+
+.contenedorPrincipal h4.cesurColor {
+	background-color: #244AA4;
+	box-shadow: 0px 3px 5px 0px #1b3679;
+}

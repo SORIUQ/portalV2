@@ -20,7 +20,7 @@ public class Util {
         boolean landing = false;
         Conector conector = new Conector();
         Connection con = null;
-		String error = "";
+	String error = "";
         try {
             con = conector.getMySqlConnection();
             String email = req.getParameter("email");
@@ -35,9 +35,9 @@ public class Util {
                     session.setAttribute("user", user);
                     landing = true;
                 }else
-					error = "Contraseña incorrecta";
+		    error = "Contraseña incorrecta";
             } else
-				error = "El usuario no existe";
+		error = "El usuario no existe";
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally {
@@ -48,8 +48,8 @@ public class Util {
                 e.printStackTrace();
             }
         }
-		if (!error.isEmpty())
-			session.setAttribute("error",error);
+	if (!error.isEmpty())
+		session.setAttribute("error",error);
         return landing;
     }
 

@@ -48,7 +48,7 @@
 			
 			<!-- EMAIL -->
 			<div class="input_container" id="emailContainer">
-				<input type="email" name="user_email" id="emailInput" required> <label>Email</label>
+				<input type="text" name="user_email" id="emailInput" required> <label>Email</label>
 				<% if(session.getAttribute("dniExists") != null) { %>
 				<p class="errorMsg"> <%= session.getAttribute("emailExists") %> </p>
 				<% } %>

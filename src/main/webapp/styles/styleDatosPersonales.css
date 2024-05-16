@@ -12,13 +12,13 @@ body {
 
 .tarjetaPersonal {
 	display: flex;
-	width: 45vw;
-	height: 35vh;
+	width: fit-content;
+	height: fit-content;
 	border: 2px solid #a100ff;																																		
 	border-radius: 15px;
 	padding: 10px;
-    box-shadow: 0px 0px 6px 3px #a100ff;
-    font-size: large;
+    	box-shadow: 0px 0px 6px 3px #a100ff;
+    	font-size: large;
 }
 
 .h1dp{

@@ -4,8 +4,10 @@ public class Course {
 	
 	Integer id_course;
 	String nameCourse;
-	
-	
+
+	public Course() {
+	}
+
 	public Course(Integer id_course, String nameCourse) {
 		this.id_course = id_course;
 		this.nameCourse = nameCourse;

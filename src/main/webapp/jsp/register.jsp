@@ -1,13 +1,14 @@
 <%@ page import="models.Course" %>
 <%@ page import="models.School" %>
 <%@ page import="java.util.List" %>
-<%@ page import="utils.Util" %>
+<%@ page import="modelsDAO.SchoolDAO" %>
+<%@ page import="modelsDAO.CourseDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 
 <%
-	List<School> schools = Util.getAllSchools();
-	List<Course> courses = Util.getAllCourses();
+	List<School> schools = SchoolDAO.getAllSchools();
+	List<Course> courses = CourseDAO.getAllCourses();
 %>
 
 <!DOCTYPE html>

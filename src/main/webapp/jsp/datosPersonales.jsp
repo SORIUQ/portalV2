@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, utils.*, models.*"%>
 <%@page import="java.util.List"%>
+<%@ page import="modelsDAO.UserDAO" %>
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +21,7 @@
 
 User activeUser= (User) request.getSession().getAttribute("user");
 int id = activeUser.getId();
-List<String> user = Util.getUserInfo(id);
+List<String> user = UserDAO.getUserInfo(id);
 %>
 
 <body onload="detColoresdp(<%=activeUser.getId_school()%>)">

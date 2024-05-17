@@ -4,7 +4,8 @@
 		 pageEncoding="UTF-8"%>
 
 <%@ page import="java.sql.*,utils.*,models.*" %>
-<%@ page import="java.io.IOException" %>
+<%@ page import="modelsDAO.CourseDAO" %>
+<%@ page import="modelsDAO.SchoolDAO" %>
 
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
@@ -17,16 +18,16 @@
 	Course crs=null;
 	String centroUsuario="";
 
-	if (activeUser == null) {
+	if ( session.getAttribute("user") == null ){
 		response.sendRedirect("./jsp/login.jsp");
 		return;
 	} else {
 		idSchool = activeUser.getId_school();
 		imagen = Util.defineImageIndex(idSchool);
-		sch = Util.getInfoSchool(idSchool);
+		sch = SchoolDAO.createSchool(idSchool);
 		scrCentro = Util.defineID(idSchool);
 		if (activeUser.getId_course() != null)
-			crs = Util.getCourseInfo(activeUser.getId_course());
+			crs = CourseDAO.createCourse(activeUser.getId_course());
 		if (sch.getSchoolName() != null)
 			centroUsuario = sch.getSchoolName();
 		else
@@ -121,22 +122,22 @@
     </div>
 </div>
 			<div class="cerrarSesion">
-				<p onclick="irLogin()">
-					<b>Cerrar Sesión</b>
-				</p>
+				<form action="./logout" method="POST">
+					<input type="submit" value="Cerrar Sesión">
+				</form>
 			</div>
 		</article>
 		<div class="contenedorPrincipal">
-		<iframe id="contenido" src="./jsp/inicio.jsp" width="100%" height="100%"></iframe>
+			<iframe id="contenido" src="./jsp/inicio.jsp" width="100%" height="100%"></iframe>
 		</div>
-	</div>
+		</div>
 
-	<footer>
-		<p>
-			Aplicación creada por <strong>Grupo La Rubia & co</strong>
-		</p>
-		<img src="./images/logoAccentureBlanco.png" alt="logoAccenture"
-			style="width: 8vw">
+		<footer>
+			<p>
+				Aplicación creada por <strong>Grupo La Rubia & co</strong>
+			</p>
+			<img src="./images/logoAccentureBlanco.png" alt="logoAccenture"
+				 style="width: 8vw">
 	</footer>
 <script type="text/javascript" src="./scripts/script.js"></script>
 </body>

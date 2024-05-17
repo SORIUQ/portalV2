@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.User;
+import modelsDAO.UserDAO;
 import org.mindrot.jbcrypt.BCrypt;
 import utils.Util;
 
@@ -22,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         HttpSession ses = req.getSession();
-        Connection conn = null;
+        Connection con = null;
         // Datos del usuario
         String userName = req.getParameter("user_name");
         String userLastName = req.getParameter("user_lastname");
@@ -34,27 +35,30 @@ public class RegisterServlet extends HttpServlet {
         String userPass = req.getParameter("user_password");
         String hashedPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
         try {
-            conn = new Conector().getMySqlConnection();
-            // Insertamos las credenciales del usuario separadas del resto de info.
-            if(Util.checkIfEmailExist(conn, userEmail) || Util.checkIfDnieExist(conn, userDnie)) {
-                if (Util.checkIfEmailExist(conn, userEmail))
-                    ses.setAttribute("emailExists" , "El email ya existe");
-                if (Util.checkIfDnieExist(conn, userDnie))
-                    ses.setAttribute("dniExists", "El dni ya existe");
-                res.sendRedirect("./jsp/register.jsp");
-            } else {
-                Util.insertCredentials(conn, userEmail, hashedPass);
-                Util.insertUserInDb(conn, userName, userLastName, userBirthday, userDnie, userEmail, hashedPass, userSchool, userCourse);
-                res.sendRedirect("./jsp/login.jsp");
+            con = new Conector().getMySqlConnection();
+            if (con != null) {
+                // Insertamos las credenciales del usuario separadas del resto de info.
+                if (Util.checkIfEmailExist(con, userEmail) || Util.checkIfDnieExist(con, userDnie)) {
+                    if (Util.checkIfEmailExist(con, userEmail))
+                        ses.setAttribute("emailExists", "El email ya existe");
+                    if (Util.checkIfDnieExist(con, userDnie))
+                        ses.setAttribute("dniExists", "El dni ya existe");
+                    res.sendRedirect("./jsp/register.jsp");
+                } else {
+                    UserDAO.insertCredentials(con, userEmail, hashedPass);
+                    UserDAO.insertUserInDb(con, userName, userLastName, userBirthday, userDnie, userEmail, hashedPass, userSchool, userCourse);
+                    res.sendRedirect("./jsp/login.jsp");
+                }
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(conn != null)
-                    conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

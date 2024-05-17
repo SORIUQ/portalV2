@@ -2,10 +2,11 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@ page import="java.sql.*,utils.*,models.*"%>
+<%@ page import="modelsDAO.SchoolDAO" %>
 <%
 User activeUser = (User) session.getAttribute("user");
-School sch = Util.getInfoSchool(activeUser.getId_school());
-String imagen = Util.defineImage(sch.getIdSchool());
+School sch = SchoolDAO.createSchool(activeUser.getId_school());
+String imagen = "." + Util.defineImageIndex(sch.getIdSchool());
 String mapLink = Util.defineMap(sch.getIdSchool());
 %>
 <!DOCTYPE html>
@@ -21,7 +22,7 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 <meta charset="UTF-8	">
 <title>Portal - Inicio</title>
 </head>
-<body>
+<body onload="detColoresCentro(<%=activeUser.getId_school()%>)">
 
 	<div class="contenedorPrincipal">
 		<div class="headerContenedor">
@@ -52,5 +53,7 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 				style="border: 0;" allowfullscreen="" loading="lazy"
 				referrerpolicy="no-referrer-when-downgrade"></iframe>
 		</div>
+
+	<script type="text/javascript" src="../scripts/script.js"></script>
 </body>
 </html>

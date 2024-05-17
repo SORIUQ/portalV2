@@ -1,7 +1,25 @@
 * {
 	font-family: "Jost", sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	flex-direction: column;
+	overflow: auto;
+}
+
+h4{
+	margin-top:5vh;
+	font-size: 1.85rem;
+	background-color: #217491;
+	color:white;
+	width:120vh;
+	text-align:center;
+	margin-bottom: 2vh;
+	box-shadow: 0px 3px 5px 0px rgba(26,83,102,1);
 }

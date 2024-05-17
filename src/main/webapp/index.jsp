@@ -125,19 +125,18 @@
 					<input type="submit" value="Cerrar Sesión">
 				</form>
 			</div>
-			
 		</article>
 		<div class="contenedorPrincipal">
-		<iframe id="contenido" src="./jsp/inicio.jsp" width="100%" height="100%"></iframe>
+			<iframe id="contenido" src="./jsp/inicio.jsp" width="100%" height="100%"></iframe>
 		</div>
-	</div>
+		</div>
 
-	<footer>
-		<p>
-			Aplicación creada por <strong>Grupo La Rubia & co</strong>
-		</p>
-		<img src="./images/logoAccentureBlanco.png" alt="logoAccenture"
-			style="width: 8vw">
+		<footer>
+			<p>
+				Aplicación creada por <strong>Grupo La Rubia & co</strong>
+			</p>
+			<img src="./images/logoAccentureBlanco.png" alt="logoAccenture"
+				 style="width: 8vw">
 	</footer>
 <script type="text/javascript" src="./scripts/script.js"></script>
 </body>

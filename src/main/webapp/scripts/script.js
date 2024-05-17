@@ -62,6 +62,41 @@ function irLogin() {
 	}
   }
 
+function detColoresCentro(id){
+
+    var color1 = document.getElementsByTagName("h4")[0];
+    var color2 = document.getElementsByTagName("h4")[1];
+
+    switch(id){
+        case 1 :
+            color1.classList.add('cesurColor');
+            color2.classList.add('cesurColor');
+            break;
+
+        case 2 :
+            color1.classList.add('picassoColor');
+            color2.classList.add('picassoColor');
+            break;
+
+        case 3 :
+            color1.classList.add('belenColor');
+            color2.classList.add('belenColor');
+            break;
+
+        case 4 :
+            color1.classList.add('turingColor');
+            color2.classList.add('turingColor');
+            break;
+
+        case 5 :
+            color1.classList.add('joseColor');
+            color2.classList.add('joseColor');
+            break;
+
+        default : break;
+    }
+}  
+
 function detColoresNoticias(id){
 
     var cont = document.getElementsByClassName("cont")[0];
@@ -175,5 +210,34 @@ var cerrarElement = document.getElementsByClassName('cerrarSesion')[0];
     
     default : break;
 	}
- 
+}
+	
+function detColorInicio(id){
+	
+  var elementoBorrar=document.getElementsByClassName("divider")[0];
+		
+			switch (id) {
+  case 1:
+    elementoBorrar.classList.add('cesurColor');
+    break;
+    
+  case 2:
+    elementoBorrar.classList.add('picassoColor');
+    break;
+    
+  case 3:
+    elementoBorrar.classList.add('belenColor');
+    break;
+    
+  case 4:
+    elementoBorrar.classList.add('turingColor');
+    break;
+    
+  case 5:
+    elementoBorrar.classList.add('joseColor');
+    break;
+    
+    default : break;
+	}
+	
 }

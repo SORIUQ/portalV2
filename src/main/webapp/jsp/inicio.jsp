@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ page import="java.sql.*,utils.*,models.*" %>
+   
+<% User activeUser= (User) request.getSession().getAttribute("user"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +16,11 @@
 <meta charset="UTF-8">
 <title>Inicio</title>
 </head>
-<body>
-	<h2>Bienvenido al portal de Accenture!</h2>
+<body onload="detColorInicio(<%=activeUser.getId_school()%>)">
+<div class="container">
+	<h2>¡Bienvenido/a <%=activeUser.getName() %>!</h2>
+	<div class="divider"></div>
+	</div>
 </body>
+<script type="text/javascript" src="../scripts/script.js"></script>
 </html>

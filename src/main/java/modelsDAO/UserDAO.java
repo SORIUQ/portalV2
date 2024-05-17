@@ -134,4 +134,13 @@ public class UserDAO {
 
         return usuario;
     }
+
+    /*Función provisional. Falta ver cómo avanza la bbdd para poder avanzar*/
+    public static List<User> getStudentsFromTeacher (int profesorId){
+        List<User> alumnos = new ArrayList<>();
+
+        //Añadir sentencia sql para buscar los alumnos en función del id del profesor pasado como parámentro
+
+        return alumnos;
+    }
 }

@@ -34,21 +34,26 @@ public class RegisterServlet extends HttpServlet {
         String userCourse = req.getParameter("user_course"); // Falta esto por validar en el front
         String userPass = req.getParameter("user_password");
         String hashedPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
+        String userExists = "El usuario ya esta registrado";
+
         try {
             con = new Conector().getMySqlConnection();
+            boolean emailExists = Util.checkIfEmailExist(con, userEmail);
+            boolean dnieExists = Util.checkIfDnieExist(con, userDnie);
             if (con != null) {
-                // Insertamos las credenciales del usuario separadas del resto de info.
-                if (Util.checkIfEmailExist(con, userEmail) || Util.checkIfDnieExist(con, userDnie)) {
-                    if (Util.checkIfEmailExist(con, userEmail))
-                        ses.setAttribute("emailExists", "El email ya existe");
-                    if (Util.checkIfDnieExist(con, userDnie))
-                        ses.setAttribute("dniExists", "El dni ya existe");
-                    res.sendRedirect("./jsp/register.jsp");
+                if (emailExists || dnieExists) {
+                    if (emailExists)
+                        userExists += "<br/>Email ya existe";
+                    if (dnieExists)
+                        userExists += "<br/>DNIE ya existe";
+                    ses.setAttribute("userExists", userExists);
                 } else {
                     UserDAO.insertCredentials(con, userEmail, hashedPass);
                     UserDAO.insertUserInDb(con, userName, userLastName, userBirthday, userDnie, userEmail, hashedPass, userSchool, userCourse);
-                    res.sendRedirect("./jsp/login.jsp");
+                    userExists = "¡Usuario registrado con éxito!";
+                    ses.setAttribute("userExists", userExists);
                 }
+                res.sendRedirect("./jsp/login.jsp");
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

@@ -81,12 +81,9 @@ public class Util {
 			try {
 				PreparedStatement ps = con.prepareStatement("select * from credentials where email=?;");
 				ps.setString(1, email);
-				try {
-					ResultSet rs = ps.executeQuery();
-					res = rs.next();
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
+				ResultSet rs = ps.executeQuery();
+				if (rs.next())
+					res = true;
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
@@ -109,12 +106,9 @@ public class Util {
 			try {
 				PreparedStatement ps = con.prepareStatement("select * from user_obj where dnie=?;");
 				ps.setString(1, dnie);
-				try {
-					ResultSet rs = ps.executeQuery();
-					res = rs.next();
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
+				ResultSet rs = ps.executeQuery();
+				if (rs.next())
+					res = true;
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}

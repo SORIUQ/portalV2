@@ -4,21 +4,27 @@ package models;
 
 public class School {
 	
-	int idSchool;
-	String schoolName;
-	String tlfSchool; 
-	String email;
-	String scheduleSchool;
-	String locSchool;
-	
+	private int idSchool;
+	private String schoolName;
+	private String tlfSchool;
+	private String email;
+	private String scheduleSchool;
+	private String locSchool;
+	private String mapLink;
+
+	public School() {
+
+	}
+
 	public School(int idSchool, String nombreSchool, String tlfSchool, String email, String scheduleSchool,
-			String locSchool) {
+			String locSchool, String mapLink) {
 		this.idSchool = idSchool;
 		this.schoolName = nombreSchool;
 		this.tlfSchool = tlfSchool;
 		this.email = email;
 		this.scheduleSchool = scheduleSchool;
 		this.locSchool = locSchool;
+		this.mapLink = mapLink;
 	}
 
 	
@@ -72,6 +78,12 @@ public class School {
 	public void setLocSchool(String locSchool) {
 		this.locSchool = locSchool;
 	}
-	
-	
+
+	public String getMapLink() {
+		return mapLink;
+	}
+
+	public void setMapLink(String mapLink) {
+		this.mapLink = mapLink;
+	}
 }

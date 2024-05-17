@@ -3,12 +3,13 @@
 
 <%@ page import="java.sql.*,utils.*,models.*"%>
 <%@ page import="modelsDAO.SchoolDAO" %>
+
 <%
 User activeUser = (User) session.getAttribute("user");
-School sch = SchoolDAO.createSchool(activeUser.getId_school());
-String imagen = "." + Util.defineImageIndex(sch.getIdSchool());
-String mapLink = Util.defineMap(sch.getIdSchool());
+School school = SchoolDAO.createSchool(activeUser.getId_school());
+String imagen = "." + Util.defineImageIndex(school.getIdSchool());
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,30 +27,30 @@ String mapLink = Util.defineMap(sch.getIdSchool());
 
 	<div class="contenedorPrincipal">
 		<div class="headerContenedor">
-			<h2 id="schoolTitle"><%=sch.getSchoolName()%></h2>
+			<h2 id="schoolTitle"><%=school.getSchoolName()%></h2>
 			<img src=<%=imagen%>>
 		</div>
 			<h4>Informacion de contacto</h4>
 			<table>
 				<tr>
 					<th>Número de teléfono:</th>
-					<th class="tableContent"><%=sch.getTlfSchool()%></th>
+					<th class="tableContent"><%=school.getTlfSchool()%></th>
 				</tr>
 				<tr>
 					<th>Email :</th>
-					<th class="tableContent"><%=sch.getEmail()%></th>
+					<th class="tableContent"><%=school.getEmail()%></th>
 				</tr>
 				<tr>
 					<th>Horarios de Secretaría :</th>
-					<th class="tableContent"><%=sch.getScheduleSchool()%></th>
+					<th class="tableContent"><%=school.getScheduleSchool()%></th>
 				</tr>
 				<tr>
 					<th>Municipio :</th>
-					<th class="tableContent"><%=sch.getLocSchool()%></th>
+					<th class="tableContent"><%=school.getLocSchool()%></th>
 				</tr>
 			</table>
 			<h4>¿Cómo llegar?</h4>
-			<iframe src=<%=mapLink%> class="mapaEscuela" width="1000" height="500"
+			<iframe src=<%=school.getMapLink()%> class="mapaEscuela" width="1000" height="500"
 				style="border: 0;" allowfullscreen="" loading="lazy"
 				referrerpolicy="no-referrer-when-downgrade"></iframe>
 		</div>

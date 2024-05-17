@@ -33,6 +33,10 @@
                     <%if (session.getAttribute("error") != null) {%>
                         <p class="errorMsg"><%=session.getAttribute("error")%></p>
                     <%}%>
+                    <%if (session.getAttribute("userExists") != null) {%>
+                        <p class="errorMsg"><%=session.getAttribute("userExists")%></p>
+                        <%session.setAttribute("userExists",null);
+                        }%>
                     <div class="input-submit">
                         <input type="submit" value="Acceder">
                     </div>

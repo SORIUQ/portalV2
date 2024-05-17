@@ -178,7 +178,8 @@ dnieInput.addEventListener('input', checkDnieInput);
 const checkPassInput = () => {
     let res = false;
     if(!passValidator(passInput.value.trim()))
-        validInputProcces(passInput, "¡Password demasiado débil!", 'passContainer');
+        validInputProcces(passInput, "¡Password demasiado débil! \nLa contraseña debe tener: \n- Una mayúscula \n- Una minúscula \n- 8 caracteres\n- Un número" , 'passContainer');
+        
     else {
         nonValidInputProcces(passInput, 'passContainer');
         res = true;
@@ -197,4 +198,13 @@ const checkPass2Input = () => {
     }
     return res;
 }
-pass2VerifyInput.addEventListener('input', checkPass2Input)
+pass2VerifyInput.addEventListener('input', checkPass2Input);
+
+
+
+
+
+
+
+
+

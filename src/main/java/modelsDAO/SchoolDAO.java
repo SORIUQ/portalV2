@@ -16,35 +16,27 @@ public class SchoolDAO {
      * @return School con los datos correspondientes al ID del parámetro
      */
     public static School createSchool(int idSchool){
-        int idSchoolConstr=idSchool;
-        String nombreSchool="";
-        String tlfSchool= "";
-        String email= "";
-        String scheduleSchool= "";
-        String locSchool="";
+        School school = new School();
         Conector conector = new Conector();
         Connection con = null;
 
         try {
             con = conector.getMySqlConnection();
             if (con != null) {
-                String sql = "SELECT * FROM school where id="+idSchool;
-                Statement sentencia = con.createStatement();
-
-                try (ResultSet rs = sentencia.executeQuery(sql)) {
-                    while (rs.next()) {
-                        idSchoolConstr=rs.getInt(1);
-                        nombreSchool=rs.getString(2);
-                        tlfSchool= rs.getString(3);
-                        email= rs.getString(4);
-                        scheduleSchool= rs.getString(5);
-                        locSchool=rs.getString(6);
-                    }
+                PreparedStatement sentencia = con.prepareStatement("SELECT * FROM school where id="+idSchool);
+                ResultSet rs = sentencia.executeQuery();
+                while (rs.next()) {
+                    school.setIdSchool(rs.getInt(1));
+                    school.setSchoolName(rs.getString(2));
+                    school.setTlfSchool(rs.getString(3));
+                    school.setEmail(rs.getString(4));
+                    school.setScheduleSchool(rs.getString(5));
+                    school.setLocSchool(rs.getString(6));
+                    school.setMapLink(rs.getString(7));
                 }
+
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             if (con != null) {
@@ -56,7 +48,7 @@ public class SchoolDAO {
             }
         }
 
-        return new School(idSchoolConstr, nombreSchool, tlfSchool, email, scheduleSchool, locSchool);
+        return school;
     }
 
     /**
@@ -80,7 +72,8 @@ public class SchoolDAO {
                     String email = result.getString("email");
                     String secretarySchedule = result.getString("secretarySchedule");
                     String location = result.getString("loc");
-                    schools.add(new School(id, name, telephone, email, secretarySchedule, location));
+                    String mapLink = result.getString("mapLink");
+                    schools.add(new School(id, name, telephone, email, secretarySchedule, location, mapLink));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

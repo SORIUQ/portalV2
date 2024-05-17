@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.User;
+import modelsDAO.UserDAO;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
@@ -40,7 +41,7 @@ public class Util {
             if (resultSet.next()) {
                 String hashedPassFromDB = resultSet.getString("pass");
                 if(BCrypt.checkpw(password, hashedPassFromDB)) {
-                    User user = createUser(con, resultSet);
+                    User user = UserDAO.createUser(con, resultSet);
                     session.setAttribute("user", user);
                     landing = true;
                 }else
@@ -64,89 +65,6 @@ public class Util {
 		return landing;
     }
 
-	/**
-	 * Método utilizado para crear el susuario que hace login.
-	 * @author Ricardo
-	 * @param con
-	 * @param resultSet
-	 * @return Devuelve el usuario.
-	 * @throws SQLException
-	 */
-    public static User createUser(Connection con, ResultSet resultSet) throws SQLException {
-		User user = new User();
-
-		if (con != null) {
-			user.setId(resultSet.getInt("id"));
-			PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM user_obj WHERE id = ?");
-			preparedStatement.setInt(1, user.getId());
-			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				user.setUserType(resultSet.getString("user_type"));
-				user.setName(resultSet.getString("user_name"));
-				user.setId_school(resultSet.getInt("school_id"));
-				user.setId_course((Integer) resultSet.getObject("course_id"));
-			}
-		}
-
-        return user;
-    }
-
-	/**
-	 * Inserta un registro nuevo en la tabla de Credentials.
-	 * @author Ricardo
-	 * @param con
-	 * @param userEmail	email que se recoge en el registro.
-	 * @param userPass	contraseña que se recoge en el registro.
-	 */
-    public static void insertCredentials(Connection con, String userEmail, String userPass) {
-		// No cerramos la conexión porque este metodo se utiliza dentro de otro que si la cierra
-		if (con != null) {
-			try (PreparedStatement ps = con.prepareStatement("call insertUserCredentials(?,?)")) {
-				ps.setString(1, userEmail);
-				ps.setString(2, userPass);
-				int linesModified = ps.executeUpdate();
-				if (linesModified > 0)
-					System.out.println("Query ejecutada con éxito!");
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
-		}
-    }
-
-	/**
-	 * Inserta un usuario nuevo en la BD.
-	 * @author Ricardo
-	 * @param con
-	 * @param name	nombre recogido en el registro.
-	 * @param lastName	apellidos recogidos en el registro.
-	 * @param birthDate	fecha de nacimiento recogida en el registro.
-	 * @param dnie	DNI o NIE recogido en el registro.
-	 * @param email email recogido en el registro.
-	 * @param pass	contraseña recogida en el registro.
-	 * @param schoolId	ID del colegio seleccionado en el registro.
-	 * @param courseId	ID del módulo seleccionado en el registro.
-	 */
-    public static void insertUserInDb(Connection con, String name, String lastName, String birthDate, String dnie, String email, String pass, String schoolId, String courseId) {
-		// No cerramos la conexión porque este metodo se utiliza dentro de otro que si la cierra
-		if (con != null) {
-			try {
-				PreparedStatement ps = con.prepareStatement("call insertUser(?,?,?,?,?,?,?,?,?);");
-				ps.setString(1, name);
-				ps.setString(2, lastName);
-				ps.setString(3, birthDate);
-				ps.setString(4, dnie);
-				ps.setString(5, "01");
-				ps.setString(6, email);
-				ps.setString(7, pass);
-				// Preguntarnos si los ids la mejor forma de tratarlos sería con Strings y no ints.
-				ps.setInt(8, Integer.parseInt(schoolId));
-				ps.setInt(9, Integer.parseInt(courseId));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-    }
 
 	/**
 	 * Método utilizado para ver si un correo existe en la BD.
@@ -226,48 +144,8 @@ public class Util {
 	}
 
 	/**
-	 * Método utilizado en el datosPersonales.jsp devuelve los datos del usuario y los utiliza para imprimirlos.
-	 * @author Ricardo
-	 * @param id
-	 * @return	List con los datos del alumno ordenados.
-	 */
-	public static List<String> getUserInfo(int id) {
-		List<String> usuario = new ArrayList<>();
-		Connection con = null;
-
-		try {
-			con = new Conector().getMySqlConnection();
-			if (con != null) {
-				PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM user_obj WHERE id = ?");
-				preparedStatement.setInt(1, id);
-				ResultSet resultSet = preparedStatement.executeQuery();
-				if (resultSet.next()) {
-					usuario.add(resultSet.getString("user_name"));
-					usuario.add(resultSet.getString("user_surname"));
-					usuario.add(resultSet.getString("dnie"));
-					usuario.add(resultSet.getString("birthDate"));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
-			}
-		}
-
-		return usuario;
-	}
-	
-	/**
 	 * Método que formatea la fecha tipo aaaa-dd-mm a dd/mm/aaaa
-	 * Sólo funciona si la fecha es tipo aaaa-dd-mm
+	 * Solo funciona si la fecha es tipo aaaa-dd-mm
 	 * @author Óscar
 	 * @param date - fecha a cambiar
 	 * @return fecha cambiada
@@ -325,96 +203,6 @@ public class Util {
     }
 
 	/**
-	 * Método utilizado para crear un objeto School a partir de un ID
-	 * @author Ricardo
-	 * @param idSchool
-	 * @return School con los datos correspondientes al ID del parámetro
-	 */
-
-	// Este método me gustaría cambiarle el nombre a createSchool
-	public static School getInfoSchool(int idSchool){
-		int idSchoolConstr=idSchool;
-		String nombreSchool="";
-		String tlfSchool= "";
-		String email= "";
-		String scheduleSchool= "";
-		String locSchool="";
-		Conector conector = new Conector();
-		Connection con = null;
-
-		try {
-			con = conector.getMySqlConnection();
-			if (con != null) {
-				String sql = "SELECT * FROM school where id="+idSchool;
-				Statement sentencia = con.createStatement();
-
-				try (ResultSet rs = sentencia.executeQuery(sql)) {
-					while (rs.next()) {
-						idSchoolConstr=rs.getInt(1);
-						nombreSchool=rs.getString(2);
-						tlfSchool= rs.getString(3);
-						email= rs.getString(4);
-						scheduleSchool= rs.getString(5);
-						locSchool=rs.getString(6);
-					}
-				}
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
-			}
-        }
-
-		return new School(idSchoolConstr, nombreSchool, tlfSchool, email, scheduleSchool, locSchool);
-	}
-
-	/**
-	 * Método utilizado para crear un Course a partir de un ID
-	 * @author Ricardo
-	 * @param idCourse
-	 * @return Course correspondiente al ID introducido por parámetro
-	 */
-	public static Course getCourseInfo(int idCourse){
-		Course course = new Course();
-		Conector conector = new Conector();
-		Connection con = null;
-
-		try {
-			con = conector.getMySqlConnection();
-			if (con != null) {
-				PreparedStatement sentencia = con.prepareStatement("SELECT * FROM course where id="+idCourse);
-				ResultSet rs = sentencia.executeQuery();
-				if (rs.next()) {
-					course.setId_course(idCourse);
-					course.setNameCourse(rs.getString(2));
-				}
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-		}
-
-		return course;
-	}
-
-	/**
 	 * Método utilizado para definir la ruta del mapa de un centro a partir de su ID
 	 * @author Ricardo
 	 * @param idSchool
@@ -432,81 +220,4 @@ public class Util {
     	return mapLink;
     }
 
-	/**
-	 * Método utilizado para enseñar todos los centros en el registro
-	 * @author Ricardo
-	 * @return	List con todos los School
-	 */
-	public static List<School> getAllSchools() {
-		List<School> schools = new ArrayList<>();
-		Connection con = null;
-
-		try {
-			con = new Conector().getMySqlConnection();
-			try {
-				PreparedStatement ps = con.prepareStatement("select * from school");
-				ResultSet result = ps.executeQuery();
-				while (result.next()) {
-					int id = result.getInt("id");
-					String name = result.getString("school_name");
-					String telephone = result.getString("tel");
-					String email = result.getString("email");
-					String secretarySchedule = result.getString("secretarySchedule");
-					String location = result.getString("loc");
-					schools.add(new School(id, name, telephone, email, secretarySchedule, location));
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
-			}
-		}
-
-		return schools;
-	}
-
-	/**
-	 * Método utilizado para mostrar los cursos en el registro
-	 * @author Ricardo
-	 * @return	List con los Courses
-	 */
-	public static List<Course> getAllCourses() {
-		List<Course> courses = new ArrayList<>();
-		Connection con = null;
-
-		try {
-			con = new Conector().getMySqlConnection();
-			try {
-				PreparedStatement ps = con.prepareStatement("select id, course_name from course;");
-				ResultSet result = ps.executeQuery();
-				while (result.next()) {
-					int id = result.getInt("id");
-					String name = result.getString("course_name");
-					courses.add(new Course(id, name));
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
-			}
-		}
-
-		return courses;
-	}
 }

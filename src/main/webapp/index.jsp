@@ -4,7 +4,8 @@
 		 pageEncoding="UTF-8"%>
 
 <%@ page import="java.sql.*,utils.*,models.*" %>
-<%@ page import="java.io.IOException" %>
+<%@ page import="modelsDAO.CourseDAO" %>
+<%@ page import="modelsDAO.SchoolDAO" %>
 
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
@@ -23,10 +24,10 @@
 	} else {
 		idSchool = activeUser.getId_school();
 		imagen = Util.defineImageIndex(idSchool);
-		sch = Util.getInfoSchool(idSchool);
+		sch = SchoolDAO.createSchool(idSchool);
 		scrCentro = Util.defineID(idSchool);
 		if (activeUser.getId_course() != null)
-			crs = Util.getCourseInfo(activeUser.getId_course());
+			crs = CourseDAO.createCourse(activeUser.getId_course());
 		if (sch.getSchoolName() != null)
 			centroUsuario = sch.getSchoolName();
 		else

@@ -2,9 +2,10 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@ page import="java.sql.*,utils.*,models.*"%>
+<%@ page import="modelsDAO.SchoolDAO" %>
 <%
 User activeUser = (User) session.getAttribute("user");
-School sch = Util.getInfoSchool(activeUser.getId_school());
+School sch = SchoolDAO.createSchool(activeUser.getId_school());
 String imagen = "." + Util.defineImageIndex(sch.getIdSchool());
 String mapLink = Util.defineMap(sch.getIdSchool());
 %>

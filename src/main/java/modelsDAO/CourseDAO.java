@@ -26,23 +26,24 @@ public class CourseDAO {
         try {
             con = conector.getMySqlConnection();
             if (con != null) {
-                PreparedStatement sentencia = con.prepareStatement("SELECT * FROM course where id="+idCourse);
+                PreparedStatement sentencia = con.prepareStatement("SELECT * FROM course where id=?");
+                sentencia.setInt(1, idCourse);
                 ResultSet rs = sentencia.executeQuery();
                 if (rs.next()) {
                     course.setId_course(idCourse);
                     course.setNameCourse(rs.getString(2));
+                    course.setAcronym(rs.getString(3));
+                    course.setCourseDescription(rs.getString(4));
                 }
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             if (con != null) {
                 try {
                     con.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -62,12 +63,14 @@ public class CourseDAO {
         try {
             con = new Conector().getMySqlConnection();
             try {
-                PreparedStatement ps = con.prepareStatement("select id, course_name from course;");
+                PreparedStatement ps = con.prepareStatement("select * from course;");
                 ResultSet result = ps.executeQuery();
                 while (result.next()) {
                     int id = result.getInt("id");
                     String name = result.getString("course_name");
-                    courses.add(new Course(id, name));
+                    String acronym = result.getString("acronime");
+                    String courseDescription = result.getString("description_course");
+                    courses.add(new Course(id, name, acronym, courseDescription));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

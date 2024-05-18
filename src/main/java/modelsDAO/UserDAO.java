@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class UserDAO {
 
     /**
@@ -143,4 +145,20 @@ public class UserDAO {
 
         return alumnos;
     }
+    
+    public static void setNewPass (int id, String newPass){
+    	Connection con = null;
+    	String hashedPass = BCrypt.hashpw(newPass, BCrypt.gensalt());
+    	try {
+    		con = new Conector().getMySqlConnection();
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE credentials SET pass = ? WHERE id = ?");
+            preparedStatement.setString(1, hashedPass);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+    	} catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 }
+    }

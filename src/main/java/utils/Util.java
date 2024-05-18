@@ -195,4 +195,27 @@ public class Util {
 
     	return nombre;
     }
+	
+	public static boolean checkPassDB (int id, String oldPass) throws ClassNotFoundException, SQLException{
+		boolean resultado = false;
+		Conector conector = new Conector();
+        Connection con = null;
+		String error = "";
+		String hashedPassFromDB="";
+		
+        con = conector.getMySqlConnection();
+        PreparedStatement preparedStatement = con.prepareStatement("SELECT pass FROM credentials WHERE id ="+id);
+        ResultSet rs = preparedStatement.executeQuery();
+            
+        if (rs.next()) {
+                hashedPassFromDB = rs.getString(1);
+                System.out.println(hashedPassFromDB);
+	    }
+        
+        if(BCrypt.checkpw(oldPass, hashedPassFromDB)) {
+            resultado = true;
+        }else
+    		error = "La contraseña no coincide con la contraseña proporcionada";   
+        return resultado;
+   }
 }

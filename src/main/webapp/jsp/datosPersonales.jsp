@@ -22,6 +22,8 @@
 User activeUser= (User) request.getSession().getAttribute("user");
 int id = activeUser.getId();
 List<String> user = UserDAO.getUserInfo(id);
+String errorMsg = (String) session.getAttribute("errorMsg");
+String okMsg = (String) session.getAttribute("okMsg");
 %>
 
 <body onload="detColoresdp(<%=activeUser.getId_school()%>)">
@@ -67,8 +69,41 @@ List<String> user = UserDAO.getUserInfo(id);
 
 
 	</div>
+	
+	<div class="buttonDiv">
+	<button id="passChangeButton" onclick="showChangeInput()"
+	onsubmit="comprobarPass">Cambiar Contraseña
+	</button>
+	<% if (errorMsg!=null){ %>
+		<p class="errorMsg"><%=errorMsg %></p>
+	<% } %>
+	<% if (okMsg!=null){ %>
+		<p class="okMsg"><%=okMsg %></p>
+	<% } %>
+	</div>
+	<div id="inputPass" class="hiddenPass">
+	<form action="../passChange" method="POST">
+	    <p> Antigua contraseña </p>
+		<input type="password" id="oldPass" name="user_oldPassword"></input>
+		<p> Nueva contraseña </p>
+		<input type="password" id="newPass" name="user_newPassword"></input>
+		
+		<div class="passNotValidShow" id="errorPass">
+		<p>¡Password demasiado débil! La contraseña debe tener:
+		<ul>
+		<li>Una mayúscula</li>
+		<li>Una minuscula</li>
+		<li>8 carácteres</li>
+		<li>Un número</li>
+		</ul>
+		</p>
+		</div>
+		<br>
+		<button id="botonInput"type="submit" disabled="true">Hecho</button>
+	</form>
+	</div>
 
-
-<script type="text/javascript" src="../scripts/script.js"></script>
+	<script src="../scripts/passChange.js"></script>
+	
 </body>
 </html>

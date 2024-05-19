@@ -54,6 +54,44 @@ body {
 	align-items: center;
 }
 
+.hiddenPass {
+	display: none;
+}
+
+.showingChange {
+	transition: 2s ease-in-out width;
+}
+
+.showingChange form{
+	background: white;
+	display:flex;
+	flex-direction: column;
+	padding: 20px;
+}
+
+.buttonDiv{
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content:center;
+}
+
+#passChangeButton{
+	margin-top:20px;
+}
+
+.passNotValidShow{
+	display: none;
+}
+
+.errorMsg{
+	color:red;
+}
+
+.okMsg{
+	color: green;
+}
+
 /* Colores segun centro */
 
 /*belenColor*/

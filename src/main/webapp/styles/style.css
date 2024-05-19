@@ -206,7 +206,7 @@ footer {
     fill: #244AA4;
 }
 
-.cerrarSesion.cesurColor p:hover{
+.cerrarSesion.cesurColor input:hover{
     background-color: red;
 }
 

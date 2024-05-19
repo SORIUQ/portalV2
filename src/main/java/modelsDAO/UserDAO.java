@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class UserDAO {
 
     /**
@@ -142,5 +144,40 @@ public class UserDAO {
         //Añadir sentencia sql para buscar los alumnos en función del id del profesor pasado como parámentro
 
         return alumnos;
+    }
+
+    /**
+     * Método que se utiliza para cambiar la contraseña de un usuario existente
+     * @author Ricardo
+     * @param id
+     * @param newPass
+     * @return boolean que representa si se ha cambiado o no
+     */
+    public static boolean setNewPass (int id, String newPass){
+        boolean changed = false;
+    	Connection con = null;
+    	String hashedPass = BCrypt.hashpw(newPass, BCrypt.gensalt());
+
+    	try {
+    		con = new Conector().getMySqlConnection();
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE credentials SET pass = ? WHERE id = " + id);
+            preparedStatement.setString(1, hashedPass);
+            int i = preparedStatement.executeUpdate();
+            if (i == 1)
+                changed = true;
+
+    	} catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return changed;
     }
 }

@@ -55,7 +55,7 @@ List<Course> courses = CourseDAO.getAllCourses();
 				<input type="text" name="user_email" id="emailInput" required>
 				<label>Email</label>
 				<%
-				if (session.getAttribute("dniExists") != null) {
+				if (session.getAttribute("emailExists") != null) {
 				%>
 				<p class="errorMsg">
 					<%=session.getAttribute("emailExists")%>

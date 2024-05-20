@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,6 +146,41 @@ public class UserDAO {
 
         return alumnos;
     }
+    
+    
+    /**
+     * Método que recupera todos los profesores existentes en la BBDD,
+     * es decir todos los usuarios cuyo tipo de usuario sea "02"
+     * @author Óscar
+     */
+    
+    public static List<String> getAllNameTeachers(){
+      
+      List<String> profesores = new ArrayList<>();
+      
+      try (Connection conx = new Conector().getMySqlConnection()){
+        Statement sentencia = conx.createStatement();
+         
+        //Sentencia sql para traerme todos los profesores
+        String sql = "SELECT user_name, user_surname FROM user_obj WHERE user_type = '02';";
+       
+        ResultSet rs = sentencia.executeQuery(sql);
+        
+        //Se añaden los resultados a la lista de profesores
+        while (rs.next()) {
+          profesores.add(rs.getString(1) + " " + rs.getString(2));
+        }
+        
+      } catch (ClassNotFoundException | SQLException e) {
+        e.printStackTrace();
+      }
+      
+      //Retornamos la lista con los nombres de los profesores
+      return profesores;
+    }
+    
+    
+    
 
     /**
      * Método que se utiliza para cambiar la contraseña de un usuario existente

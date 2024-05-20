@@ -1,0 +1,79 @@
+* {
+	font-family: "Jost", sans-serif;
+}
+
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 99vw;
+	height: 90vh;
+}
+
+h1{
+	height: 5vh;
+}
+
+.reservas{
+	display: flex;
+	width: 99vw;
+	justify-content: space-around;
+	align-items: center;
+	height: 65vh;
+}
+
+.hours{
+	display: flex;
+	flex-direction: column;
+	gap: 0px;
+}
+
+.ocupado{
+	background-color: #a100ff;
+	padding: 5px;
+	border-radius: 10px;
+	color: white;
+}
+
+.libre{
+	border: 2px solid #a100ff;
+	padding: 5px;
+	border-radius: 10px;
+	color: #a100ff;
+	
+}
+
+.opciones{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 30vw;
+	margin: 20px;
+}
+
+a.cancelar{
+	display: flex;
+	background-color: red;
+	color:white;
+	border-radius: 5px;
+	justify-content: center;
+	align-items: center;
+	width: 7vw;
+	height: 5vh;
+	text-decoration: none;
+	font-size: 15px;
+}	
+
+button.confirmar{
+	display: flex;
+	background-color: green;
+	color:white;
+	border-radius: 5px;
+	justify-content: center;
+	align-items: center;
+	width: 12vw;
+	height: 5vh;
+	font-size: 15px;
+}

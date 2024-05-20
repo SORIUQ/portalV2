@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                        
+                            
+    
     
     
     
@@ -10,7 +11,8 @@
     
     
     <wb-module deploy-name="portal-0.0.1-SNAPSHOT">
-                                                
+                                                        
+        
         
         
         
@@ -21,7 +23,8 @@
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-                                                
+                                                        
+        
         
         
         
@@ -29,7 +32,7 @@
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-                                                                                                        
+                                                                                                                
         
         
         
@@ -42,8 +45,10 @@
         
         
         
+        
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-                                                                                        
+                                                                                                
+        
         
         
         
@@ -54,13 +59,20 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
-        <dependent-module archiveName="mysql-connector-j-8.3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/portalEstable/src/main/webapp/WEB-INF/mysql-connector-j-8.3.0.jar">
+        <dependent-module archiveName="jBCrypt-0.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/portal/src/main/webapp/WEB-INF/jBCrypt-0.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-                                                
+        <dependent-module archiveName="mysql-connector-j-8.3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/portal/src/main/webapp/WEB-INF/mysql-connector-j-8.3.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+                                                        
+        
         
         
         
@@ -71,7 +83,8 @@
         
         
         <property name="context-root" value="portal"/>
-                                                
+                                                        
+        
         
         
         
@@ -81,7 +94,8 @@
         
         
         <property name="java-output-path" value="/portal/build/classes"/>
-                                            
+                                                    
+    
     
     
     
@@ -92,7 +106,8 @@
     
     
     </wb-module>
-                    
+                        
+
 
 
 

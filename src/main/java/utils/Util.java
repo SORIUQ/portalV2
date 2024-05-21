@@ -2,15 +2,12 @@ package utils;
 
 import connections.*;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.User;
 import modelsDAO.UserDAO;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import models.*;
 
@@ -195,4 +192,68 @@ public class Util {
 
     	return nombre;
     }
+
+	/**
+	 * Método utilizado para comprobar si la contraseña introducida en el cambio de contraseña es correcta
+	 * @Author Ricardo
+	 * @param id
+	 * @param oldPass
+	 * @return Booleano que muestra si la contraseña coincide o no
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static boolean checkPassDB (int id, String oldPass) {
+        Connection con = null;
+		String hashedPassFromDB = "";
+
+        try {
+			con = new Conector().getMySqlConnection();
+			PreparedStatement preparedStatement = con.prepareStatement("SELECT pass FROM credentials WHERE id = " + id);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next())
+				hashedPassFromDB = rs.getString(1);
+
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+        }
+
+        return BCrypt.checkpw(oldPass, hashedPassFromDB);
+   }
+
+	/**
+	 * Método utilizado para mandar un mensaje al usuario cuando quiera cambiar la contraseña
+	 * @author Ricardo
+	 * @param ses
+	 * @param id
+	 * @param oldPass
+	 * @param newPass
+	 */
+   public static void sendPassChangeMsg(HttpSession ses, int id, String oldPass, String newPass) {
+	   if (Util.checkPassDB(id, oldPass)){
+		   if (!oldPass.equals(newPass)) {
+			   boolean changed = UserDAO.setNewPass(id, newPass);
+			   if (changed) {
+				   ses.setAttribute("okMsg", "¡Se ha cambiado la contraseña con éxito!");
+				   ses.setAttribute("errorMsg", null);
+			   } else {
+				   ses.setAttribute("errorMsg", "No se ha podido cambiar la contraseña");
+				   ses.setAttribute("okMsg", null);
+			   }
+		   } else {
+			   ses.setAttribute("errorMsg", "No puedes cambiar a la misma contraseña");
+			   ses.setAttribute("okMsg",null);
+		   }
+	   } else {
+		   ses.setAttribute("errorMsg", "La contraseña antigua no coincide");
+		   ses.setAttribute("okMsg",null);
+	   }
+   }
 }

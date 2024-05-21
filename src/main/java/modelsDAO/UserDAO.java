@@ -7,8 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserDAO {
 
@@ -142,5 +145,75 @@ public class UserDAO {
         //Añadir sentencia sql para buscar los alumnos en función del id del profesor pasado como parámentro
 
         return alumnos;
+    }
+    
+    
+    /**
+     * Método que recupera todos los profesores existentes en la BBDD,
+     * es decir todos los usuarios cuyo tipo de usuario sea "02"
+     * @author Óscar
+     */
+    
+    public static List<String> getAllNameTeachers(){
+      
+      List<String> profesores = new ArrayList<>();
+      
+      try (Connection conx = new Conector().getMySqlConnection()){
+        Statement sentencia = conx.createStatement();
+         
+        //Sentencia sql para traerme todos los profesores
+        String sql = "SELECT user_name, user_surname FROM user_obj WHERE user_type = '02';";
+       
+        ResultSet rs = sentencia.executeQuery(sql);
+        
+        //Se añaden los resultados a la lista de profesores
+        while (rs.next()) {
+          profesores.add(rs.getString(1) + " " + rs.getString(2));
+        }
+        
+      } catch (ClassNotFoundException | SQLException e) {
+        e.printStackTrace();
+      }
+      
+      //Retornamos la lista con los nombres de los profesores
+      return profesores;
+    }
+    
+    
+    
+
+    /**
+     * Método que se utiliza para cambiar la contraseña de un usuario existente
+     * @author Ricardo
+     * @param id
+     * @param newPass
+     * @return boolean que representa si se ha cambiado o no
+     */
+    public static boolean setNewPass (int id, String newPass){
+        boolean changed = false;
+    	Connection con = null;
+    	String hashedPass = BCrypt.hashpw(newPass, BCrypt.gensalt());
+
+    	try {
+    		con = new Conector().getMySqlConnection();
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE credentials SET pass = ? WHERE id = " + id);
+            preparedStatement.setString(1, hashedPass);
+            int i = preparedStatement.executeUpdate();
+            if (i == 1)
+                changed = true;
+
+    	} catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return changed;
     }
 }

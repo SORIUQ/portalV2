@@ -13,6 +13,8 @@ public class Subject {
         this.totalHours = totalHours;
     }
 
+    public Subject() {}
+
     public Integer getSubjectId() {
         return subjectId;
     }

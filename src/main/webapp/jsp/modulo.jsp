@@ -1,6 +1,9 @@
 <%@ page import="models.User" %>
 <%@ page import="models.Course" %>
 <%@ page import="modelsDAO.CourseDAO" %>
+<%@ page import="models.Subject" %>
+<%@ page import="java.util.List" %>
+<%@ page import="modelsDAO.SubjectDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,14 +37,20 @@
 			<th>Asignatura</th>
 			<th>Horas semanales</th>
 			<th>Horas totales</th>
+			<th>Info</th>
 		</tr>
 		<%
-			ArrayList<Subject> subjects = mC.getSubjects(activeUser.getId_course());
+			List<Subject> subjects = SubjectDAO.getAllSubjectsByCourseId(activeUser.getId_course());
 			for (Subject subject : subjects) { %>
 		<tr>
-			<td class="tableContent"><%= subject.getSubject_name() %></td>
-			<td class="tableContent" id="hoursWeekly"><%= subject.getWeekly_hours() %></td>
-			<td class="tableContent" id="hoursTotal"><%= subject.getTotal_hours() %></td>
+			<td class="tableContent"><%= subject.getName() %></td>
+			<td class="tableContent" id="hoursWeekly"><%= subject.getWeeklyHours() %></td>
+			<td class="tableContent" id="hoursTotal"><%= subject.getTotalHours() %></td>
+			<td class="tableContent" id="downloadLink">
+				<a href="../descarga?subjectId=<%= subject.getSubjectId() %>">
+					<img src="../images/IconoPDF.png" alt="Icono de un pdf para descargar">
+				</a>
+			</td>
 		</tr>
 		<% } }%>
 	</table>

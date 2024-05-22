@@ -1,7 +1,68 @@
 * {
 	font-family: "Jost", sans-serif;
+
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-image: url(../images/registerBackground.png);
+}
+
+.contenedorPrincipal {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin-top:30px;
+	margin-bottom: 30px;
+}
+
+#courseTable{
+	background-color: white;
+}
+
+h2{
+	font-size:40px;
+}
+
+#descriptionUnderline {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-direction: column;
+	height: 30px;
+	width: 120px;
+	border-bottom: solid #A100FF 2px;
+	margin-bottom: 20px;
+}
+
+th{
+	font-size:20px;
+	background-color:#A100FF;
+	color: white;
+}
+
+p {
+	width: 800px;
+	margin-top: -15px;
+	margin-bottom: 50px;
+	text-align: center;
+	border-left: solid #A100FF 3px;
+	border-right: solid #A100FF 3px;
+	border-radius: 10px;
+	padding: 15px;
+}
+#courseTable,th, td, tr {
+	border: solid black 2px;
+	padding:8px;
+	border-collapse: collapse;
+}
+
+#hoursWeekly, #hoursTotal {
+	text-align: center;
+}
+
+.tableContent {
+	text-align: center;
 }

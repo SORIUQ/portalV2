@@ -1,4 +1,4 @@
- 
+
 function cambiarContenido(url, id) {
  
     let element;
@@ -21,46 +21,6 @@ function irLogin() {
     window.location.href = "./jsp/login.jsp";
 }
 
- function detColoresdp(id){
-	
-	var h1dp = document.getElementsByClassName("h1dp")[0];
-	var tarjetaPersonal=document.getElementsByClassName("tarjetaPersonal")[0];
-	var ladoIzquierdo=document.getElementsByClassName("ladoIzquierdoTarjeta")[0];
-	
-	switch(id){
-	case 1 : 
-	h1dp.classList.add('cesurColor');
-    tarjetaPersonal.classList.add('cesurColor');
-    ladoIzquierdo.classList.add('cesurColor');
-    break;
-    
-    case 2 : 
-	h1dp.classList.add('picassoColor');
-    tarjetaPersonal.classList.add('picassoColor');
-    ladoIzquierdo.classList.add('picassoColor');
-    break;
-    
-    case 3 : 
-	h1dp.classList.add('belenColor');
-    tarjetaPersonal.classList.add('belenColor');
-    ladoIzquierdo.classList.add('belenColor');
-    break;
-    
-    case 4 : 
-	h1dp.classList.add('turingColor');
-    tarjetaPersonal.classList.add('turingColor');
-    ladoIzquierdo.classList.add('turingColor');
-    break;
-    
-    case 5 : 
-	h1dp.classList.add('joseColor');
-    tarjetaPersonal.classList.add('joseColor');
-    ladoIzquierdo.classList.add('joseColor');
-    break;
-    
-    default : break;
-	}
-  }
 
 function detColoresCentro(id){
 
@@ -241,3 +201,4 @@ function detColorInicio(id){
 	}
 	
 }
+

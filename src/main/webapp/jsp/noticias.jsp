@@ -32,7 +32,7 @@
         <h3><%= noticia.getCaption() %></h3>
 
         <div class="imagen">
-            <img alt="Imagen Noticia" src="<%= noticia.getImagen() %>">
+            <img alt="Imagen Noticia" class="imagen-noticia" src="<%= noticia.getImagen() %>">
             <div class="caption"><%= noticia.getCaptionImagen() %></div>
         </div>        
 		<div class="linea">

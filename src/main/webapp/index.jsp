@@ -11,7 +11,7 @@
 	User activeUser= (User) request.getSession().getAttribute("user");
 	Integer idSchool = null;
 	String imagen="";
-	String scrCentro="";
+
 	School sch=null;
 	String contentTarjeta="";
 	String courseName="";
@@ -25,7 +25,6 @@
 		idSchool = activeUser.getId_school();
 		imagen = Util.defineImageIndex(idSchool);
 		sch = SchoolDAO.createSchool(idSchool);
-		scrCentro = Util.defineID(idSchool);
 		if (activeUser.getId_course() != null)
 			crs = CourseDAO.createCourse(activeUser.getId_course());
 		if (sch.getSchoolName() != null)
@@ -72,7 +71,7 @@
 				<%
 					if(activeUser != null && (activeUser.getUserType().equals("01") || activeUser.getUserType().equals("02"))) {
 				%>
-				<div class="menuOpcion" id="0" onclick="cambiarContenido('<%= scrCentro %>', id)">
+				<div class="menuOpcion" id="0" onclick="cambiarContenido('./jsp/noticias.jsp', id)">
        <svg xmlns="http://www.w3.org/2000/svg" width="125" height="125"
           viewBox="0 0 24 24">
           <path fill="#a100ff"

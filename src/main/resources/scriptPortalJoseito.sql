@@ -1,3 +1,4 @@
+drop database portalacademico;
 create database if not exists portalAcademico;
 
 use portalAcademico;

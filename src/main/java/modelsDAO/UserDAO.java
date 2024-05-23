@@ -245,4 +245,65 @@ public class UserDAO {
 
         return changed;
     }
+    
+    /**
+	 * Statement que cambia el correo en la base de datos
+	 * 
+	 * @author Joseito
+	 * @param id
+	 * @param mail
+	 * @return boolean: demuestra si el query se ha ejecutado con exito o no
+	 */
+
+	public static boolean setNewMail(int id, String mail) {
+		boolean changed = false;
+		Connection con = null;
+
+		try {
+			con = new Conector().getMySqlConnection();
+			PreparedStatement ps = con.prepareStatement("Update credentials SET email = ? WHERE id = " + id);
+			ps.setString(1, mail);
+			int i = ps.executeUpdate();
+			if (i == 1) {
+				changed = true;
+			}
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		return changed;
+	}
+
+	public static String getMail(int id) {
+		String mail = "";
+		Connection con = null;
+
+		try {
+			con = new Conector().getMySqlConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT email from credentials WHERE id=" + id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				mail = rs.getString(1);
+			}
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		return mail;
+	}
 }
+

@@ -1,5 +1,11 @@
+<%@ page import="models.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
+
+<%
+	User u = (User) session.getAttribute("user");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,27 +21,27 @@
 	<div class="reservas">
 		<div class="hours">
 			<h3>Horario 17:00 - 18:00</h3>
-			<p class="ocupado">Lunes 17:00 - 18:00</p>
-			<p class="libre">Martes 17:00 - 18:00</p>
-			<p class="libre">Miercoles 17:00 - 18:00</p>
-			<p class="libre">Jueves 17:00 - 18:00</p>
-			<p class="libre">Viernes 17:00 - 18:00</p>
+			<a class="ocupado" href="../booking?student=<%=u.getId()%>&time=17:00&day=20">Lunes 17:00 - 18:00</a>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=17:00&day=21">Martes 17:00 - 18:00</a>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=17:00&day=22">Miercoles 17:00 - 18:00</a>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=17:00&day=23">Jueves 17:00 - 18:00</a>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=17:00&day=24">Viernes 17:00 - 18:00</a>
 		</div>
 		<div class="hours">
 			<h3>Horario 18:00 - 19:00</h3>
-			<p class="libre">Lunes 18:00 - 19:00</p>
-			<p class="libre">Martes 18:00 - 19:00</p>
-			<p class="libre">Miercoles 18:00 - 19:00</p>
-			<p class="libre">Jueves 18:00 - 19:00</p>
-			<p class="libre">Viernes 18:00 - 19:00</p>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=18:00&day=20">Lunes 18:00 - 19:00</a>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=18:00&day=21">Martes 18:00 - 19:00</a>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=18:00&day=22">Miercoles 18:00 - 19:00</a>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=18:00&day=23">Jueves 18:00 - 19:00</a>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=18:00&day=24">Viernes 18:00 - 19:00</a>
 		</div>
 		<div class="hours">
 			<h3>Horario 19:00 - 20:00</h3>
-			<p class="ocupado">Lunes 19:00 - 20:00</p>
-			<p class="ocupado">Martes 19:00 - 20:00</p>
-			<p class="ocupado">Miercoles 19:00 - 20:00</p>
-			<p class="ocupado">Jueves 19:00 - 20:00</p>
-			<p class="ocupado">Viernes 19:00 - 20:00</p>
+			<a class="ocupado" href="../booking?student=<%=u.getId()%>&time=19:00&day=20">Lunes 19:00 - 20:00</a>
+			<a class="ocupado" href="../booking?student=<%=u.getId()%>&time=19:00&day=21">Martes 19:00 - 20:00</a>
+			<a class="ocupado" href="../booking?student=<%=u.getId()%>&time=19:00&day=22">Miercoles 19:00 - 20:00</a>
+			<a class="ocupado" href="../booking?student=<%=u.getId()%>&time=19:00&day=23">Jueves 19:00 - 20:00</a>
+			<a class="libre" href="../booking?student=<%=u.getId()%>&time=19:00&day=24">Viernes 19:00 - 20:00</a>
 		</div>
 
 	</div>

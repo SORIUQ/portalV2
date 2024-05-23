@@ -21,7 +21,7 @@
 <body>
 <%
 	if (user.getUserType().equals("02")){
-		List<User> alumnos = UserDAO.getStudentsFromTeacher(user.getId());
+		List<User> alumnos = UserDAO.getStudentsFromTeacherID(user.getId());
 %>
 		<select name="alumnosSelect">
 			<option value="0" disabled selected>-- Seleccione un centro --</option>

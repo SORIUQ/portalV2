@@ -12,18 +12,28 @@ body {
 	height: 90vh;
 }
 
+select{
+	width: 20vw;
+	font-size: 18px;
+	border-color: #a100ff;
+	border:2px solid #a100ff;
+	border-radius: 10px;
+}
+
 h1{
 	height: 5vh;
 }
 
 .reservas{
-	display: flex;
+	display: none;
 	width: 99vw;
 	justify-content: space-around;
 	align-items: center;
 	height: 65vh;
 }
-
+.reservas.show {
+	display: flex;
+}
 .hours{
 	display: flex;
 	flex-direction: column;
@@ -42,15 +52,18 @@ h1{
 	padding: 5px;
 	border-radius: 10px;
 	color: #a100ff;
-	
+
 }
 
 .opciones{
-	display: flex;
+	display: none;
 	justify-content: space-between;
 	align-items: center;
 	width: 30vw;
 	margin: 20px;
+}
+.opciones.show {
+	display: flex;
 }
 
 a.cancelar{
@@ -64,7 +77,7 @@ a.cancelar{
 	height: 5vh;
 	text-decoration: none;
 	font-size: 15px;
-}	
+}
 
 button.confirmar{
 	display: flex;

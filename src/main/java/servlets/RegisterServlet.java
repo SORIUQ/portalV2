@@ -30,8 +30,8 @@ public class RegisterServlet extends HttpServlet {
         String userEmail = req.getParameter("user_email");
         String userBirthday = req.getParameter("user_birthday");
         String userDnie = req.getParameter("user_nif");
-        String userSchool = req.getParameter("user_center"); // Falta esto por validar en el front
-        String userCourse = req.getParameter("user_course"); // Falta esto por validar en el front
+        String userSchool = req.getParameter("user_center");
+        String userCourse = req.getParameter("user_course");
         String userPass = req.getParameter("user_password");
         String hashedPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
         String userExists = "El usuario ya esta registrado";

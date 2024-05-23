@@ -6,12 +6,12 @@
          
 <%@ page import="java.sql.*,utils.*,models.*" %>
 <%@ page import="modelsDAO.CourseDAO" %>
-<%@ page import="modelsDAO.NewDAO" %>
+<%@ page import="modelsDAO.NewsDAO" %>
 <%@ page import="modelsDAO.SchoolDAO" %>
 
 <%
     User activeUser= (User) request.getSession().getAttribute("user");
-    List<New> news = NewDAO.getAllNewsBySchoolId(activeUser.getId_school());
+    List<News> news = NewsDAO.getAllNewsBySchoolId(activeUser.getId_school());
 %>
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
 <body onload="detColoresNoticias(<%=activeUser.getId_school()%>)">
 
 <%
-    for (New noticia : news) {
+    for (News noticia : news) {
 %>
     <div class="cont">
         <h1><%= noticia.getTitle() %>></h1>

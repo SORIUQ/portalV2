@@ -1,9 +1,17 @@
-
-let profesorSelect = document.getElementById('profesorSelect');
-let contenido = document.getElementById('contenido');
+var profesorSelect = document.getElementById('profesorSelect');
+var reservas = document.getElementsByClassName('reservas');
+var opciones = document.getElementsByClassName('opciones');
+var buttonInput = document.getElementById("buttonSubmit");
 
 // Añade un event listener para el evento 'change' del <select>
-profesorSelect.addEventListener('change', function () {
+buttonInput.addEventListener('click', function () {
     // Cambia el estilo display del <div> a 'block' para mostrar el contenido
-    contenido.style.display = 'block';
+    reservas.classList.toggle("show")
+    opciones.classList.toggle("show")
 });
+
+async function getStudents() {
+    const teacherID = profesorSelect.value;
+    const response = await fetch("../reservations?id=" + teacherID);
+    const students = await response.json();
+}

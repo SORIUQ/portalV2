@@ -11,14 +11,6 @@ body {
 	align-items: center;
 }
 
-select{
-	width: 20vw;
-	font-size: 18px;
-	border-color: #a100ff;
-	border:2px solid #a100ff;
-	border-radius: 10px;
-}
-
 .informacion{
 	display: flex;
 	flex-direction: column;
@@ -26,11 +18,11 @@ select{
 }
 
 #contenido{
-	display: flex;
+	display: none;
 	width: 87vw;
 	flex-direction: column;
 	justify-content: center;
-	
+
 }
 
 .tablaReservas{

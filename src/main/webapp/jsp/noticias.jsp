@@ -28,21 +28,21 @@
     for (News noticia : news) {
 %>
     <div class="cont">
-        <h1><%= noticia.getTitle() %>></h1>
+        <h1><%= noticia.getTitle() %></h1>
         <h3><%= noticia.getCaption() %></h3>
 
         <div class="imagen">
-            <img alt="Imagen Noticia" src="<%= noticia.getImagen() %>">
+            <img alt="Imagen Noticia" class="imagen-noticia" src="<%= noticia.getImagen() %>">
             <div class="caption"><%= noticia.getCaptionImagen() %></div>
-        </div>
-			<p><%= noticia.getCreationDate() %></p>        <div class="linea">
+        </div>        
+		<div class="linea">
             <hr>
         </div>
         <div class="desarrollo">
             <p><%= noticia.getContent() %></p>
         </div>
         <div class="fecha">
-            
+            <p><%= noticia.getCreationDate() %></p>
         </div>
 
     </div>

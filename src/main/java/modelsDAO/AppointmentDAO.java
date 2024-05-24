@@ -165,6 +165,8 @@ public class AppointmentDAO {
     public static void deleteAppointmentMsg(HttpSession ses, int student_id){
         if (deleteAppointment(student_id)){
             ses.setAttribute("borrarMsg","Se han borrado todas las tutorias reservadas");
+            ses.setAttribute("okMsg",null);
+            ses.setAttribute("errorMsg",null);
         } else ses.setAttribute("borrarMsg","Error al borrar las tutorias reservadas");
     }
 }

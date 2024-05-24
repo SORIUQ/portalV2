@@ -55,7 +55,7 @@
 <p class="errorMsg"><%=deleteMSG%></p>
 <%}%>
 
-<div cl="reservas">
+<div id="reservas">
 	<%if (appointments == null) {%>
 		<p>Seleccione un profesor</p>
 	<%} else {%>
@@ -122,7 +122,7 @@
 		<h2>Asignatura</h2>
 		<h2>Lugar de las tutorías</h2>
 		<p>
-			<strong>Horario:</strong> de lunes a viernes de 17:00 a 20:00
+			<b>Horario:</b> de lunes a viernes de 17:00 a 20:00
 		</p>
 	</div>
 

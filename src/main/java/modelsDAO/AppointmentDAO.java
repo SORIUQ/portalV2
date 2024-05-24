@@ -95,54 +95,72 @@ public class AppointmentDAO {
 //        return getAppointmentsByDay(appointments, 'V');
 //    }
 
-    public static boolean updateAppointment(String id, int student_id) {
+    public static boolean updateAppointment(HttpSession ses, String id, int student_id, List<Appointment> appointments) {
         boolean updated = false;
         Connection con = null;
 
-        try {
-            con = new Conector().getMySqlConnection();
-            PreparedStatement stmt = con.prepareStatement("UPDATE appointment set student_id = ? WHERE id = ?");
-            stmt.setInt(1, student_id);
-            stmt.setString(2, id);
-            int results = stmt.executeUpdate();
-            if (results == 1) {
-                updated = true;
+        boolean alreadyAppointed = false;
+        for (Appointment a : appointments) {
+            if (a.getStudentID() != null && a.getStudentID().equals(student_id)) {
+                alreadyAppointed = true;
+                break;
             }
+        }
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.getStackTrace();
-        } finally {
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e){
-                    e.getStackTrace();
+        if (!alreadyAppointed) {
+            try {
+                con = new Conector().getMySqlConnection();
+                PreparedStatement stmt = con.prepareStatement("UPDATE appointment set student_id = ? WHERE id = ?");
+                stmt.setInt(1, student_id);
+                stmt.setString(2, id);
+                int results = stmt.executeUpdate();
+                if (results != 0) {
+                    updated = true;
+                    ses.setAttribute("apmOk", "Se ha hecho la reserva con éxito");
+                    ses.setAttribute("apmError", null);
+                } else {
+                    ses.setAttribute("apmError","No se ha podido realizar la reserva");
+                    ses.setAttribute("apmOk",null);
+                }
+
+            } catch (SQLException | ClassNotFoundException e) {
+                e.getStackTrace();
+            } finally {
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (SQLException e) {
+                        e.getStackTrace();
+                    }
                 }
             }
+        } else {
+            ses.setAttribute("apmError","Ya tienes una reserva hecha");
+            ses.setAttribute("apmOk",null);
         }
 
         return updated;
     }
 
-    public static void appointmentUpdateMsg(String hourID, int student_id, HttpSession ses){
-        if (updateAppointment(hourID,student_id)) {
-            ses.setAttribute("apmOk","Se ha hecho la reserva con éxito");
-            ses.setAttribute("apmError",null);
-        } else {
-            ses.setAttribute("apmError","No se ha podido realizar la reserva");
-            ses.setAttribute("apmOk",null);
+//    public static void appointmentUpdateMsg(HttpSession ses, String hourID, int student_id, List<Appointment> appointments){
+//        if (updateAppointment(hourID,student_id, appointments)) {
+//            ses.setAttribute("apmOk","Se ha hecho la reserva con éxito");
+//            ses.setAttribute("apmError",null);
+//        } else {
+//            ses.setAttribute("apmError","No se ha podido realizar la reserva");
+//            ses.setAttribute("apmOk",null);
+//        }
+//    }
 
-        }
-    }
-
-    public static boolean deleteAppointment(int student_id){
+    public static boolean deleteAppointment(int student_id, String teacherID){
         boolean deleted = false;
         Connection con = null;
 
         try {
             con = new Conector().getMySqlConnection();
-            PreparedStatement stmt = con.prepareStatement("UPDATE appointment set student_id = null WHERE student_id = ?");
+            PreparedStatement stmt = con.prepareStatement("UPDATE appointment set student_id = null WHERE student_id = ? and teacher_id = ?");
             stmt.setInt(1,student_id);
+            stmt.setString(2,teacherID);
             int results = stmt.executeUpdate();
             if (results != 0)
                 deleted = true;
@@ -162,11 +180,11 @@ public class AppointmentDAO {
         return deleted;
     }
 
-    public static void deleteAppointmentMsg(HttpSession ses, int student_id){
-        if (deleteAppointment(student_id)){
-            ses.setAttribute("borrarMsg","Se han borrado todas las tutorias reservadas");
+    public static void deleteAppointmentMsg(HttpSession ses, int student_id, String teacher_id){
+        if (deleteAppointment(student_id, teacher_id)){
+            ses.setAttribute("deleteMsg","Se han borrado todas las tutorias reservadas");
             ses.setAttribute("okMsg",null);
             ses.setAttribute("errorMsg",null);
-        } else ses.setAttribute("borrarMsg","Error al borrar las tutorias reservadas");
+        } else ses.setAttribute("deleteMsg","Error al borrar las tutorias reservadas");
     }
 }

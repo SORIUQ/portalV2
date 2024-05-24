@@ -33,8 +33,8 @@ public class AppointmentServlet extends HttpServlet {
         String hourID = req.getParameter("hourSelectedID");
         HttpSession ses = req.getSession();
         int student_id = ((User) ses.getAttribute("user")).getId();
-        AppointmentDAO.appointmentUpdateMsg(hourID, student_id, ses);
         List<Appointment> appointments = AppointmentDAO.getAppointments(Integer.parseInt((String)ses.getAttribute("selectedTeacherID")));
+        AppointmentDAO.updateAppointment(ses, hourID, student_id, appointments);
         ses.setAttribute("appointments", appointments);
         doGet(req,resp);
     }

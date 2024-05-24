@@ -31,7 +31,8 @@ public class DeleteAppointmentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession ses = req.getSession();
         int student_id = ((User) ses.getAttribute("user")).getId();
-        AppointmentDAO.deleteAppointmentMsg(ses, student_id);
+        String teacher_id = (String) ses.getAttribute("selectedTeacherID");
+        AppointmentDAO.deleteAppointmentMsg(ses, student_id, teacher_id);
         List<Appointment> appointments = AppointmentDAO.getAppointments(Integer.parseInt((String)ses.getAttribute("selectedTeacherID")));
         ses.setAttribute("appointments", appointments);
         doGet(req,resp);

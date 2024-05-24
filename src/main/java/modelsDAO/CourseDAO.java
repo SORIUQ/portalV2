@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CourseDAO {
 
@@ -88,5 +90,42 @@ public class CourseDAO {
         }
 
         return courses;
+    }
+
+    public static Map<Integer, List<Course>> getAllCoursesOfSchool() {
+        Map<Integer, List<Course>> coursesMap = new HashMap<>();
+        Connection conn = null;
+        try {
+            conn = new Conector().getMySqlConnection();
+            try (PreparedStatement ps = conn.prepareStatement("Select sc.school_id, c.* From school_course as sc inner join course as c on sc.course_id = c.id")) {
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Course c = new Course();
+                        int school_id = rs.getInt("school_id");
+                        c.setId_course(rs.getInt("id"));
+                        c.setNameCourse(rs.getString("course_name"));
+                        c.setAcronym(rs.getString("acronime"));
+                        c.setCourseDescription(rs.getString("description_course"));
+
+                        List<Course> schoolCourses = coursesMap.getOrDefault(school_id, new ArrayList<>());
+                        schoolCourses.add(c);
+                        coursesMap.put(school_id, schoolCourses);
+                    }
+                }
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return coursesMap;
     }
 }

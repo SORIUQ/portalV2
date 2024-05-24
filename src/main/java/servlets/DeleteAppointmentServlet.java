@@ -17,7 +17,7 @@ import java.util.List;
 public class DeleteAppointmentServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession ses = req.getSession();
         String id = req.getParameter("selectedTeacherID");
         if (id != null && !id.equals(ses.getAttribute("selectedTeacherID")))
@@ -28,13 +28,11 @@ public class DeleteAppointmentServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession ses = req.getSession();
         int student_id = ((User) ses.getAttribute("user")).getId();
-        String teacher_id = (String) ses.getAttribute("selectedTeacherID");
-        AppointmentDAO.deleteAppointmentMsg(ses, student_id, teacher_id);
-        List<Appointment> appointments = AppointmentDAO.getAppointments(Integer.parseInt((String)ses.getAttribute("selectedTeacherID")));
-        ses.setAttribute("appointments", appointments);
+        List<Appointment> appointments = (List<Appointment>) ses.getAttribute("appointments");
+        AppointmentDAO.deleteAppointment(ses, student_id, appointments);
         doGet(req,resp);
     }
 }

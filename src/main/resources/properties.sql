@@ -460,6 +460,8 @@
     INSERT INTO teacher_subject values (19,3),(20,6),(21,5),(22,4),(23,1),(24,2);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS SAN JOSE */
     INSERT INTO teacher_subject values (25,3),(26,6),(27,5),(29,4),(30,1),(31,2);
+    /* INSERT DE COLEGIOS Y MODULOS RELACION */
+    INSERT INTO school_course values (1,1),(1,2),(1,3),(2,1),(3,1),(3,2),(4,1),(4,2),(4,3),(5,1);
     /* INSERT DE LAS NOTICIAS */
     call insertNew("Cesur detecta una alta demanda de formación en informática",
 	'Son alumnos del ciclo de grado Superior en Desarrollo de Aplicaciones Multiplataforma',

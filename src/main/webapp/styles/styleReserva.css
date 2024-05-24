@@ -24,12 +24,9 @@ h1{
 	height: 5vh;
 }
 
-#reservas{
-	display: none;
-	width: 99vw;
-	justify-content: space-around;
-	align-items: center;
-	height: 65vh;
+.reservas{
+ display: flex;
+
 }
 
 .hours{
@@ -54,7 +51,6 @@ h1{
 }
 
 #opciones{
-	display: none;
 	justify-content: space-between;
 	align-items: center;
 	width: 30vw;

@@ -40,15 +40,15 @@ public class AppointmentDAO {
         return appointments;
     }
 
-    public static List<Appointment> getAppointmentsByDay(List<Appointment> appointments, char dayChar) {
-        List<Appointment> res = new ArrayList<>();
-        for(Appointment a : appointments) {
-            if(a.getId().charAt(0) == dayChar) {
-                res.add(a);
-            }
-        }
-        return res;
-    }
+//    public static List<Appointment> getAppointmentsByDay(List<Appointment> appointments, char dayChar) {
+//        List<Appointment> res = new ArrayList<>();
+//        for(Appointment a : appointments) {
+//            if(a.getId().charAt(0) == dayChar) {
+//                res.add(a);
+//            }
+//        }
+//        return res;
+//    }
 
     public static List<Appointment> getAppointmentsByHour(List<Appointment> appointments, String hour) {
         List<Appointment> res = new ArrayList<>();
@@ -72,28 +72,28 @@ public class AppointmentDAO {
         return getAppointmentsByHour(appointments, "19:00");
     }
 
-    public static List<Appointment> getMondayAppointments(List<Appointment> appointments) {
-        return getAppointmentsByDay(appointments, 'L');
-    }
-
-    public static List<Appointment> getTuesdayAppointments(List<Appointment> appointments) {
-        return getAppointmentsByDay(appointments, 'M');
-    }
-
-
-    public static List<Appointment> getWednesdayAppointments(List<Appointment> appointments) {
-        return getAppointmentsByDay(appointments, 'X');
-    }
-
-
-    public static List<Appointment> getThursdayAppointments(List<Appointment> appointments) {
-        return getAppointmentsByDay(appointments, 'J');
-    }
-
-
-    public static List<Appointment> getFridayAppointments(List<Appointment> appointments) {
-        return getAppointmentsByDay(appointments, 'V');
-    }
+//    public static List<Appointment> getMondayAppointments(List<Appointment> appointments) {
+//        return getAppointmentsByDay(appointments, 'L');
+//    }
+//
+//    public static List<Appointment> getTuesdayAppointments(List<Appointment> appointments) {
+//        return getAppointmentsByDay(appointments, 'M');
+//    }
+//
+//
+//    public static List<Appointment> getWednesdayAppointments(List<Appointment> appointments) {
+//        return getAppointmentsByDay(appointments, 'X');
+//    }
+//
+//
+//    public static List<Appointment> getThursdayAppointments(List<Appointment> appointments) {
+//        return getAppointmentsByDay(appointments, 'J');
+//    }
+//
+//
+//    public static List<Appointment> getFridayAppointments(List<Appointment> appointments) {
+//        return getAppointmentsByDay(appointments, 'V');
+//    }
 
     public static boolean updateAppointment(String id, int student_id) {
         boolean updated = false;
@@ -133,5 +133,38 @@ public class AppointmentDAO {
             ses.setAttribute("apmOk",null);
 
         }
+    }
+
+    public static boolean deleteAppointment(int student_id){
+        boolean deleted = false;
+        Connection con = null;
+
+        try {
+            con = new Conector().getMySqlConnection();
+            PreparedStatement stmt = con.prepareStatement("UPDATE appointment set student_id = null WHERE student_id = ?");
+            stmt.setInt(1,student_id);
+            int results = stmt.executeUpdate();
+            if (results != 0)
+                deleted = true;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e){
+                    e.getStackTrace();
+                }
+            }
+        }
+
+        return deleted;
+    }
+
+    public static void deleteAppointmentMsg(HttpSession ses, int student_id){
+        if (deleteAppointment(student_id)){
+            ses.setAttribute("borrarMsg","Se han borrado todas las tutorias reservadas");
+        } else ses.setAttribute("borrarMsg","Error al borrar las tutorias reservadas");
     }
 }

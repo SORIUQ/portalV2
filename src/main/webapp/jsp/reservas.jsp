@@ -10,6 +10,7 @@
 	List<Appointment> appointments = (List<Appointment>) session.getAttribute("appointments");
 	String apmOk = (String) session.getAttribute("apmOk");
 	String apmError = (String) session.getAttribute("apmError");
+	String deleteMSG = (String) session.getAttribute("deleteMSG");
 %>
 
 <!DOCTYPE html>
@@ -50,12 +51,18 @@
 	<p class="errorMsg"><%=apmError%></p>
 <%}%>
 
-<div id="reservas">
-	<%if (appointments != null) {%>
+<% if (deleteMSG != null) {%>
+<p class="errorMsg"><%=deleteMSG%></p>
+<%}%>
+
+<div cl="reservas">
+	<%if (appointments == null) {%>
+		<p>Seleccione un profesor</p>
+	<%} else {%>
 		<form action="../appointments" method="post">
 			<table>
 				<tr>
-
+					<th> </th>
 					<th>Lunes</th>
 					<th>Martes</th>
 					<th>Miércoles</th>
@@ -93,18 +100,15 @@
 					}%>
 				</tr>
 			</table>
-			<input type="submit">
+			<div id="opciones"></div>
+			<input type="submit" class="botonReserva" value="Hacer Reserva">
 		</form>
+		<form action="../deleteAppointment" method="post">
+			<button type="submit">Cancelar Reserva</button>
+		</form>
+
 	<%}%>
 </div>
-
-<div id="opciones">
-	<a href="./tutoria.jsp" class="cancelar">Cancelar</a>
-	<form action="" method="POST">
-		<button class="confirmar">Confirmar Reserva</button>
-	</form>
-</div>
-<script src="../scripts/tutorias.js"></script>
 </body>
 <% } %>
 

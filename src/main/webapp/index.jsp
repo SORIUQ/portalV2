@@ -95,7 +95,7 @@
 
        <p>Módulo</p>
     </div>
-    <div class="menuOpcion" id="3" onclick="cambiarContenido('jsp/tutoria.jsp', id)">
+    <div class="menuOpcion" id="3" onclick="cambiarContenido('jsp/reservas.jsp', id)">
        <svg xmlns="http://www.w3.org/2000/svg" width="125" height="125"
           viewBox="0 0 24 24">
           <path fill="#a100ff"

@@ -12,7 +12,7 @@ import java.util.*;
 public class AppointmentDAO {
 
 
-    public static List<Appointment>     getAppointments(int id) {
+    public static List<Appointment> getAppointments(int id) {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;

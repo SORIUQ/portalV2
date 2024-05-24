@@ -149,17 +149,7 @@ img.cesurColor {
     background-color: #244AA4;
 }
 
-.fecha {
-	display: flex;
-	justify-content: flex-end;	
-}
-
-.fecha p{
-	color: #5c5c5c;
-	font-style: italic;
-}
-
-.imagen-noticia{
-	height: 50vh;
-	width: 45vw;
+#imagenSanJose {
+	height: 60vh;
+	width: 66vw;
 }

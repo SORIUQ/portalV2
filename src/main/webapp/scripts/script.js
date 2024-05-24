@@ -59,46 +59,43 @@ function detColoresCentro(id){
 
 function detColoresNoticias(id){
 
-    var cont = document.getElementsByClassName("cont");
-    var img= document.getElementsByTagName("img");
-    var hr=document.getElementsByTagName("hr");
-
-    var color;
+    var cont = document.getElementsByClassName("cont")[0];
+    var img= document.getElementsByTagName("img")[0];
+    var hr=document.getElementsByTagName("hr")[0];
 
     switch(id){
         case 1 :
-            color = 'cesurColor';
+            cont.classList.add('cesurColor');
+            img.classList.add('cesurColor');
+            hr.classList.add('cesurColor');
             break;
 
         case 2 :
-            color = 'picassoColor';
+            cont.classList.add('picassoColor');
+            img.classList.add('picassoColor');
+            hr.classList.add('picassoColor');
             break;
 
         case 3 :
-            color = 'belenColor';
+            cont.classList.add('belenColor');
+            img.classList.add('belenColor');
+            hr.classList.add('belenColor');
             break;
 
         case 4 :
-            color = 'turingColor';
+            cont.classList.add('turingColor');
+            img.classList.add('turingColor');
+            hr.classList.add('turingColor');
             break;
 
         case 5 :
-            color = 'joseColor';
+            cont.classList.add('joseColor');
+            img.classList.add('joseColor');
+            hr.classList.add('joseColor');
             break;
 
         default : break;
     }
-
-    function addClassToElements(elementos, color) {
-        for (var i = 0; i < elementos.length; i++) {
-            elementos[i].classList.add(color);
-        }
-    }
-
-    addClassToElements(cont, color);
-    addClassToElements(img, color);
-    addClassToElements(hr, color);
-
 }
  
 function determinarColores(id){

@@ -2,10 +2,6 @@ let passInput = document.getElementById("newPass");
 let newpassInput = document.getElementById("oldPass");
 let errorPass = document.getElementById("errorPass");
 let botonHecho = document.getElementById("botonInput");
-let buttonMail = document.getElementById("mailChangeButton");
-let buttonPass = document.getElementById("passChangeButton");
-
-
 function detColoresdp(id){
 	
 	var h1dp = document.getElementsByClassName("h1dp")[0];
@@ -49,29 +45,10 @@ function detColoresdp(id){
   
 function showChangeInput (){
 	let inputPassDiv = document.getElementById("inputPass");
-	buttonMail.classList.toggle("hiddenPass");
-	buttonPass.classList.toggle("botonSelected");
-	
-	if (buttonPass.innerText === "Cambiar Contraseña"){
-		buttonPass.innerText = "Cancelar"
-	} else buttonPass.innerText = "Cambiar Contraseña"
-	
 	inputPassDiv.classList.toggle("hiddenPass");
 	inputPassDiv.classList.toggle("showingChange");
 }
 
-function showChangeInputMail (){
-	let inputPassDiv = document.getElementById("inputMail");
-	buttonPass.classList.toggle("hiddenPass");
-	buttonMail.classList.toggle("botonSelected");
-	
-	if (buttonMail.innerText === "Cambiar Email"){
-		buttonMail.innerText = "Cancelar"
-	} else buttonMail.innerText = "Cambiar Email"
-	
-	inputPassDiv.classList.toggle("hiddenPass");
-	inputPassDiv.classList.toggle("sho123wingChange");
-}
 
 function passValidator(pass) {
     let containsUpper = false;
@@ -128,6 +105,7 @@ function nonValidInputProcces(inputName, containerName) {
         container.removeChild(errText);
     }
 }
+
 
 
 

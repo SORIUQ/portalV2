@@ -24,16 +24,14 @@ h1{
 	height: 5vh;
 }
 
-.reservas{
+#reservas{
 	display: none;
 	width: 99vw;
 	justify-content: space-around;
 	align-items: center;
 	height: 65vh;
 }
-.reservas.show {
-	display: flex;
-}
+
 .hours{
 	display: flex;
 	flex-direction: column;
@@ -55,15 +53,12 @@ h1{
 
 }
 
-.opciones{
+#opciones{
 	display: none;
 	justify-content: space-between;
 	align-items: center;
 	width: 30vw;
 	margin: 20px;
-}
-.opciones.show {
-	display: flex;
 }
 
 a.cancelar{

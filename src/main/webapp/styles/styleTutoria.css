@@ -49,122 +49,35 @@ body {
 	text-decoration: none;
 }
 
-* {
-	font-family: "Jost", sans-serif;
+table {
+	border-collapse: collapse;
+	width: fit-content;
 }
 
-table{
-	border-collapse:collapse;
-	padding:4px;
-}
-
-td{
-	padding:5px;
-}
-
-body {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	width: 99vw;
-	height: 90vh;
-}
-
-select{
-	width: 20vw;
-	font-size: 18px;
-	border-color: #a100ff;
-	border:2px solid #a100ff;
-	border-radius: 10px;
-}
-
-h1{
-	height: 5vh;
-}
-
-#reservas{
-	display: flex;
-	width: 99vw;
-	justify-content: space-around;
-	align-items: center;
-	height: 65vh;
-}
-
-.hours{
-	display: flex;
-	flex-direction: column;
-	gap: 1px;
-}
-
-.ocupado{
-	display: flex;
-	height:inherit;
-	width:inherit;
-	justify-content: center;
-	border: 2px solid #1a001a;
-	background-color: #1a001a;
-	padding: 5px;
-	color: white;
-	padding:10px;
-	
-}
-
-.libre{
-	display: flex;
-	height:inherit;
-	width:inherit;
-	justify-content: center;
+td {
 	border: 2px solid #a100ff;
-	padding: 5px;
-	color: #a100ff;
-	padding:10px;
+	padding: 10px;
+	text-align: center;
 }
 
-#opciones{
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 30vw;
-	margin: 20px;
+th {
+	padding: 10px;
+	text-align: center;
 }
 
-.selected {
-    border:2px solid #a100ff;
-    background-color: #a100ff;
+td {
+	width: 120px;
+	height: 30px;
 }
 
-
-a.cancelar{
-	display: flex;
-	background-color: red;
-	color:white;
-	border-radius: 5px;
-	justify-content: center;
-	align-items: center;
-	width: 7vw;
-	height: 5vh;
-	text-decoration: none;
-	font-size: 15px;
-}	
-
-button.confirmar{
-	display: flex;
-	background-color: green;
-	color:white;
-	border-radius: 5px;
-	justify-content: center;
-	align-items: center;
-	width: 12vw;
-	height: 5vh;
-	font-size: 15px;
+.ocupado {
+	background-color: #a100ff;
+	border:1px solid  black;
 }
 
-.legend{
-	display:flex;
-	flex-direction:row;
-	align-items:center;
-	justify-content:center;
+.libre {
+	background-color: white;
+	border:1px solid  black;
 }
 
 .legend {
@@ -180,8 +93,8 @@ button.confirmar{
 
 .legend div span {
 	display: inline-block;
-	width: 10px;
-	height: 10px;
+	width: 20px;
+	height: 20px;
 	margin-right: 10px;
 	border: 1px solid #000;
 }
@@ -192,5 +105,4 @@ button.confirmar{
 
 .legend .libre {
 	background-color: white;
-	margin-left:10px;
 }

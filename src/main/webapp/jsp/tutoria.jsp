@@ -9,7 +9,6 @@
 	User activeUser= (User) request.getSession().getAttribute("user");
 	List<User> teachers = UserDAO.getAllNameTeachers(activeUser.getId_course(), activeUser.getId_school());
 	List<Appointment> appointments = (List<Appointment>) session.getAttribute("appointments");
-	String selectedTeacher = (String) session.getAttribute("selectedTeacherID");
 %>
 
 
@@ -42,8 +41,8 @@
 	</select>
 	<input id="buttonSubmit" type="submit">
 </form>
-<div class="reservas">
-	<h3><%=selectedTeacher%></h3>
+
+<div id="reservas">
 	<table>
 		<%if (appointments != null) {
 			for (Appointment a : appointments) {%>
@@ -52,7 +51,8 @@
 		}%>
 	</table>
 </div>
-<div class="opciones">
+
+<div id="opciones">
 	<a href="./tutoria.jsp" class="cancelar">Cancelar</a>
 	<form action="" method="POST">
 		<button class="confirmar">Confirmar Reserva</button>
@@ -67,7 +67,7 @@
 <% if (activeUser.getUserType().equals("02")) { %>
 <body>
 <h1>TUTORÍAS</h1>
-<div class="contenido">
+<div id="contenido">
 	<div class="informacion">
 		<h2>Asignatura</h2>
 		<h2>Lugar de las tutorías</h2>

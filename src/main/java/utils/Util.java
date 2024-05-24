@@ -256,36 +256,4 @@ public class Util {
 		   ses.setAttribute("okMsg",null);
 	   }
    }
-   
-	/**
-	 * Método utilizado para mandar un mensaje al usuario cuando quiera cambiar el correo de la cuenta
-	 * @author Joseito
-	 * @param ses
-	 * @param id
-	 * @param pass
-	 * @param mail
-	 */
-  
-public static void sendMailChangeMsg(HttpSession ses, int id, String pass, String mail) {
-	String oldMail = UserDAO.getMail(id);
-	if (Util.checkPassDB(id, pass)){
-		if (!oldMail.equals(mail)){
-			if(UserDAO.setNewMail(id, mail)) {
-				   ses.setAttribute("okMsgMail", "¡Se ha cambiado el correo con éxito!");
-				   ses.setAttribute("errorMsgMail", null);
-			}else {
-				   ses.setAttribute("errorMsgMail", "No se ha podido cambiar el correo");
-				   ses.setAttribute("okMsgMail", null);
-			}
-		} else {
-			   ses.setAttribute("errorMsgMail", "El nuevo correo no puede ser igual al anterior");
-			   ses.setAttribute("okMsgMail",null);
-		}
-	}else {
-		   ses.setAttribute("errorMsgMail", "Contraseña incorrecta");
-		   ses.setAttribute("okMsgMail", null);
-	}
-
-	}
 }
-

@@ -10,7 +10,8 @@
 	List<String> user = UserDAO.getUserInfo(id);
 	String errorMsg = (String) session.getAttribute("errorMsg");
 	String okMsg = (String) session.getAttribute("okMsg");
-%>
+	String errorMsgMail = (String) session.getAttribute("errorMsgMail");
+	String okMsgMail = (String) session.getAttribute("okMsgMail");%>
 
 
 <!DOCTYPE html>
@@ -41,6 +42,7 @@
 					<h3>Dni</h3>
 					<p><%=user.get(2)%></p>
 				</div>
+				
 			</div>
 			<div class="columna2">
 				<div>
@@ -48,10 +50,11 @@
 					<p><%=user.get(1)%></p>
 				</div>
 				<div>
-					<h3>Fecha de Nacimiento</h3>
-					<p><%=Util.dateFormat(user.get(3))%></p>
+					<h3>Correo Electronico</h3>
+					<p><%=UserDAO.getMail(id)%></p>
 				</div>
 			</div>
+			
 		</div>
 
 		<div class="ladoDerechoTarjeta">
@@ -69,6 +72,29 @@
 
 
 	</div>
+	<div class="buttonDiv">
+	<button id="mailChangeButton" onclick="showChangeInputMail()"
+	onsubmit="comprobarPass">Cambiar Email
+	</button>
+	<% if (errorMsgMail!=null){ %>
+		<p class="errorMsg"><%=errorMsgMail %></p>
+	<% } %>
+
+	<% if (okMsgMail!=null){ %>
+		<p class="okMsg"><%=okMsgMail %></p>
+	<% } %>
+	</div>
+	<div id="inputMail" class="hiddenPass">
+	<form action="../mailChange" method="POST">
+	    <p> Nuevo email </p>
+		<input type="email" id="newMail" name="user_newMail"></input>
+		<p> Contraseña </p>
+		<input type="password" id="Pass" name="user_MailPass"></input>
+		<br>
+		<button id="botonInputMail" class="buttonInput" type="submit">Hecho</button>
+	</form>
+	</div>
+	
 	
 	<div class="buttonDiv">
 	<button id="passChangeButton" onclick="showChangeInput()"
@@ -100,10 +126,9 @@
 			</p>
 		</div>
 		<br>
-		<button id="botonInput"type="submit" disabled="true">Hecho</button>
+		<button id="botonInput" class="buttonInput" type="submit" disabled="true">Hecho</button>
 	</form>
 	</div>
-
 	<script src="../scripts/passChange.js"></script>
 	
 </body>

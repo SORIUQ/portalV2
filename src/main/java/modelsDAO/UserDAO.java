@@ -91,7 +91,7 @@ public class UserDAO {
                 ps.setInt(8, Integer.parseInt(schoolId));
                 ps.setInt(9, Integer.parseInt(courseId));
                 int rows = ps.executeUpdate();
-                System.out.println(rows);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -207,8 +207,6 @@ public class UserDAO {
             }
         }
 
-        //Retornamos la lista con los nombres de los profesores
-        System.out.println(teachers);
         return teachers;
     }
 

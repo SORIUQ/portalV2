@@ -3,14 +3,14 @@
 <%@ page import="java.sql.*,utils.*,models.*,java.util.List"%>
 <%@ page import="modelsDAO.UserDAO"%>
 <%@ page import="modelsDAO.AppointmentDAO" %>
-<%@ page import="java.util.ArrayList" %>
 
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
 	List<User> teachers = UserDAO.getAllNameTeachers(activeUser.getId_course(), activeUser.getId_school());
 	List<Appointment> appointments = (List<Appointment>) session.getAttribute("appointments");
+	String apmOk = (String) session.getAttribute("apmOk");
+	String apmError = (String) session.getAttribute("apmError");
 %>
-
 
 <!DOCTYPE html>
 <html>
@@ -42,14 +42,60 @@
 	<input id="buttonSubmit" type="submit">
 </form>
 
+<% if (apmOk != null) {%>
+	<p class="okMsg"><%=apmOk%></p>
+<%}%>
+
+<% if (apmError != null) {%>
+	<p class="errorMsg"><%=apmError%></p>
+<%}%>
+
 <div id="reservas">
-	<table>
-		<%if (appointments != null) {
-			for (Appointment a : appointments) {%>
-			<p><%=a.getId()%></p>
-			<%}
-		}%>
-	</table>
+	<%if (appointments != null) {%>
+		<form action="../appointments" method="post">
+			<table>
+				<tr>
+
+					<th>Lunes</th>
+					<th>Martes</th>
+					<th>Miércoles</th>
+					<th>Jueves</th>
+					<th>Viernes</th>
+				</tr>
+				<tr>
+					<td>17:00 - 18:00</td>
+					<%for (Appointment a : AppointmentDAO.getAppointments1700(appointments)) {%>
+						<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
+							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
+						<%} else {%>
+							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID"></td>
+						<%}%>
+					<%}%>
+				</tr>
+				<tr>
+					<td>18:00 - 19:00</td>
+					<%for (Appointment a : AppointmentDAO.getAppointments1800(appointments)) {%>
+						<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
+							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
+						<%} else {%>
+							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID"></td>
+						<%}%>
+					<%}%>
+				</tr>
+				<tr>
+					<td>19:00 - 20:00</td>
+					<%for (Appointment a : AppointmentDAO.getAppointments1900(appointments)){%>
+						<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
+							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
+						<%} else {%>
+							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID"></td>
+						<%}
+					}%>
+				</tr>
+			</table>
+			<input type="submit">
+		</form>
+	<%}%>
 </div>
 
 <div id="opciones">

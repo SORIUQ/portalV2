@@ -11,17 +11,17 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(String id, int teacherID, Integer studentID, String date, String time) {
-        this.id = id;
-        this.teacherID = teacherID;
-        this.studentID = studentID;
-        this.date = date;
-        this.time = time;
-    }
+//    public Appointment(String id, int teacherID, Integer studentID, String date, String time) {
+//        this.id = id;
+//        this.teacherID = teacherID;
+//        this.studentID = studentID;
+//        this.date = date;
+//        this.time = time;
+//    }
 
-    public Appointment(String json) {
-
-    }
+//    public Appointment(String json) {
+//
+//    }
 
     public String getId() {
         return id;
@@ -47,9 +47,9 @@ public class Appointment {
         this.studentID = studentID;
     }
 
-    public String getDate() {
-        return date;
-    }
+//    public String getDate() {
+//        return date;
+//    }
 
     public void setDate(String date) {
         this.date = date;

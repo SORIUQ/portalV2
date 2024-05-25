@@ -33,25 +33,25 @@ public class News {
 		this.creationDate = creationDate;
 	}
 
-	// Este constructor no estoy seguro de que sea necesario ya que podemos
-	// insertarlo como null en el otro y ya
-	/**
-	 * Constructor de noticia sin imagen
-	 * 
-	 * @param id            identificador de la noticia
-	 * @param title         titulo de la noticia
-	 * @param caption       subtitulo de la noticia
-	 * @param content       contenido noticia
-	 * @param creationDate  fecha de publicacion de la noticia
-	 */
-	public News(int id, String title, String caption, String content, String creationDate) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.caption = caption;
-		this.content = content;
-		this.creationDate = creationDate;
-	}
+//	// Este constructor no estoy seguro de que sea necesario ya que podemos
+//	// insertarlo como null en el otro y ya
+//	/**
+//	 * Constructor de noticia sin imagen
+//	 *
+//	 * @param id            identificador de la noticia
+//	 * @param title         titulo de la noticia
+//	 * @param caption       subtitulo de la noticia
+//	 * @param content       contenido noticia
+//	 * @param creationDate  fecha de publicacion de la noticia
+//	 */
+//	public News(int id, String title, String caption, String content, String creationDate) {
+//		super();
+//		this.id = id;
+//		this.title = title;
+//		this.caption = caption;
+//		this.content = content;
+//		this.creationDate = creationDate;
+//	}
 
 	public int getId() {
 		return id;

@@ -53,44 +53,44 @@ public class CourseDAO {
         return course;
     }
 
-    /**
-     * Método utilizado para mostrar los cursos en el registro
-     * @author Ricardo
-     * @return	List con los Courses
-     */
-    public static List<Course> getAllCourses() {
-        List<Course> courses = new ArrayList<>();
-        Connection con = null;
-
-        try {
-            con = new Conector().getMySqlConnection();
-            try {
-                PreparedStatement ps = con.prepareStatement("select * from course;");
-                ResultSet result = ps.executeQuery();
-                while (result.next()) {
-                    int id = result.getInt("id");
-                    String name = result.getString("course_name");
-                    String acronym = result.getString("acronime");
-                    String courseDescription = result.getString("description_course");
-                    courses.add(new Course(id, name, acronym, courseDescription));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
-        return courses;
-    }
+//    /**
+//     * Método utilizado para mostrar los cursos en el registro
+//     * @author Ricardo
+//     * @return	List con los Courses
+//     */
+//    public static List<Course> getAllCourses() {
+//        List<Course> courses = new ArrayList<>();
+//        Connection con = null;
+//
+//        try {
+//            con = new Conector().getMySqlConnection();
+//            try {
+//                PreparedStatement ps = con.prepareStatement("select * from course;");
+//                ResultSet result = ps.executeQuery();
+//                while (result.next()) {
+//                    int id = result.getInt("id");
+//                    String name = result.getString("course_name");
+//                    String acronym = result.getString("acronime");
+//                    String courseDescription = result.getString("description_course");
+//                    courses.add(new Course(id, name, acronym, courseDescription));
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (con != null) {
+//                try {
+//                    con.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//        return courses;
+//    }
 
     public static Map<Integer, List<Course>> getAllCoursesOfSchool() {
         Map<Integer, List<Course>> coursesMap = new HashMap<>();

@@ -58,7 +58,7 @@ public class NewsDAO {
                 try {
                     con.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }

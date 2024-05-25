@@ -7,8 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -16,14 +16,14 @@ import org.mindrot.jbcrypt.BCrypt;
 public class UserDAO {
 
     /**
-     * Método utilizado para crear el susuario que hace login.
+     * Método utilizado para crear el usuario que hace login.
      * @author Ricardo
-     * @param con
-     * @param resultSet
-     * @return Devuelve el usuario.
+     * @param con   Conexión con la BD.
+     * @param resultSet Resultados de la
+     * @return User (Usuario que ha hecho login)
      * @throws SQLException
      */
-    public static User createUser(Connection con, ResultSet resultSet) throws SQLException {
+    public static User createUserLogin(Connection con, ResultSet resultSet) throws SQLException {
         User user = new User();
 
         if (con != null) {
@@ -34,8 +34,8 @@ public class UserDAO {
             if (resultSet.next()) {
                 user.setUserType(resultSet.getString("user_type"));
                 user.setName(resultSet.getString("user_name"));
-                user.setId_school(resultSet.getInt("school_id"));
-                user.setId_course((Integer) resultSet.getObject("course_id"));
+                user.setSchool_id(resultSet.getInt("school_id"));
+                user.setCourse_id((Integer) resultSet.getObject("course_id"));
             }
         }
 
@@ -45,18 +45,18 @@ public class UserDAO {
     /**
      * Inserta un registro nuevo en la tabla de Credentials.
      * @author Ricardo
-     * @param con
+     * @param con   Conexión con la BD.
      * @param userEmail	email que se recoge en el registro.
      * @param userPass	contraseña que se recoge en el registro.
      */
     public static void insertCredentials(Connection con, String userEmail, String userPass) {
-        // No cerramos la conexión porque este metodo se utiliza dentro de otro que si la cierra
+        // No cerramos la conexión porque este método se utiliza dentro de otro que si la cierra
         if (con != null) {
             try (PreparedStatement ps = con.prepareStatement("call insertUserCredentials(?,?)")) {
                 ps.setString(1, userEmail);
                 ps.setString(2, userPass);
-                int linesModified = ps.executeUpdate();
-                if (linesModified > 0);
+                ps.executeUpdate();
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -66,18 +66,18 @@ public class UserDAO {
     /**
      * Inserta un usuario nuevo en la BD.
      * @author Ricardo
-     * @param con
+     * @param con   Conexión con la BD.
      * @param name	nombre recogido en el registro.
      * @param lastName	apellidos recogidos en el registro.
      * @param birthDate	fecha de nacimiento recogida en el registro.
      * @param dnie	DNI o NIE recogido en el registro.
      * @param email email recogido en el registro.
      * @param pass	contraseña recogida en el registro.
-     * @param schoolId	ID del colegio seleccionado en el registro.
-     * @param courseId	ID del módulo seleccionado en el registro.
+     * @param schoolId	Id del colegio seleccionado en el registro.
+     * @param courseId	Id del módulo seleccionado en el registro.
      */
-    public static void insertUserInDb(Connection con, String name, String lastName, String birthDate, String dnie, String email, String pass, String schoolId, String courseId) {
-        // No cerramos la conexión porque este metodo se utiliza dentro de otro que si la cierra
+    public static void insertUserInDB(Connection con, String name, String lastName, String birthDate, String dnie, String email, String pass, String schoolId, String courseId) {
+        // No cerramos la conexión porque este método se utiliza dentro de otro que si la cierra
         if (con != null) {
             try {
                 PreparedStatement ps = con.prepareStatement("call insertUser(?,?,?,?,?,?,?,?,?);");
@@ -90,7 +90,7 @@ public class UserDAO {
                 ps.setString(7, pass);
                 ps.setInt(8, Integer.parseInt(schoolId));
                 ps.setInt(9, Integer.parseInt(courseId));
-                int rows = ps.executeUpdate();
+                ps.executeUpdate();
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -99,13 +99,13 @@ public class UserDAO {
     }
 
     /**
-     * Método utilizado en el datosPersonales.jsp devuelve los datos del usuario y los utiliza para imprimirlos.
+     * Método utilizado en DatosPersonales.jsp. Devuelve los datos del usuario y los utiliza para imprimirlos.
      * @author Ricardo
-     * @param id
-     * @return	List con los datos del alumno ordenados.
+     * @param id Id del alumno.
+     * @return	HashMap<String,String> (Datos del alumno)
      */
-    public static List<String> getUserInfo(int id) {
-        List<String> usuario = new ArrayList<>();
+    public static HashMap<String,String> getUserInfo(int id) {
+        HashMap<String, String> userInfo = new HashMap<>();
         Connection con = null;
 
         try {
@@ -115,58 +115,74 @@ public class UserDAO {
                 preparedStatement.setInt(1, id);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
-                    usuario.add(resultSet.getString("user_name"));
-                    usuario.add(resultSet.getString("user_surname"));
-                    usuario.add(resultSet.getString("dnie"));
-                    usuario.add(resultSet.getString("birthDate"));
+                    userInfo.put("name",resultSet.getString("user_name"));
+                    userInfo.put("surname",resultSet.getString("user_surname"));
+                    userInfo.put("dnie",resultSet.getString("dnie"));
+                    userInfo.put("birthDate",resultSet.getString("birthDate"));
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e1) {
-            e1.printStackTrace();
         } finally {
             if (con != null) {
                 try {
                     con.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
 
-        return usuario;
+        return userInfo;
     }
 
     /**
-     *
+     * Método que se utiliza para rescatar los estudiantes de un profesor a partir de su ID.
+     * @author Ricardo
+     * @param teacher Usuario del profesor.
+     * @return List<User> (Lista de los estudiantes del profesor)
      */
-    public static List<User> getStudentsFromTeacherID(int teacherID) {
+    public static List<User> getStudentsFromTeacher(User teacher) {
         Connection con = null;
-        List<User> users = new ArrayList<>();
+        List<User> students = new ArrayList<>();
+
         try {
             con = new Conector().getMySqlConnection();
             if (con != null) {
-                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM user_obj WHERE id = ?");
-                preparedStatement.setInt(1, teacherID);
-                ResultSet resultSet = preparedStatement.executeQuery();
+                PreparedStatement ps = con.prepareStatement("SELECT * FROM user_obj WHERE course_id = ? and school_id = ? and user_type = '01'");
+                ps.setInt(1, teacher.getCourse_id());
+                ps.setInt(2,teacher.getSchool_id());
+
+                ResultSet resultSet = ps.executeQuery();
                 while (resultSet.next()) {
-                    users.add(createUser(con, resultSet));
+                    User user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setUserType(resultSet.getString("user_type"));
+                    user.setName(resultSet.getString("user_name"));
+                    user.setSchool_id(resultSet.getInt("school_id"));
+                    user.setCourse_id((Integer) resultSet.getObject("course_id"));
+                    students.add(user);
                 }
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-        return users;
+        return students;
     }
 
 
     /**
-     * Método que recupera todos los profesores existentes en la BBDD,
+     * Método que recupera todos los profesores existentes en la BD,
      * es decir todos los usuarios cuyo tipo de usuario sea "02"
      * @author Óscar
      */
@@ -188,8 +204,8 @@ public class UserDAO {
                 user.setId(rs.getInt("id"));
                 user.setName(rs.getString("user_name") + " " + rs.getString("user_surname"));
                 user.setUserType(rs.getString("user_type"));
-                user.setId_school(rs.getInt("school_id"));
-                user.setId_course(rs.getInt("course_id"));
+                user.setSchool_id(rs.getInt("school_id"));
+                user.setCourse_id(rs.getInt("course_id"));
                 teachers.add(user);
             }
             ps.close();
@@ -213,9 +229,9 @@ public class UserDAO {
     /**
      * Método que se utiliza para cambiar la contraseña de un usuario existente
      * @author Ricardo
-     * @param id
-     * @param newPass
-     * @return boolean que representa si se ha cambiado o no
+     * @param id Id del usuario.
+     * @param newPass Nueva contraseña que quiere guardar.
+     * @return boolean (Booleano que representa si se ha cambiado o no)
      */
     public static boolean setNewPass (int id, String newPass){
         boolean changed = false;
@@ -237,7 +253,7 @@ public class UserDAO {
                 try {
                     con.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }

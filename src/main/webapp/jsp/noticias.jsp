@@ -1,17 +1,14 @@
 <%@ page import="models.User" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
          
-<%@ page import="java.sql.*,utils.*,models.*" %>
-<%@ page import="modelsDAO.CourseDAO" %>
+<%@ page import="models.*" %>
 <%@ page import="modelsDAO.NewsDAO" %>
-<%@ page import="modelsDAO.SchoolDAO" %>
 
 <%
     User activeUser= (User) request.getSession().getAttribute("user");
-    List<News> news = NewsDAO.getAllNewsBySchoolId(activeUser.getId_school());
+    List<News> news = NewsDAO.getAllNewsBySchoolId(activeUser.getSchool_id());
 %>
 
 <!DOCTYPE html>
@@ -22,7 +19,7 @@
     <meta charset="ISO-8859-1">
     <title>Insert title here</title>
 </head>
-<body onload="detColoresNoticias(<%=activeUser.getId_school()%>)">
+<body onload="detColoresNoticias(<%=activeUser.getSchool_id()%>)">
 
 <%
     for (News noticia : news) {

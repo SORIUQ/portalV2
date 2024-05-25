@@ -1,6 +1,5 @@
 package servlets;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ import java.io.IOException;
 @WebServlet(name = "DownloadPDFServlet", urlPatterns = "/descarga")
 public class DownloadPDFServlet extends HttpServlet {
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         int id = Integer.parseInt(req.getParameter("subjectId"));
         Subject subject = SubjectDAO.getSubjectByID(id);
         if (subject != null) {
@@ -31,7 +30,7 @@ public class DownloadPDFServlet extends HttpServlet {
                     contentStream.showText("Info sobre la asignatura de " + subject.getName());
                     contentStream.endText();
                 }
-                // Indicamos al navegador que el contenido de la respuesta es de tipo PDF
+                // Indicamos al navegador que el contenido dé la respuesta es de tipo PDF
                 res.setContentType("application/pdf");
                 // Content-Disposition: Cabecera que indica al navegador como manejar la descarga del archivo
                 // attachment: Le indica al navegador que debe descargar el archivo en lugar de mostrarlo.

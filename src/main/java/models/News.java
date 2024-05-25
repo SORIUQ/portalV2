@@ -41,8 +41,6 @@ public class News {
 	 * @param id            identificador de la noticia
 	 * @param title         titulo de la noticia
 	 * @param caption       subtitulo de la noticia
-	 * @param imagen        url de la imagen de la noticia
-	 * @param captionImagen descripcin de la imagen
 	 * @param content       contenido noticia
 	 * @param creationDate  fecha de publicacion de la noticia
 	 */

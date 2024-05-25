@@ -22,11 +22,11 @@
 		response.sendRedirect("./jsp/login.jsp");
 		return;
 	} else {
-		idSchool = activeUser.getId_school();
+		idSchool = activeUser.getSchool_id();
 		imagen = Util.defineImageIndex(idSchool);
 		sch = SchoolDAO.createSchool(idSchool);
-		if (activeUser.getId_course() != null)
-			crs = CourseDAO.createCourse(activeUser.getId_course());
+		if (activeUser.getCourse_id() != null)
+			crs = CourseDAO.createCourse(activeUser.getCourse_id());
 		if (sch.getSchoolName() != null)
 			centroUsuario = sch.getSchoolName();
 		else
@@ -49,7 +49,7 @@
 <title>Portal - Inicio</title>
 </head>
 
-<body onload="determinarColores(<%=activeUser.getId_school()%>)">
+<body onload="determinarColores(<%=activeUser.getSchool_id()%>)">
 	<header>
 		<div class="imagenNombreCentro">
 			<img src=<%=imagen %> alt="imagenCentro"

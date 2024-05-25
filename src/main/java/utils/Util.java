@@ -24,27 +24,32 @@ public class Util {
 	 */
     public static boolean loginProcess(HttpServletRequest req, HttpSession session) {
         boolean landing = false;
-        Conector conector = new Conector();
         Connection con = null;
 		String error = "";
 
         try {
-            con = conector.getMySqlConnection();
+            con = new Conector().getMySqlConnection();
             String email = req.getParameter("email");
             String password = req.getParameter("password");
             PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM credentials WHERE email = ?");
             preparedStatement.setString(1, email);
+
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String hashedPassFromDB = resultSet.getString("pass");
-                if(BCrypt.checkpw(password, hashedPassFromDB)) {
-                    User user = UserDAO.createUser(con, resultSet);
+                if (BCrypt.checkpw(password, hashedPassFromDB)) {
+                    User user = UserDAO.createUserLogin(con, resultSet);
                     session.setAttribute("user", user);
                     landing = true;
-                }else
-		    		error = "Contraseña incorrecta";
-            } else
+
+                } else {
+					error = "Contraseña incorrecta";
+				}
+
+            } else {
 				error = "El usuario no existe";
+			}
+
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally {
@@ -52,7 +57,7 @@ public class Util {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					e.printStackTrace();
 				}
 			}
         }
@@ -126,9 +131,9 @@ public class Util {
 		String result = "";
 
 		switch (activeUser.getUserType()) {
-			case "01" -> {result = "Alumno de " + crs.getNameCourse();}
-			case "02" -> {result = "Profesor " + centroUsuario;}
-			case "03" -> {result = "Empleado/a de Accenture";}
+			case "01" -> result = "Alumno de " + crs.getNameCourse();
+			case "02" -> result = "Profesor " + centroUsuario;
+			case "03" -> result = "Empleado/a de Accenture";
 		}
 
 		return result;
@@ -142,12 +147,12 @@ public class Util {
 	 * @return fecha cambiada
 	 */
 	public static String dateFormat(String date) {
-		String fecha = "";
-		String año = date.substring(0,4);
+		String fecha;
+		String anho = date.substring(0,4);
 		String mes = date.substring(5, 7);
 		String dia = date.substring(8,10);
 
-		fecha = dia + "/" + mes + "/" + año;
+		fecha = dia + "/" + mes + "/" + anho;
 
 		return fecha;
 	}
@@ -159,39 +164,39 @@ public class Util {
 	 * @return String con el link de la ruta de la imagen
 	 */
     public static String defineImageIndex(Integer id){
-    	String imagen = "";
+    	String imagen;
 
     	switch(id) {
-			case 1 -> {imagen = "./images/logos/LOGOTIPO-CESUR.png";}
-			case 2 -> {imagen = "./images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";}
-			case 3 -> {imagen = "./images/logos/LOGOTIPO-IES-BELEN.png";}
-			case 4 -> {imagen = "./images/logos/LOGOTIPO-ALAN-TURING.png";}
-			case 5 -> {imagen = "./images/logos/LOGOTIPO-IES-SAN-JOSE.png";}
-			default -> {imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";}
+			case 1 -> imagen = "./images/logos/LOGOTIPO-CESUR.png";
+			case 2 -> imagen = "./images/logos/LOGOTIPO-IES-PABLO-PICASSO.png";
+			case 3 -> imagen = "./images/logos/LOGOTIPO-IES-BELEN.png";
+			case 4 -> imagen = "./images/logos/LOGOTIPO-ALAN-TURING.png";
+			case 5 -> imagen = "./images/logos/LOGOTIPO-IES-SAN-JOSE.png";
+			default -> imagen = "./images/logos/LOGOTIPO-ACCENTURE.png";
 		}
 
     	return imagen;
     }
 
-	/**
-	 * Método utilizado para definir la ruta al JSP de las noticias de cada centro
-	 * @author Ricardo
-	 * @param id
-	 * @return	String con la ruta
-	 */
-	public static String defineID(int id){
-    	String nombre="";
-
-    	switch(id){
-			case 1->{nombre="./jsp/noticiasCesur.jsp";}
-			case 2->{nombre="./jsp/noticiasPabloPicasso.jsp";}
-			case 3->{nombre="./jsp/noticiasBelen.jsp";}
-			case 4->{nombre="./jsp/noticiasAlanTuring.jsp";}
-			case 5->{nombre="./jsp/noticiasSanJose.jsp";}
-    	}
-
-    	return nombre;
-    }
+//	/**
+//	 * Método utilizado para definir la ruta al JSP de las noticias de cada centro
+//	 * @author Ricardo
+//	 * @param id
+//	 * @return	String con la ruta
+//	 */
+//	public static String defineID(int id){
+//    	String nombre="";
+//
+//    	switch(id){
+//			case 1->{nombre="./jsp/noticiasCesur.jsp";}
+//			case 2->{nombre="./jsp/noticiasPabloPicasso.jsp";}
+//			case 3->{nombre="./jsp/noticiasBelen.jsp";}
+//			case 4->{nombre="./jsp/noticiasAlanTuring.jsp";}
+//			case 5->{nombre="./jsp/noticiasSanJose.jsp";}
+//    	}
+//
+//    	return nombre;
+//    }
 
 	/**
 	 * Método utilizado para comprobar si la contraseña introducida en el cambio de contraseña es correcta
@@ -220,7 +225,7 @@ public class Util {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					e.printStackTrace();
 				}
 			}
         }

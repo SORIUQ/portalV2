@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-<%@ page import="java.sql.*,utils.*,models.*"%>
+<%@ page import="utils.*,models.*"%>
 <%@ page import="modelsDAO.SchoolDAO" %>
 
 <%
 User activeUser = (User) session.getAttribute("user");
-School school = SchoolDAO.createSchool(activeUser.getId_school());
+School school = SchoolDAO.createSchool(activeUser.getSchool_id());
 String imagen = "." + Util.defineImageIndex(school.getIdSchool());
 %>
 
@@ -23,12 +23,12 @@ String imagen = "." + Util.defineImageIndex(school.getIdSchool());
 <meta charset="UTF-8	">
 <title>Portal - Inicio</title>
 </head>
-<body onload="detColoresCentro(<%=activeUser.getId_school()%>)">
+<body onload="detColoresCentro(<%=activeUser.getSchool_id()%>)">
 
 	<div class="contenedorPrincipal">
 		<div class="headerContenedor">
 			<h2 id="schoolTitle"><%=school.getSchoolName()%></h2>
-			<img src=<%=imagen%>>
+			<img src="<%=imagen%>" alt="imagen del centro"/>
 		</div>
 			<h4>Informacion de contacto</h4>
 			<table>

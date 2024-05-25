@@ -10,7 +10,6 @@
 
 <%
 	List<School> schools = SchoolDAO.getAllSchools();
-	List<Course> courses = CourseDAO.getAllCourses();
 	Map<Integer, List<Course>> coursesMap = CourseDAO.getAllCoursesOfSchool();
 	Gson gson = new Gson();
 	String coursesMapJson = gson.toJson(coursesMap);
@@ -37,7 +36,7 @@
 <body>
 	<div id="mainContainer">
 		<!-- ACCENTURE IMAGE -->
-		<img src="../images/logoAccenture.svg" id="logoAccenture">
+		<img src="../images/logoAccenture.svg" id="logoAccenture" alt="logo de Accenture">
 
 		<!-- FORM -->
 		<form action="../register" method="post" class="login"

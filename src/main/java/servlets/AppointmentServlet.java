@@ -1,6 +1,5 @@
 package servlets;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,34 +11,33 @@ import models.User;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "AppointmentServlet", urlPatterns = "/appointments")
 public class AppointmentServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession ses = req.getSession();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("selectedTeacherID");
+        HttpSession ses = req.getSession();
         if (id != null && !id.equals(ses.getAttribute("selectedTeacherID")))
             ses.setAttribute("selectedTeacherID", id);
         List<Appointment> appointments = AppointmentDAO.getAppointments(Integer.parseInt((String)ses.getAttribute("selectedTeacherID")));
+
         ses.setAttribute("appointments", appointments);
         resp.sendRedirect("./jsp/reservas.jsp");
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String hourID = req.getParameter("hourSelectedID");
         HttpSession ses = req.getSession();
         int student_id = ((User) ses.getAttribute("user")).getId();
-        List<Appointment> appointments = AppointmentDAO.getAppointments(Integer.parseInt((String)ses.getAttribute("selectedTeacherID")));
+        List<Appointment> appointments = (ses.getAttribute("appointments")==null) ?
+                new ArrayList<>() : (List<Appointment>) ses.getAttribute("appointments");
+
         AppointmentDAO.updateAppointment(ses, hourID, student_id, appointments);
-        ses.setAttribute("appointments", appointments);
         doGet(req,resp);
-    }
-
-    protected void borrarReserva(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     }
 }

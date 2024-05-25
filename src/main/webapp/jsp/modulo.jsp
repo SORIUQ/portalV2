@@ -25,9 +25,9 @@
 
 <body>
 <% 	if (activeUser.getUserType().equals("02")) { %>
-<h3> Los profesores/as no tienen modulo asignado</h3> <% } else {%>
+<h3> Los profesores/as no tienen módulo asignado</h3> <% } else {%>
 <%
-	Course course = CourseDAO.createCourse(activeUser.getId_course()); %>
+	Course course = CourseDAO.createCourse(activeUser.getCourse_id()); %>
 <div class="contenedorPrincipal">
 	<h2><%= course.getNameCourse() %></h2>
 	<div id="descriptionUnderline"> <h3> Descripción</h3> </div>
@@ -40,7 +40,7 @@
 			<th>Info</th>
 		</tr>
 		<%
-			List<Subject> subjects = SubjectDAO.getAllSubjectsByCourseId(activeUser.getId_course());
+			List<Subject> subjects = SubjectDAO.getAllSubjectsByCourseId(activeUser.getCourse_id());
 			for (Subject subject : subjects) { %>
 		<tr>
 			<td class="tableContent"><%= subject.getName() %></td>

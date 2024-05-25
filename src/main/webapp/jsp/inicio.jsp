@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@ page import="java.sql.*,utils.*,models.*" %>
+<%@ page import="models.*" %>
    
 <% User activeUser= (User) request.getSession().getAttribute("user"); %>
 <!DOCTYPE html>
@@ -16,7 +16,7 @@
 <meta charset="UTF-8">
 <title>Inicio</title>
 </head>
-<body onload="detColorInicio(<%=activeUser.getId_school()%>)">
+<body onload="detColorInicio(<%=activeUser.getSchool_id()%>)">
 <div class="container">
 	<h2>¡Bienvenido/a <%=activeUser.getName() %>!</h2>
 	<div class="divider"></div>

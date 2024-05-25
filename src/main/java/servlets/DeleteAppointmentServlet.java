@@ -1,6 +1,5 @@
 package servlets;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +22,7 @@ public class DeleteAppointmentServlet extends HttpServlet {
         if (id != null && !id.equals(ses.getAttribute("selectedTeacherID")))
             ses.setAttribute("selectedTeacherID", id);
         List<Appointment> appointments = AppointmentDAO.getAppointments(Integer.parseInt((String)ses.getAttribute("selectedTeacherID")));
+
         ses.setAttribute("appointments", appointments);
         resp.sendRedirect("./jsp/reservas.jsp");
     }
@@ -32,6 +32,7 @@ public class DeleteAppointmentServlet extends HttpServlet {
         HttpSession ses = req.getSession();
         int student_id = ((User) ses.getAttribute("user")).getId();
         List<Appointment> appointments = (List<Appointment>) ses.getAttribute("appointments");
+
         AppointmentDAO.deleteAppointment(ses, student_id, appointments);
         doGet(req,resp);
     }

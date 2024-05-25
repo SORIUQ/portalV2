@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*,utils.*,models.*,java.util.List"%>
+<%@ page import="models.*,java.util.List"%>
 <%@ page import="modelsDAO.UserDAO"%>
 <%@ page import="modelsDAO.AppointmentDAO" %>
 
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
 	if (activeUser.getUserType().equals("02")) {response.sendRedirect("./tutoriaProfesor.jsp");}
-	List<User> teachers = UserDAO.getAllNameTeachers(activeUser.getId_course(), activeUser.getId_school());
+	List<User> teachers = UserDAO.getAllNameTeachers(activeUser.getCourse_id(), activeUser.getSchool_id());
 	List<Appointment> appointments = (List<Appointment>) session.getAttribute("appointments");
 	String okMsg = (String) session.getAttribute("okMsg");
 	String errorMsg = (String) session.getAttribute("errorMsg");

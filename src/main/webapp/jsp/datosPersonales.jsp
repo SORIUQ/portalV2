@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*, utils.*, models.*"%>
-<%@page import="java.util.List"%>
+<%@ page import="utils.*, models.*"%>
 <%@ page import="modelsDAO.UserDAO" %>
+<%@ page import="java.util.HashMap" %>
 
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
 	int id = activeUser.getId();
-	List<String> user = UserDAO.getUserInfo(id);
+	HashMap<String,String> user = UserDAO.getUserInfo(id);
 	String errorMsg = (String) session.getAttribute("errorMsg");
 	String okMsg = (String) session.getAttribute("okMsg");
 %>
@@ -26,7 +26,7 @@
 <title>Datos Personales</title>
 </head>
 
-<body onload="detColoresdp(<%=activeUser.getId_school()%>)">
+<body onload="detColoresdp(<%=activeUser.getSchool_id()%>)">
 	<h1 class="h1dp">Datos Personales</h1>
 
 	<div class="tarjetaPersonal">
@@ -35,21 +35,21 @@
 			<div class="columna1">
 				<div>
 					<h3>Nombre</h3>
-					<p><%=user.get(0)%></p>
+					<p><%=user.get("name")%></p>
 				</div>
 				<div>
 					<h3>Dni</h3>
-					<p><%=user.get(2)%></p>
+					<p><%=user.get("dnie")%></p>
 				</div>
 			</div>
 			<div class="columna2">
 				<div>
 					<h3>Apellidos</h3>
-					<p><%=user.get(1)%></p>
+					<p><%=user.get("surname")%></p>
 				</div>
 				<div>
 					<h3>Fecha de Nacimiento</h3>
-					<p><%=Util.dateFormat(user.get(3))%></p>
+					<p><%=Util.dateFormat(user.get("birthDate"))%></p>
 				</div>
 			</div>
 		</div>
@@ -85,9 +85,9 @@
 	<div id="inputPass" class="hiddenPass">
 	<form action="../passChange" method="POST">
 	    <p> Antigua contraseña </p>
-		<input type="password" id="oldPass" name="user_oldPassword"></input>
+		<input type="password" id="oldPass" name="user_oldPassword"/>
 		<p> Nueva contraseña </p>
-		<input type="password" id="newPass" name="user_newPassword"></input>
+		<input type="password" id="newPass" name="user_newPassword"/>
 		
 		<div class="passNotValidShow" id="errorPass">
 			<p>¡Password demasiado débil! La contraseña debe tener:
@@ -100,7 +100,7 @@
 			</p>
 		</div>
 		<br>
-		<button id="botonInput"type="submit" disabled="true">Hecho</button>
+		<button id="botonInput" type="submit" disabled>Hecho</button>
 	</form>
 	</div>
 

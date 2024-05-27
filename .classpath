@@ -54,8 +54,8 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/jose.prados.morente/OneDrive - Accenture/Documents/ProyectoEstable/portalJoseito/src/main/webapp/WEB-INF/jBCrypt-0.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/jose.prados.morente/OneDrive - Accenture/Documents/ProyectoEstable/portalJoseito/src/main/webapp/WEB-INF/mysql-connector-j-8.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/jose.prados.morente/OneDrive - Accenture/Documents/ProyectoEstable/portalJoseito/src/main/webapp/WEB-INF/pdfbox-3.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nestor.hidalgo.leiva/OneDrive - Accenture/Desktop/lombok-1.18.32.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nestor.hidalgo.leiva/OneDrive - Accenture/Desktop/mysql-connector-j-8.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nestor.hidalgo.leiva/OneDrive - Accenture/Desktop/pdfbox-app-3.0.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

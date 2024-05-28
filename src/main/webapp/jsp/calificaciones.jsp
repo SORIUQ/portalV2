@@ -10,6 +10,9 @@
 
 <%
 User user = (User) request.getSession().getAttribute("user");
+	if (user.getUserType().equals("01")) {
+		response.sendRedirect("./calificacionesAlumno.jsp");
+	}
 %>
 
 <!DOCTYPE html>
@@ -26,41 +29,24 @@ User user = (User) request.getSession().getAttribute("user");
 </head>
 
 <body onload="detColoresCalificaciones(<%=user.getSchool_id()%>)">
-	<%
-	if (user.getUserType().equals("02")) {
-		String courses = UserDAO.getCourseFromTeacherId(user.getId());
-		List<User> students;
-		String[] coursesList = courses.split(";");
-		Course course = CourseDAO.createCourse(user.getCourse_id());
-	%>
-
 	<h4>Calificaciones del centro escolar</h4>
 	<div class="general">
 		<div class="curso">
 			<h2><%=UserDAO.getCourseFromTeacherId(user.getId())%></h2>
 		</div>
 		<div>
-			<select class="asignaturas" name="cursoSelect" id="select"
-				onchange="returnId()">
-				<option value="0" disabled selected>-- Seleccione una
-					asignatura --</option>
+			<form method="GET" action="../studentGrades">
+			<select class="asignaturas" name="cursoSelect" id="select">
+				<option value="0" disabled selected>-- Seleccione una asignatura --</option>
 				<%
-				List<Subject> subjects = SubjectDAO.getAllSubjectsByCourseId(user.getCourse_id());
+				List<Subject> subjects = SubjectDAO.getAllSubjectsByUser(user);
 				for (Subject subject : subjects) {
 				%>
-				<option value="<%=subject.getName()%>"><%=subject.getName()%></option>
+				<option value="<%=subject.getSubjectId()%>"><%=subject.getName()%></option>
 				<%
 				}
 				%>
-			</select>
-		</div>
-		<div>
-			<select class="asignaturas" name="alumnosSelect" id="trimestre">
-				<option value="0" disabled selected>-- Seleccione un
-					trimestre --</option>
-				<option value="1">1º Trimestre</option>
-				<option value="2">2º Trimestre</option>
-				<option value="3">3º Trimestre</option>
+			</form>
 			</select>
 		</div>
 	</div>
@@ -78,19 +64,6 @@ User user = (User) request.getSession().getAttribute("user");
 	<div id="contenido">
 
 		<div class="alumnoBox" id="box">
-			<%
-			students = UserDAO.getStudentsFromTeacherId(user.getId());
-
-			for (User i : students) {
-			%>
-			<div>
-				<input type="radio" name="student" value="<%=i.getId()%>"
-					id="<%=i.getId()%>"> <label><%=i.getName()%></label>
-			</div>
-			<%
-			}
-			%>
-
 		</div>
 		<div id="frame">
 
@@ -128,9 +101,6 @@ User user = (User) request.getSession().getAttribute("user");
 		</div>
 
 	</div>
-	<%
-	}
-	%>
 
 	<script type="text/javascript" src="../scripts/script.js"></script>
 	<script type="text/javascript" src="../scripts/calificaciones.js"></script>

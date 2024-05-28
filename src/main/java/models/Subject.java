@@ -46,4 +46,14 @@ public class Subject {
     public void setTotalHours(int totalHours) {
         this.totalHours = totalHours;
     }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "subjectId=" + subjectId +
+                ", name='" + name + '\'' +
+                ", weeklyHours=" + weeklyHours +
+                ", totalHours=" + totalHours +
+                '}';
+    }
 }

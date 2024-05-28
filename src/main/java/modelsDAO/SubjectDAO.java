@@ -2,6 +2,7 @@ package modelsDAO;
 
 import connections.Conector;
 import models.Subject;
+import models.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -70,5 +71,52 @@ public class SubjectDAO {
             e.printStackTrace();
         }
         return s;
+    }
+
+    /**
+     * Método utilizado para rescatar las asignatura de un alumno en calificaciones.jsp.
+     * Devuelve solamente los datos necesarios.
+     * @author Ricardo
+     * @param user Usuario activo de la sesión.
+     * @return List<Subject> Lista de asignaturas.
+     */
+    public static List<Subject> getAllSubjectsByUser(User user) {
+        List<Subject> subjects = new ArrayList<>();
+        Connection con = null;
+
+        try {
+            con = new Conector().getMySqlConnection();
+            String query = "";
+            int parameter = 0;
+            if (user.getUserType().equals("01")){
+                query = "Select s.id,s.subject_name from _subject as s inner join course_subject as cs on s.id = cs.subject_id where cs.course_id = ?;";
+                parameter = user.getCourse_id();
+            } else if (user.getUserType().equals("02")){
+                query = "Select s.id,s.subject_name from _subject as s inner join teacher_subject as ts on s.id = ts.subject_id where ts.user_id = ?;";
+                parameter = user.getId();
+            }
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1,parameter);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Subject subject = new Subject();
+                subject.setSubjectId(rs.getInt(1));
+                subject.setName(rs.getString(2));
+                subjects.add(subject);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return subjects;
     }
 }

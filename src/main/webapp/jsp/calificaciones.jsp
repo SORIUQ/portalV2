@@ -19,14 +19,13 @@
 	<title></title>
 </head>
 <body>
-<%
-	if (user.getUserType().equals("02")){
-		List<User> alumnos = UserDAO.getStudentsFromTeacher(user.getId());
-%>
+
+	<%if (user.getUserType().equals("02")) {%>
+		<%List<User> alumnos = UserDAO.getStudentsFromTeacher(user);%>
 		<select name="alumnosSelect">
 			<option value="0" disabled selected>-- Seleccione un centro --</option>
-			<%for(int i = 0; i < alumnos.size(); i++) { %>
-				<option value="<%= alumnos.get(i)%>"><%= alumnos.get(i).getName()%></option>
+			<%for (User alumno : alumnos) { %>
+				<option value="<%=alumno%>"><%=alumno.getName()%></option>
 			<%}%>
 		</select>
 	<%}%>

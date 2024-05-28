@@ -11,7 +11,7 @@
 	User activeUser= (User) request.getSession().getAttribute("user");
 	Integer idSchool = null;
 	String imagen="";
-	String scrCentro="";
+
 	School sch=null;
 	String contentTarjeta="";
 	String courseName="";
@@ -22,12 +22,11 @@
 		response.sendRedirect("./jsp/login.jsp");
 		return;
 	} else {
-		idSchool = activeUser.getId_school();
+		idSchool = activeUser.getSchool_id();
 		imagen = Util.defineImageIndex(idSchool);
 		sch = SchoolDAO.createSchool(idSchool);
-		scrCentro = Util.defineID(idSchool);
-		if (activeUser.getId_course() != null)
-			crs = CourseDAO.createCourse(activeUser.getId_course());
+		if (activeUser.getCourse_id() != null)
+			crs = CourseDAO.createCourse(activeUser.getCourse_id());
 		if (sch.getSchoolName() != null)
 			centroUsuario = sch.getSchoolName();
 		else
@@ -50,7 +49,7 @@
 <title>Portal - Inicio</title>
 </head>
 
-<body onload="determinarColores(<%=activeUser.getId_school()%>)">
+<body onload="determinarColores(<%=activeUser.getSchool_id()%>)">
 	<header>
 		<div class="imagenNombreCentro">
 			<img src=<%=imagen %> alt="imagenCentro"
@@ -72,7 +71,7 @@
 				<%
 					if(activeUser != null && (activeUser.getUserType().equals("01") || activeUser.getUserType().equals("02"))) {
 				%>
-				<div class="menuOpcion" id="0" onclick="cambiarContenido('<%= scrCentro %>', id)">
+				<div class="menuOpcion" id="0" onclick="cambiarContenido('./jsp/noticias.jsp', id)">
        <svg xmlns="http://www.w3.org/2000/svg" width="125" height="125"
           viewBox="0 0 24 24">
           <path fill="#a100ff"
@@ -96,7 +95,7 @@
 
        <p>Módulo</p>
     </div>
-    <div class="menuOpcion" id="3" onclick="cambiarContenido('jsp/tutoria.jsp', id)">
+    <div class="menuOpcion" id="3" onclick="cambiarContenido('jsp/reservas.jsp', id)">
        <svg xmlns="http://www.w3.org/2000/svg" width="125" height="125"
           viewBox="0 0 24 24">
           <path fill="#a100ff"

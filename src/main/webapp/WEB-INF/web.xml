@@ -11,16 +11,6 @@
   </welcome-file-list>
   <servlet>
     <description></description>
-    <display-name>cerrarSesion</display-name>
-    <servlet-name>cerrarSesion</servlet-name>
-    <servlet-class>servlets.cerrarSesion</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>cerrarSesion</servlet-name>
-    <url-pattern>/cerrarSesion</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>logoutServlet</display-name>
     <servlet-name>logoutServlet</servlet-name>
     <servlet-class>servlets.logoutServlet</servlet-class>
@@ -28,5 +18,25 @@
   <servlet-mapping>
     <servlet-name>logoutServlet</servlet-name>
     <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>passChangeServlet</display-name>
+    <servlet-name>passChangeServlet</servlet-name>
+    <servlet-class>servlets.passChangeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>passChangeServlet</servlet-name>
+    <url-pattern>/passChange</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MailChange</display-name>
+    <servlet-name>MailChange</servlet-name>
+    <servlet-class>servlets.MailChange</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MailChange</servlet-name>
+    <url-pattern>/MailChange</url-pattern>
   </servlet-mapping>
 </web-app>

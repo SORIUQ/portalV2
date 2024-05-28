@@ -1,3 +1,4 @@
+drop database portalacademico;
 create database if not exists portalAcademico;
 
 use portalAcademico;
@@ -67,11 +68,11 @@ create table if not exists _subject (
 );
 
 create table if not exists appointment (
-	id int not null primary key,
+	id char(2) not null primary key,
 	teacher_id int not null,
-    student_id int not null,
-    day date not null,
-    hour time,
+    student_id int,
+    day varchar(15) not null,
+    hour varchar(15) not null,
     
     constraint foreign_key_appointment_teacherId foreign key (teacher_id) references user_obj(id),
     constraint foreign_key_appointment_studentId foreign key (student_id) references user_obj(id)
@@ -306,6 +307,7 @@ select * from news;
 select * from grades;
 select cs.id_subject from user_obj as ub inner join course_subject as cs on ub.course_id = cs.id_course where ub.course_id=1 and ub.name=?; 
 
+
 /* Drop Functions */
 drop function checkIfSubjectExists;
 drop function checkIfExistsUserCredentials;
@@ -322,5 +324,6 @@ drop procedure subjectCourse;
 drop database portalacademico;
 
 drop trigger user_subjects;
+
 
 

@@ -43,7 +43,7 @@ public class SchoolDAO {
                 try {
                     con.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -85,7 +85,7 @@ public class SchoolDAO {
                 try {
                     con.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }

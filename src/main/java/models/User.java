@@ -1,19 +1,11 @@
 package models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@NoArgsConstructor
-
 public class User {
     private int id;
     private String name;
     private String userType;
-    private Integer id_school;
-    private Integer id_course;
+    private Integer school_id;
+    private Integer course_id;
 
     @Override
     public String toString() {
@@ -21,8 +13,8 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", userType='" + userType + '\'' +
-                ", id_school=" + id_school +
-                ", id_course=" + id_course +
+                ", id_school=" + school_id +
+                ", id_course=" + course_id +
                 '}';
     }
 
@@ -50,20 +42,20 @@ public class User {
 		this.userType = userType;
 	}
 
-	public Integer getId_school() {
-		return id_school;
+	public Integer getSchool_id() {
+		return school_id;
 	}
 
-	public void setId_school(Integer id_school) {
-		this.id_school = id_school;
+	public void setSchool_id(Integer school_id) {
+		this.school_id = school_id;
 	}
 
-	public Integer getId_course() {
-		return id_course;
+	public Integer getCourse_id() {
+		return course_id;
 	}
 
-	public void setId_course(Integer id_course) {
-		this.id_course = id_course;
+	public void setCourse_id(Integer course_id) {
+		this.course_id = course_id;
 	}
     
     

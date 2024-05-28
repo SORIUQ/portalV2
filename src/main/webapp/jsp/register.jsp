@@ -3,12 +3,16 @@
 <%@ page import="java.util.List"%>
 <%@ page import="modelsDAO.SchoolDAO"%>
 <%@ page import="modelsDAO.CourseDAO"%>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="java.util.Map" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
-List<School> schools = SchoolDAO.getAllSchools();
-List<Course> courses = CourseDAO.getAllCourses();
+	List<School> schools = SchoolDAO.getAllSchools();
+	Map<Integer, List<Course>> coursesMap = CourseDAO.getAllCoursesOfSchool();
+	Gson gson = new Gson();
+	String coursesMapJson = gson.toJson(coursesMap);
 %>
 
 <!DOCTYPE html>
@@ -32,7 +36,7 @@ List<Course> courses = CourseDAO.getAllCourses();
 <body>
 	<div id="mainContainer">
 		<!-- ACCENTURE IMAGE -->
-		<img src="../images/logoAccenture.svg" id="logoAccenture">
+		<img src="../images/logoAccenture.svg" id="logoAccenture" alt="logo de Accenture">
 
 		<!-- FORM -->
 		<form action="../register" method="post" class="login"
@@ -55,7 +59,7 @@ List<Course> courses = CourseDAO.getAllCourses();
 				<input type="text" name="user_email" id="emailInput" required>
 				<label>Email</label>
 				<%
-				if (session.getAttribute("dniExists") != null) {
+				if (session.getAttribute("emailExists") != null) {
 				%>
 				<p class="errorMsg">
 					<%=session.getAttribute("emailExists")%>
@@ -88,31 +92,18 @@ List<Course> courses = CourseDAO.getAllCourses();
 
 			<!-- CENTRO -->
 			<div class="input_container">
-				<select name="user_center">
-					<option value="0" disabled selected>-- Seleccione un
-						centro --</option>
-					<%
-					for (int i = 0; i < schools.size(); i++) {
-					%>
-					<option value="<%=schools.get(i).getIdSchool()%>"><%=schools.get(i).getSchoolName()%></option>
-					<%
-					}
-					%>
+				<select name="user_center" id="user_center" onchange="updateOptions(this.value)">
+					<option value="0" disabled selected>-- Seleccione un centro --</option>
+					<%for (School s : schools) {%>
+						<option value="<%=s.getIdSchool()%>"><%=s.getSchoolName()%></option>
+					<% } %>
 				</select>
 			</div>
 
 			<!-- CURSO -->
 			<div class="input_container" id="courseContainer">
 				<select name="user_course" id="courseInput" required>
-					<option value="0" disabled selected>-- Seleccione un curso
-						--</option>
-					<%
-					for (int i = 0; i < courses.size(); i++) {
-					%>
-					<option value="<%=courses.get(i).getId_course()%>"><%=courses.get(i).getNameCourse()%></option>
-					<%
-					}
-					%>
+					<option value="0" disabled selected>-- Seleccione un curso --</option>
 				</select>
 			</div>
 
@@ -148,6 +139,21 @@ List<Course> courses = CourseDAO.getAllCourses();
 	</footer>
 	<script src="../scripts/register.js"></script>
 	<script>
+		const coursesMap = <%= coursesMapJson %>;
+		const updateOptions = (schoolID) => {
+			const schoolSelect = document.getElementById('user_center');
+			const courseSelect = document.getElementById('courseInput');
+			courseSelect.innerHTML = '';
+			const selectedCourses = coursesMap[schoolID];
+			if (selectedCourses) {
+				for (const course of selectedCourses) {
+					const option = document.createElement('option');
+					option.value = course.id_course; // Assign the course ID to the value attribute
+					option.text = course.nameCourse; // Assign the course name to the option text
+					courseSelect.appendChild(option);
+				}
+			}
+		};
 		let validationResults = {};
 		function userValidation() {
 			validationResults = {
@@ -158,7 +164,6 @@ List<Course> courses = CourseDAO.getAllCourses();
 				password: checkPassInput(),
 				password2: checkPass2Input()
 			};
-
 			return Object.values(validationResults).every(result => result);
 		}
 	</script>

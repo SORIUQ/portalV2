@@ -1,6 +1,8 @@
+<%@page import="com.mysql.cj.util.Util"%>
+<%@page import="org.apache.tomcat.dbcp.dbcp2.Utils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
-<%@ page import="models.*,java.util.List"%>
+<%@ page import="models.*,java.util.List,utils.*"%>
 <%@ page import="modelsDAO.UserDAO"%>
 <%@ page import="modelsDAO.AppointmentDAO" %>
 
@@ -11,6 +13,7 @@
 	List<Appointment> appointments = (List<Appointment>) session.getAttribute("appointments");
 	String okMsg = (String) session.getAttribute("okMsg");
 	String errorMsg = (String) session.getAttribute("errorMsg");
+	String subject = "";
 %>
 
 <!DOCTYPE html>
@@ -47,12 +50,16 @@
 	<p class="errorMsg"><%=errorMsg%></p>
 <%}%>
 
-<div id="reservas">
-	<%if (appointments == null) {%>
-		<p>Seleccione un profesor</p>
-	<%} else {%>
+<div id="reservas">	
+	<% if (appointments != null) {%>
+	
+		<div class="informacion">
+			<h3>Asignatura: <span style="color:#a100ff; font-size: 18px;"><%= UserDAO.getSubjectTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span></h3>
+			<h3>Lugar: <span style="color:#a100ff; font-size: 18px;"><%= UserDAO.getNameSchoolTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span> </h3>
+			<p><strong>Horario:</strong> de lunes a viernes de 17:00 a 20:00</p>
+		</div>
 		<form action="../appointments" method="post">
-			<table>
+			<table class="tablaReservas">
 				<tr>
 					<th> </th>
 					<th>Lunes</th>
@@ -101,5 +108,19 @@
 
 	<%}%>
 </div>
+
+<script type="text/javascript">
+
+const radios = document.querySelectorAll('input[type="radio"]');
+
+radios.forEach(radio => {
+    if (radio.disabled) {
+        radio.closest('td').classList.add('ocupado');
+    }
+});
+
+
+</script>
+
 </body>
 </html>

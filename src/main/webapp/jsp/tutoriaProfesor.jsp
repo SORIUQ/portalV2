@@ -31,6 +31,7 @@
 		<form action="../checkAppointmentInfo" method="get">
 			<table>
 				<tr>
+					<th></th>
 					<th>Lunes</th>
 					<th>Martes</th>
 					<th>Miércoles</th>
@@ -81,5 +82,6 @@
 			<!-- <p>Despacho: appointmentInfo.get("room")</p> -->
 		<%}%>
 	</div>
+	<script type="text/javascript" src="../scripts/tutorias.js"></script>
 </body>
 </html>

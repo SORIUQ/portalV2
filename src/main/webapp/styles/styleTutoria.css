@@ -11,40 +11,38 @@ body {
 	align-items: center;
 }
 
-.informacion{
+.informacion {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-#contenido{
+#contenido {
 	display: none;
 	width: 87vw;
 	flex-direction: column;
 	justify-content: center;
-
 }
 
-.tablaReservas{
+.tablaReservas {
 	display: flex;
 	width: 87vw;
 	align-items: center;
 	justify-content: center;
 }
 
-
-.reservar{
+.reservar {
 	display: flex;
 	justify-content: center;
 	width: 87vw;
 	margin-top: 20px;
 }
 
-.reservar a{
+.reservar a {
 	background: #a100ff;
 	padding: 5px;
 	font-size: 15px;
-	color:white;
+	color: white;
 	border-radius: 10px;
 	text-decoration: none;
 }
@@ -52,12 +50,6 @@ body {
 table {
 	border-collapse: collapse;
 	width: fit-content;
-}
-
-td {
-	border: 2px solid #a100ff;
-	padding: 10px;
-	text-align: center;
 }
 
 th {
@@ -68,16 +60,27 @@ th {
 td {
 	width: 120px;
 	height: 30px;
+	border: 2px solid #a100ff;
+	padding: 10px;
+	text-align: center;
 }
 
 .ocupado {
 	background-color: #a100ff;
-	border:1px solid  black;
 }
 
-.libre {
-	background-color: white;
-	border:1px solid  black;
+input[type="radio"] {
+	width: 117%;
+	height: 155%;
+	margin: -9.5px;
+	box-sizing: border-box;
+	appearance: none;
+	-webkit-appearance: none;
+}
+
+input[type="radio"]:checked {
+	background-color: #a100ff;
+	box-shadow: 0px 3px 2px 2px black;
 }
 
 .legend {

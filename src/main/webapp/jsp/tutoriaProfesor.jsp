@@ -27,6 +27,14 @@
 </head>
 <body>
 	<h1>RESERVAS DISPONIBLES</h1>
+	<div class="legend">
+                <div>
+                    <span class="ocupado"></span> Ocupados
+                </div>
+                <div>
+                    <span class="libre"></span> Libres
+                </div>
+            </div>
 	<div class="reservas">
 		<form action="../checkAppointmentInfo" method="get">
 			<table>
@@ -69,8 +77,11 @@
 					}%>
 				</tr>
 			</table>
-			<input type="submit" >
+			<div class="btnComprobar">
+				<input type="submit" value="Comprobar">
+			</div>
 		</form>
+		 
 	</div>
 	<div class = "infoConsulta">
 		<% if (appointmentInfo == null ) {%>

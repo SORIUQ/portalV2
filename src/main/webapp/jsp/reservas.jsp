@@ -54,10 +54,20 @@
 	<% if (appointments != null) {%>
 	
 		<div class="informacion">
-			<h3>Asignatura: <span style="color:#a100ff; font-size: 18px;"><%= UserDAO.getSubjectTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span></h3>
-			<h3>Lugar: <span style="color:#a100ff; font-size: 18px;"><%= UserDAO.getNameSchoolTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span> </h3>
-			<p><strong>Horario:</strong> de lunes a viernes de 17:00 a 20:00</p>
-		</div>
+			<div class="informacionConcreta">
+				<h3>Asignatura: <span style="color:#a100ff; font-size: 18px;"><%= UserDAO.getSubjectTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span></h3>
+				<h3>Lugar: <span style="color:#a100ff; font-size: 18px;"><%= UserDAO.getNameSchoolTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span> </h3>
+				<p><strong>Horario:</strong> de lunes a viernes de 17:00 a 20:00</p>
+			</div>
+			<div class="legend">
+	                <div>
+	                    <span class="ocupado"></span> Ocupados
+	                </div>
+	                <div>
+	                    <span class="libre"></span> Libres
+	                </div>
+	            </div>
+        </div>
 		<form action="../appointments" method="post">
 			<table class="tablaReservas">
 				<tr>
@@ -99,11 +109,12 @@
 					}%>
 				</tr>
 			</table>
-			<div id="opciones"></div>
-			<input type="submit" class="botonReserva" value="Hacer Reserva">
+			<div class="opcionReservar">
+				<input type="submit" class="botonReserva" value="Hacer Reserva">
+			</div>
 		</form>
-		<form action="../deleteAppointment" method="post">
-			<button type="submit">Cancelar Reserva</button>
+		<form action="../deleteAppointment" method="post" class="opcionCancelar">
+			<button class="botonCancelar" type="submit">Cancelar Reserva</button>
 		</form>
 
 	<%}%>

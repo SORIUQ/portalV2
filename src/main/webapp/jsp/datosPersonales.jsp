@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="utils.*, models.*"%>
+<%@ page import="java.sql.*, utils.*, models.*"%>
+<%@page import="java.util.List"%>
 <%@ page import="modelsDAO.UserDAO" %>
-<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+
 
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
 	int id = activeUser.getId();
-	HashMap<String,String> user = UserDAO.getUserInfo(id);
+	Map<String, String> user = UserDAO.getUserInfo(id);
 	String errorMsg = (String) session.getAttribute("errorMsg");
 	String okMsg = (String) session.getAttribute("okMsg");
-%>
+	String errorMsgMail = (String) session.getAttribute("errorMsgMail");
+	String okMsgMail = (String) session.getAttribute("okMsgMail");%>
 
 
 <!DOCTYPE html>
@@ -26,7 +29,7 @@
 <title>Datos Personales</title>
 </head>
 
-<body onload="detColoresdp(<%=activeUser.getSchool_id()%>)">
+<body onload="detColoresdp(<%=activeUser.getSchool_id()%>">
 	<h1 class="h1dp">Datos Personales</h1>
 
 	<div class="tarjetaPersonal">
@@ -41,6 +44,7 @@
 					<h3>Dni</h3>
 					<p><%=user.get("dnie")%></p>
 				</div>
+				
 			</div>
 			<div class="columna2">
 				<div>
@@ -48,10 +52,11 @@
 					<p><%=user.get("surname")%></p>
 				</div>
 				<div>
-					<h3>Fecha de Nacimiento</h3>
-					<p><%=Util.dateFormat(user.get("birthDate"))%></p>
+					<h3>Correo Electronico</h3>
+					<p><%=UserDAO.getMail(id)%></p>
 				</div>
 			</div>
+			
 		</div>
 
 		<div class="ladoDerechoTarjeta">
@@ -69,6 +74,29 @@
 
 
 	</div>
+	<div class="buttonDiv">
+	<button id="mailChangeButton" onclick="showChangeInputMail()"
+	onsubmit="comprobarPass">Cambiar Email
+	</button>
+	<% if (errorMsgMail!=null){ %>
+		<p class="errorMsg"><%=errorMsgMail %></p>
+	<% } %>
+
+	<% if (okMsgMail!=null){ %>
+		<p class="okMsg"><%=okMsgMail %></p>
+	<% } %>
+	</div>
+	<div id="inputMail" class="hiddenPass">
+	<form action="../mailChange" method="POST">
+	    <p> Nuevo email </p>
+		<input type="email" id="newMail" name="user_newMail"></input>
+		<p> Contraseña </p>
+		<input type="password" id="Pass" name="user_MailPass"></input>
+		<br>
+		<button id="botonInputMail" class="buttonInput" type="submit">Hecho</button>
+	</form>
+	</div>
+	
 	
 	<div class="buttonDiv">
 	<button id="passChangeButton" onclick="showChangeInput()"
@@ -85,9 +113,9 @@
 	<div id="inputPass" class="hiddenPass">
 	<form action="../passChange" method="POST">
 	    <p> Antigua contraseña </p>
-		<input type="password" id="oldPass" name="user_oldPassword"/>
+		<input type="password" id="oldPass" name="user_oldPassword"></input>
 		<p> Nueva contraseña </p>
-		<input type="password" id="newPass" name="user_newPassword"/>
+		<input type="password" id="newPass" name="user_newPassword"></input>
 		
 		<div class="passNotValidShow" id="errorPass">
 			<p>¡Password demasiado débil! La contraseña debe tener:
@@ -100,10 +128,9 @@
 			</p>
 		</div>
 		<br>
-		<button id="botonInput" type="submit" disabled>Hecho</button>
+		<button id="botonInput" class="buttonInput" type="submit" disabled="true">Hecho</button>
 	</form>
 	</div>
-
 	<script src="../scripts/passChange.js"></script>
 	
 </body>

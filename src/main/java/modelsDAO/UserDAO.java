@@ -228,6 +228,11 @@ public class UserDAO {
         return teachers;
     }
 
+    
+    
+    
+    
+    
     /**
      * Método que se utiliza para cambiar la contraseña de un usuario existente
      * @author Ricardo
@@ -343,5 +348,57 @@ public class UserDAO {
       return school_name;
   }
     
+   
     
+    public static String getMail(int id) {
+		String mail = "";
+		Connection con = null;
+
+		try {
+			con = new Conector().getMySqlConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT email from credentials WHERE id=" + id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				mail = rs.getString(1);
+			}
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		return mail;
+	}
+    
+    public static boolean setNewMail(int id, String mail) {
+		boolean changed = false;
+		Connection con = null;
+
+		try {
+			con = new Conector().getMySqlConnection();
+			PreparedStatement ps = con.prepareStatement("Update credentials SET email = ? WHERE id = " + id);
+			ps.setString(1, mail);
+			int i = ps.executeUpdate();
+			if (i == 1) {
+				changed = true;
+			}
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		return changed;
+	}
+
 }

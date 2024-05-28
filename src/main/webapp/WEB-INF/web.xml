@@ -29,4 +29,14 @@
     <servlet-name>passChangeServlet</servlet-name>
     <url-pattern>/passChange</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MailChange</display-name>
+    <servlet-name>MailChange</servlet-name>
+    <servlet-class>servlets.MailChange</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MailChange</servlet-name>
+    <url-pattern>/MailChange</url-pattern>
+  </servlet-mapping>
 </web-app>

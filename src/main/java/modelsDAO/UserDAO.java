@@ -185,6 +185,8 @@ public class UserDAO {
      * Método que recupera todos los profesores existentes en la BD,
      * es decir todos los usuarios cuyo tipo de usuario sea "02"
      * @author Óscar
+     * 
+     * @return List<User> lista con todos los nombres completos de los maestros
      */
 
     public static List<User> getAllNameTeachers(int course_id, int school_id) {
@@ -226,6 +228,11 @@ public class UserDAO {
         return teachers;
     }
 
+    
+    
+    
+    
+    
     /**
      * Método que se utiliza para cambiar la contraseña de un usuario existente
      * @author Ricardo
@@ -260,7 +267,6 @@ public class UserDAO {
 
         return changed;
     }
-    
     
 
     public static String getCourseFromTeacherId(int teacherId) {
@@ -330,4 +336,134 @@ public class UserDAO {
 		return estudiantes;
     }
 
+    /**
+     * Método que recupera la asignatura de un profesor desde base de datos
+     * @param id_teacher id del usuario asignado como profesor
+     * @author Óscar
+     * 
+     * @return nombre de la asignatura del profesor
+     */
+    public static String getSubjectTeacher(int id_teacher) {
+      
+      String subject = "";
+      Connection con = null;
+
+      try {
+          con = new Conector().getMySqlConnection();
+          PreparedStatement ps = con.prepareStatement(
+              "  select su.subject_name from _subject su\r\n"
+              + "    inner join teacher_subject te on te.subject_id = su.id\r\n"
+              + "    inner join user_obj us on us.id = te.user_id\r\n"
+              + "    where te.user_id = ?; ");
+          ps.setInt(1,id_teacher);
+          ResultSet rs = ps.executeQuery();
+          
+          while (rs.next()) {
+             subject = rs.getString(1);
+          }
+
+      } catch (ClassNotFoundException | SQLException e) {
+          e.printStackTrace();
+      } finally {
+          if (con != null) {
+              try {
+                  con.close();
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+
+      return subject;
+  }
+    
+    
+    /**
+     * Método que recupera la escula de un profesor desde base de datos
+     * @param id_teacher id del usuario asignado como profesor
+     * @author Óscar
+     * 
+     * @return nombre de la escuela  del profesor
+     */
+    public static String getNameSchoolTeacher(int id_teacher) {
+      
+      String school_name = "";
+      Connection con = null;
+
+      try {
+          con = new Conector().getMySqlConnection();
+          PreparedStatement ps = con.prepareStatement("select sc.school_name from school sc inner join user_obj us on us.school_id = sc.id where us.id = ?");
+          
+          ps.setInt(1,id_teacher);
+          ResultSet rs = ps.executeQuery();
+
+          while (rs.next()) {
+             school_name = rs.getString(1);
+          }
+
+      } catch (ClassNotFoundException | SQLException e) {
+          e.printStackTrace();
+      } finally {
+          if (con != null) {
+              try {
+                  con.close();
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+
+      return school_name;
+  }
+    
+    public static String getMail(int id) {
+		String mail = "";
+		Connection con = null;
+
+		try {
+			con = new Conector().getMySqlConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT email from credentials WHERE id=" + id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				mail = rs.getString(1);
+			}
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		return mail;
+	}
+    
+    public static boolean setNewMail(int id, String mail) {
+		boolean changed = false;
+		Connection con = null;
+
+		try {
+			con = new Conector().getMySqlConnection();
+			PreparedStatement ps = con.prepareStatement("Update credentials SET email = ? WHERE id = " + id);
+			ps.setString(1, mail);
+			int i = ps.executeUpdate();
+			if (i == 1) {
+				changed = true;
+			}
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		return changed;
+	}
 }

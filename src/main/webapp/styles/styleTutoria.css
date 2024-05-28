@@ -11,53 +11,23 @@ body {
 	align-items: center;
 }
 
-.informacion{
+.informacion {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-#contenido{
+#contenido {
 	display: none;
 	width: 87vw;
 	flex-direction: column;
 	justify-content: center;
-
-}
-
-.tablaReservas{
-	display: flex;
-	width: 87vw;
-	align-items: center;
-	justify-content: center;
-}
-
-
-.reservar{
-	display: flex;
-	justify-content: center;
-	width: 87vw;
-	margin-top: 20px;
-}
-
-.reservar a{
-	background: #a100ff;
-	padding: 5px;
-	font-size: 15px;
-	color:white;
-	border-radius: 10px;
-	text-decoration: none;
 }
 
 table {
 	border-collapse: collapse;
 	width: fit-content;
-}
-
-td {
-	border: 2px solid #a100ff;
-	padding: 10px;
-	text-align: center;
+	width: 80vw;
 }
 
 th {
@@ -68,20 +38,46 @@ th {
 td {
 	width: 120px;
 	height: 30px;
+	border: 2px solid #a100ff;
+	padding: 10px;
+	text-align: center;
 }
 
 .ocupado {
 	background-color: #a100ff;
-	border:1px solid  black;
 }
 
-.libre {
-	background-color: white;
-	border:1px solid  black;
+input[type="radio"] {
+	width: -webkit-fill-available;
+	height: -webkit-fill-available;
+	margin: -9.5px;
+	box-sizing: border-box;
+	appearance: none;
+	-webkit-appearance: none;
+}
+
+input[type="radio"]:checked {
+	background-color: #a100ff;
+	box-shadow: 0px 3px 2px 3px black;
+}
+
+.btnComprobar {
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	width: 80vw;
+	height: 10vh;
+}
+
+.btnComprobar input{
+	width: fit-content;
+	background: #a100ff;
+	color: white;
+	border-radius: 7px;
 }
 
 .legend {
-	margin-top: 20px;
+	margin-top: 10px;
 	margin-left: 30px;
 }
 

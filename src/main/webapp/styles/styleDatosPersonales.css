@@ -75,7 +75,7 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content:center;
-	margin:;
+	
 }
 
 #passChangeButton{
@@ -123,7 +123,7 @@ button:hover{
 	border:2px solid #ED5C5E;
 }
 
-}
+
 .buttonInput{
 	transition: all 0.1s;
 	margin-bottom:16px;

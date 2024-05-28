@@ -2,82 +2,160 @@
 	font-family: "Jost", sans-serif;
 }
 
-
 body {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 99vw;
-	height: 90vh;
+	height: 96vh;
 }
 
-select{
+select {
 	width: 20vw;
 	font-size: 18px;
 	border-color: #a100ff;
-	border:2px solid #a100ff;
+	border: 2px solid #a100ff;
 	border-radius: 10px;
 }
 
-h1{
+h1 {
 	height: 5vh;
 }
 
-.reservas{
- display: flex;
-
+.reservas {
+	display: flex;
 }
 
-.hours{
+.tablaReservas {
+	width: 80vw;
+	border-collapse: collapse;
+	text-align: center;
+	margin-top: 5vh;
+}
+
+.tablaReservas td {
+	width: 120px;
+	height: 30px;
+	border: 2px solid #a100ff;
+	padding: 10px;
+	text-align: center;
+}
+
+input[type="radio"] {
+	width: -webkit-fill-available;
+	height: -webkit-fill-available;
+	margin: -9.5px;
+	box-sizing: border-box;
+	appearance: none;
+	-webkit-appearance: none;
+	height: -webkit-fill-available;
+	margin: -9.5px;
+}
+
+input[type="radio"]:checked {
+	background-color: #a100ff;
+	box-shadow: 0px 3px 2px 3px black;
+}
+
+#buttonSubmit {
+	background-color: #a100ff;
+	color: white;
+	font-size: 15px;
+	border-radius: 10px;
+}
+
+.opcionReservar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 15px;
+	width: 80vw;
+}
+
+.opcionCancelar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 15px;
+	width: 80vw;
+}
+
+.botonReserva {
+	background-color: #a100ff;
+	
+	color: white;
+	border-radius: 8px;
+	border: 2px solid black;
+	padding: 5px;
+	width: 10vw;
+}
+
+.botonReserva:hover {
+	transition: 0.3s ease;
+	background: white;
+	color: #a100ff;
+	border: 2px solid #a100ff;
+}
+
+.botonCancelar {
+	background: white;
+	border: 2px solid #f0361c;
+	color: #f0361c;
+	border-radius: 8px;
+	padding: 5px;
+	width: 10vw;
+}
+
+.botonCancelar:hover {
+	transition: 0.3s ease;
+	background-color: #f0361c;
+	color: white;
+}
+
+.hours {
 	display: flex;
 	flex-direction: column;
 	gap: 0px;
 }
 
-.ocupado{
+.ocupado {
 	background-color: #a100ff;
-	padding: 5px;
-	border-radius: 10px;
-	color: white;
 }
 
-.libre{
-	border: 2px solid #a100ff;
-	padding: 5px;
-	border-radius: 10px;
-	color: #a100ff;
-
+.libre {
+	background-color: white;
 }
 
-#opciones{
-	justify-content: space-between;
-	align-items: center;
-	width: 30vw;
-	margin: 20px;
-}
-
-a.cancelar{
+.informacion {
 	display: flex;
-	background-color: red;
-	color:white;
-	border-radius: 5px;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
-	width: 7vw;
-	height: 5vh;
-	text-decoration: none;
-	font-size: 15px;
 }
 
-button.confirmar{
+.legend {
+	margin-top: 10px;
+	margin-left: 30px;
+}
+
+.legend div {
 	display: flex;
-	background-color: green;
-	color:white;
-	border-radius: 5px;
-	justify-content: center;
 	align-items: center;
-	width: 12vw;
-	height: 5vh;
-	font-size: 15px;
+	margin-bottom: 5px;
+}
+
+.legend div span {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	border: 1px solid #000;
+}
+
+.legend .ocupado {
+	background-color: #a100ff;
+}
+
+.legend .libre {
+	background-color: white;
 }

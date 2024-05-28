@@ -268,6 +268,74 @@ public class UserDAO {
         return changed;
     }
     
+
+    public static String getCourseFromTeacherId(int teacherId) {
+        Connection con = null;
+        String query = "SELECT course_name FROM course WHERE id IN (SELECT course_id FROM user_obj WHERE id = ?)";
+        String courseName = "";
+
+        try {
+            con = new Conector().getMySqlConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, teacherId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                courseName += resultSet.getString("course_name") + ";";
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return courseName.isEmpty() ? "" : courseName.substring(0, courseName.length() - 1); 
+    }
+
+    
+    public static List<User> getStudentsFromTeacherId(int teacherId) {
+        Connection con = null;
+        String query = "SELECT * FROM user_obj WHERE id IN (SELECT student FROM grades WHERE teacher = ?)";
+
+        List<User> estudiantes = new ArrayList<>();
+        try {
+            con = new Conector().getMySqlConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, teacherId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+       
+            while (resultSet.next()) {
+                User user = new User();
+            	user.setId(resultSet.getInt("id"));
+				user.setUserType(resultSet.getString("user_type"));
+                user.setName(resultSet.getString("user_name") + " " + resultSet.getString("user_surname"));
+                user.setSchool_id(resultSet.getInt("school_id"));
+                user.setCourse_id((Integer) resultSet.getObject("course_id"));      
+                
+                estudiantes.add(user);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+		return estudiantes;
+    }
+
     /**
      * Método que recupera la asignatura de un profesor desde base de datos
      * @param id_teacher id del usuario asignado como profesor
@@ -348,8 +416,6 @@ public class UserDAO {
       return school_name;
   }
     
-   
-    
     public static String getMail(int id) {
 		String mail = "";
 		Connection con = null;
@@ -400,5 +466,4 @@ public class UserDAO {
 		}
 		return changed;
 	}
-
 }

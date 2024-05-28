@@ -16,10 +16,155 @@ body{
 h4{
 	margin-top:5vh;
 	font-size: 1.85rem;
-	background-color: #217491;
 	color:white;
-	width:120vh;
+	width:80vw;
 	text-align:center;
 	margin-bottom: 2vh;
 	box-shadow: 0px 3px 5px 0px rgba(26,83,102,1);
 }
+
+.general{
+	display: flex;
+	margin: 2%;
+	width: 80vw;
+	justify-content: space-between;
+}
+
+.asignaturas {
+	background-color: #f0f0f0; 
+	border: 1px solid #ccc; 
+	border-radius: 4px; 
+	padding: 10px; 
+	font-size: 16px; 
+	color: #333; 
+	width: 100%; 
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+	transition: all 0.3s ease; 
+}
+
+.asignaturas:focus {
+	border-color: #007bff; 
+	box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); 
+	outline: none; 
+}
+
+.asignaturas option {
+padding: 10px; 
+ }
+ 
+ 
+.encabezados{
+	display: flex;
+	margin: 2%;
+	width: 80vw;
+	
+	justify-content: space-arround;
+} 
+
+.alumnoBox{
+	display: none;
+	height:auto;
+	flex-direction: column;
+	border: 1px black solid;
+	width: 20vw;
+	overflow:auto;
+	
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+#contenido{
+	display: flex;
+	margin: 2%;
+	width: 80vw;
+	height: 40vh;
+	justify-content: space-between;
+	overflow:auto;
+	
+}
+.examen{
+	display:flex;
+	flex-direction:column;
+	width: 100%;
+	gap: 2px;
+	overflow:auto;
+	
+}
+.boton button:hover{
+	background-color: blue;
+	
+	}
+.boton{
+	font-size:120%;
+	font-weight:100%;
+	width: 100%;
+	height:6vh;
+	color: black;
+	cursor: pointer;
+	transition: all 0.4s ease;
+	border:none;
+	
+}
+#frame{
+	display: none;
+	border: black 1px solid;
+	width: 57vw;
+	height: 40vh;
+	margin-left: 3vw; 
+	gap: 10%;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.anadir{
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	height:7vh;
+	width: 100%;
+	gap:15px;
+}
+
+.anadirbtn{
+	width: 5vw;
+}
+
+.alumnos h4{
+	width: 20vw;
+}
+
+.calificaciones h4{
+	width: 57vw;
+	margin-left: 3vw; 
+}
+ 
+ 
+h4.belenColor {
+	background-color: #de6c02;
+	box-shadow: 0px 3px 5px 0px #8a4605;
+}
+
+h4.picassoColor {
+	background-color: #5b2593;
+	box-shadow: 0px 3px 5px 0px #3e1864;
+}
+
+h4.joseColor {
+	background-color: #006B99;
+	box-shadow: 0px 3px 5px 0px #004964;
+}
+
+h4.turingColor {
+	background-color: #378eb6;
+	box-shadow: 0px 3px 5px 0px #245a75;
+}
+
+h4.cesurColor  {
+	background-color: #244AA4;
+	box-shadow: 0px 3px 5px 0px #1b3679;
+}
+
+
+
+ 

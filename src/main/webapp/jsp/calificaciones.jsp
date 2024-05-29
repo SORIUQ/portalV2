@@ -4,6 +4,7 @@
 <%@ page import="modelsDAO.SubjectDAO"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map" %>
+<%@ page import="modelsDAO.CourseDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -26,6 +27,7 @@ User user = (User) request.getSession().getAttribute("user");
 		notaMedia = notaMedia/gradesSubjectList.size();
 	}
 	String teacherGradesError = (String) session.getAttribute("teacherGradesError");
+	
 %>
 
 <!DOCTYPE html>

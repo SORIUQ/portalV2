@@ -44,14 +44,7 @@ User user = (User) request.getSession().getAttribute("user");
 <body onload="detColoresCalificaciones(<%=user.getSchool_id()%>)">
 	<h4>Calificaciones del centro escolar</h4>
 	<div class="general">
-		<div class="curso">
-			<% if (subjectSelected != null) {%>
-			<h3><%=subjectSelected%></h3>
-			<%}else if (teacherGradesError != null) {%>
-				<h3><%=teacherGradesError%></h3>
-			<%}%>
-		</div>
-		<div>
+		<div class="subjectForm">
 			<form method="GET" action="../teacherGrades">
 				<select class="asignaturas" name="subjectSelected" id="select">
 					<option value="0" disabled selected>-- Seleccione una asignatura --</option>
@@ -60,8 +53,15 @@ User user = (User) request.getSession().getAttribute("user");
 						<option value="<%=subject.getSubjectId()%>"><%=subject.getName()%></option>
 					<%}%>
 				</select>
-				<input type="submit" value="Comprobar">
+				<input type="submit" value="Seleccionar">
 			</form>
+		</div>
+				<div class="curso">
+			<% if (subjectSelected != null) {%>
+			<h3>Notas de <%=subjectSelected%></h3>
+			<%}else if (teacherGradesError != null) {%>
+				<h3><%=teacherGradesError%></h3>
+			<%}%>
 		</div>
 	</div>
 
@@ -72,9 +72,10 @@ User user = (User) request.getSession().getAttribute("user");
 				<%if(userSubject != null) {
 				for(User item : userSubject) {
 				Map<String,String> infoUser = UserDAO.getUserInfo(item.getId());%>
+				<div class="alumnosOptions">
 				<input id="<%=item.getId()%>" type="radio" value="<%=item.getId()%>" name="studentSelected">
 				<label for="<%=item.getId()%>"> <%=infoUser.get("surname")%>, <%=infoUser.get("name")%></label><br>
-				<%}
+				</div><%}
 				}%>
 				<br><input type="submit" id="btnElegir" value="Elegir Alumno">
 			</form>
@@ -82,9 +83,9 @@ User user = (User) request.getSession().getAttribute("user");
 
 		<div class="calificaciones">
 			<h4>Calificaciones</h4>
+			<div id="frame">
 			<%if (alumnoElegido != null) {%>
 			<h3><%=alumnoElegido.get("name")%> <%=alumnoElegido.get("surname")%></h3>
-			<div id="frame">
 				<div id="contenido">
 					<%if (gradesSubjectList != null) {%>
 						<table>
@@ -108,9 +109,9 @@ User user = (User) request.getSession().getAttribute("user");
 					<div class="anadir">
 						<form method="post" action="../showGrades">
 							<label>Nombre examen</label>
-							<input type="text" name="grade_description">
+							<input type="text" name="grade_description" required>
 							<label>Nota Examen</label>
-							<input type="number" name="gradeNumber" min="0" max="10" value="0" step="0.01">
+							<input type="number" name="gradeNumber" min="0" max="10" value="5.0" step="0.01" required>
 							<button type="submit" name="anadir_examen" class="anadirBtn">Añadir</button>
 						</form>
 					</div>

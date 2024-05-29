@@ -51,9 +51,9 @@ input[type="radio"] {
 	width: -webkit-fill-available;
 	height: -webkit-fill-available;
 	margin: -9.5px;
-	box-sizing: border-box;
 	appearance: none;
 	-webkit-appearance: none;
+	box-sizing: border-box;
 }
 
 input[type="radio"]:checked {

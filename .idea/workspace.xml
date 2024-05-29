@@ -5,13 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad31cd45-267c-42e3-9e5e-59a2371d9970" name="Changes" comment="Intento de subir todo">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/models/Internship.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/servlets/CalificacionesAccServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/calificacionesAcc.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/scripts/calificacionesAcc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/styles/calificacionesAcc.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelsDAO/GradeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelsDAO/GradeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelsDAO/SubjectDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelsDAO/SubjectDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelsDAO/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelsDAO/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/StudentGradesServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/StudentGradesServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/portal.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/portal.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <list id="1fe0b899-3038-48b8-87e0-66268c59aaa5" name="Changes by jose.prados.morente" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/calificaciones.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/calificaciones.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/StudentGradesServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/StudentGradesServlet.java" afterDir="false" />
+    </list>
+    <list id="823f53df-cbc9-46fe-bb4a-02ada9923f2f" name="Changes by rsolo" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/calificacionesAlumno.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/calificacionesAlumno.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,27 +40,24 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Ricardoncio"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ricardoncio&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Ricardoncio/portalV2.git",
-    "accountId": "18c06126-1588-48e4-9aa5-282047a2ba97"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Ricardoncio/portalV2.git&quot;,
+    &quot;accountId&quot;: &quot;18c06126-1588-48e4-9aa5-282047a2ba97&quot;
   }
-}]]></component>
+}</component>
   <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java">
+    <file path="$PROJECT_DIR$/src/main/java/servlets/StudentGradesServlet.java">
       <ranges>
-        <range start1="16" end1="16" start2="16" end2="18" changelist="1fe0b899-3038-48b8-87e0-66268c59aaa5" />
-        <range start1="19" end1="20" start2="21" end2="21" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
-        <range start1="21" end1="23" start2="22" end2="23" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
-        <range start1="29" end1="30" start2="29" end2="30" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
-        <range start1="32" end1="33" start2="32" end2="32" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
-        <range start1="34" end1="34" start2="33" end2="34" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
+        <range start1="19" end1="20" start2="19" end2="19" changelist="1fe0b899-3038-48b8-87e0-66268c59aaa5" />
+        <range start1="26" end1="27" start2="25" end2="26" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
+        <range start1="31" end1="33" start2="30" end2="36" changelist="1fe0b899-3038-48b8-87e0-66268c59aaa5" />
       </ranges>
     </file>
   </component>
@@ -57,9 +68,15 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="gc3t999y" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2h9DzmdOO29hXVtH8OmN61cK2Vi" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -67,10 +84,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Smart Tomcat.Unnamed.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "pruebas",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/albertoguzman/Code/portalV2/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -79,6 +99,18 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/styles" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/jsp" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/scripts" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="servlets" />
+      <recent name="models" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Unnamed" type="com.poratu.idea.plugins.tomcat" nameIsGenerated="true">
       <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
@@ -87,7 +119,7 @@
       <predefined_log_file id="Tomcat Manager Log" />
       <predefined_log_file id="Tomcat Host Manager Log" />
       <option name="adminPort" value="8010" />
-      <option name="catalinaBase" value="C:\Users\rsolo\.SmartTomcat\portal\portal" />
+      <option name="catalinaBase" value="" />
       <option name="contextPath" value="/portal" />
       <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
       <option name="envOptions">
@@ -96,9 +128,9 @@
       <option name="extraClassPath" value="" />
       <option name="tomcatInfo">
         <TomcatInfo>
-          <option name="name" value="Apache Tomcat/10.1.20" />
-          <option name="path" value="$PROJECT_DIR$/../portalAcademico/server/apache-tomcat-10.1.20" />
-          <option name="version" value="10.1.20.0" />
+          <option name="name" value="Apache Tomcat/10.1.23 (15)" />
+          <option name="path" value="$USER_HOME$/Downloads/server/apache-tomcat-10.1.23" />
+          <option name="version" value="10.1.23.0" />
         </TomcatInfo>
       </option>
       <option name="vmOptions" value="" />
@@ -107,14 +139,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -125,6 +149,7 @@
       <option name="presentableId" value="Default" />
       <updated>1716997664028</updated>
       <workItem from="1716997665075" duration="1814000" />
+      <workItem from="1717003388313" duration="3166000" />
     </task>
     <task id="LOCAL-00001" summary="Intento de subir todo">
       <option name="closed" value="true" />

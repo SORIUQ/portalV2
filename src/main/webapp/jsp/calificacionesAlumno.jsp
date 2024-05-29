@@ -56,9 +56,13 @@
     <%} else if (allGrades.isEmpty()) {%>
         <h2>No hay notas para esta asignatura</h2>
     <%} else {
-        for (Grade g : allGrades) {%>
-        <p><%=g.getGrade_desc()%> --- <%=g.getGrade()%></p>
-        <%}
+        for (Grade g : allGrades) {
+            if (g.getGrade() != null) {%>
+                <p><%=g.getGrade_desc()%> --- <%=g.getGrade()%></p>
+            <%} else {%>
+                <p><%=g.getGrade_desc()%> --- Nota no disponible</p>
+            <%}
+        }
     }%>
 
 <script type="text/javascript" src="../scripts/script.js"></script>

@@ -6,7 +6,7 @@
 <%@ page import="java.sql.*,utils.*,models.*" %>
 <%@ page import="modelsDAO.CourseDAO" %>
 <%@ page import="modelsDAO.SchoolDAO" %>
-
+<%@ page import="modelsDAO.UserDAO" %>
 <%
 	User activeUser= (User) request.getSession().getAttribute("user");
 	Integer idSchool = null;
@@ -17,6 +17,7 @@
 	String courseName="";
 	Course crs=null;
 	String centroUsuario="";
+	String pathCalificaciones = "";
 
 	if ( session.getAttribute("user") == null ){
 		response.sendRedirect("./jsp/login.jsp");
@@ -32,6 +33,7 @@
 		else
 			centroUsuario = "Accenture";
 		contentTarjeta = Util.getContentTarjetaIndex(activeUser,centroUsuario,crs);
+		pathCalificaciones = UserDAO.calificacionesByUserType(activeUser);
 	}
 %>
 <!DOCTYPE html>
@@ -104,8 +106,7 @@
     </div>
     <%
        }
-    %>
-    <div class="menuOpcion" id="4" onclick="cambiarContenido('jsp/calificaciones.jsp', id)">
+    %><div class="menuOpcion" id="4" onclick="cambiarContenido('<%= pathCalificaciones %>', id)">
        <svg xmlns="http://www.w3.org/2000/svg" width="125" height="125"
           viewBox="0 0 24 24">
           <path fill="#a100ff"

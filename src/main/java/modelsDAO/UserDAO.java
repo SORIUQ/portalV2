@@ -468,4 +468,49 @@ public class UserDAO {
 		}
 		return changed;
 	}
+
+    public static String calificacionesByUserType(User u) {
+        String path = "";
+        if(u.getUserType().equals("01")) {
+            path = "./jsp/calificacionesAlumno.jsp";
+        } else if (u.getUserType().equals("02")) {
+            path = "./jsp/calificaciones.jsp";
+        } else {
+            path = "./jsp/calificacionesAcc.jsp";
+        }
+
+        return path;
+    }
+
+    public static User getUserInfoById(int id) {
+        User u = new User();
+        Connection conn = null;
+        try {
+            conn = new Conector().getMySqlConnection();
+            try (PreparedStatement ps = conn.prepareStatement("Select * from user_obj where id = ?;")) {
+                ps.setInt(1, id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while(rs.next()) {
+                        u.setId(rs.getInt(1));
+                        u.setName(rs.getString(2));
+                        u.setUserType(rs.getString(6));
+                        u.setSchool_id(rs.getInt(7));
+                        u.setCourse_id(rs.getInt(8));
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if(conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return u;
+    }
 }

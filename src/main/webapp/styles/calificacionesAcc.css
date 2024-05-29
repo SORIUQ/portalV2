@@ -1,0 +1,48 @@
+* {
+    font-family: "Jost", sans-serif;
+}
+
+#mainInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+table,
+td,
+th,
+tr {
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+th{
+    background-color: #be4dff;
+    color : white;
+}
+
+.btnEnable {
+    display: none;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tituloAcc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 7vw;
+    background-color: #A100FF;
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 20px;
+}

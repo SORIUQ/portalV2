@@ -42,6 +42,10 @@ h3 {
 	flex-direction: column;
 }
 
+.imagen-noticia{
+	height: 50vh;
+	width: 45vw;
+
 .caption {
 	font-size: 12px;
 	color: #660033;
@@ -85,6 +89,16 @@ p {
 .espacio{
 	color: white;
 	display: flex;
+}
+
+.fecha {
+	display: flex;
+	justify-content: flex-end;	
+}
+
+.fecha p{
+	color: #5c5c5c;
+	font-style: italic;
 }
 
 /* Colores según centro */

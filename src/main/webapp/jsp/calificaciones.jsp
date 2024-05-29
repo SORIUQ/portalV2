@@ -1,6 +1,8 @@
 <%@ page import="models.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="modelsDAO.UserDAO" %>
+<%@ page import="modelsDAO.SubjectDAO" %>
+<%@ page import="models.Subject" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 

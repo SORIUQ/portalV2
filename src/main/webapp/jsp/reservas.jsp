@@ -31,6 +31,7 @@
 <title>Tutorías</title>
 </head>
 <body onload="detColoresTutorias(<%=activeUser.getSchool_id()%>)">
+<button id="idUsuario" style="display:none;" value="<%= activeUser.getId() %>"></button>
 <h4>RESERVAS DISPONIBLES</h4>
 <form action="../appointments" method="get" >
 	<select id="profesorSelect" name="selectedTeacherID" class="profesorSelect">

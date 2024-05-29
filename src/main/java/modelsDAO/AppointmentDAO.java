@@ -110,9 +110,11 @@ public class AppointmentDAO {
         Connection con = null;
 
         boolean alreadyAppointed = false;
-        for (int i = 0; i < appointments.size() && !alreadyAppointed; i++) {
-            if (appointments.get(i).getStudentID() != null && appointments.get(i).getStudentID().equals(student_id))
+        int i = 0;
+        while(i < appointments.size() && !alreadyAppointed) {
+            if(appointments.get(i).getStudentID() != null && appointments.get(i).getStudentID().equals(student_id))
                 alreadyAppointed = true;
+            i++;
         }
 
         if (!alreadyAppointed) {
@@ -200,14 +202,15 @@ public class AppointmentDAO {
 
         try {
             con = new Conector().getMySqlConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM appointment AS ap INNER JOIN user_obj AS u ON ap.student_id = u.id WHERE id = '" + appointment_id + "'");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM appointment AS ap INNER JOIN user_obj AS u ON ap.student_id = u.id WHERE ap.id = ?");
+            ps.setString(1, appointment_id);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 appointmentInfo.put("studentName", rs.getString("u.user_name"));
                 appointmentInfo.put("studentSurname", rs.getString("u.user_surname"));
                 appointmentInfo.put("time", rs.getString("ap.hour"));
                 appointmentInfo.put("date", rs.getString("ap.day"));
-                // --- Cuando se actualice la base de datos --- appointmentInfo.put("room", rs.getString("ap.room"));
+                appointmentInfo.put("room", rs.getString("ap.room"));
             }
 
         } catch (SQLException | ClassNotFoundException e) {

@@ -2,6 +2,7 @@ package modelsDAO;
 
 import connections.Conector;
 import models.Subject;
+import models.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -70,5 +71,43 @@ public class SubjectDAO {
             e.printStackTrace();
         }
         return s;
+    }
+
+    /**
+     * Método que se utiliza en calificaciones.jsp para sacar las asignaturas de un estudiante.
+     * Carga solamente los datos necesarios para crear el select de las asignaturas.
+     * @author Ricardo
+     * @param student Usuario del estudiante.
+     * @return List<Subject> Lista de las asignaturas.
+     */
+    public static List<Subject> getSubjectsFromStudentGrades(User student) {
+        List<Subject> subjects = new ArrayList<>();
+        Connection con = null;
+
+        try {
+            con = new Conector().getMySqlConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT su.id,su.subject_name FROM course_subject AS cs INNER JOIN _subject as su on cs.subject_id = su.id WHERE cs.course_id = ?");
+            ps.setInt(1,student.getCourse_id());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Subject subject = new Subject();
+                subject.setSubjectId(rs.getInt(1));
+                subject.setName(rs.getString(2));
+                subjects.add(subject);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return subjects;
     }
 }

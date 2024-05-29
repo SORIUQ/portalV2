@@ -17,7 +17,9 @@ public class CheckAppointmentInfoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
          String appointment_id = req.getParameter("appointmentSelected");
          HttpSession ses = req.getSession();
-         HashMap<String, Object> appointmentInfo = AppointmentDAO.getAppointmentInfo(appointment_id);
+         HashMap<String, Object> appointmentInfo = null;
+         if (appointment_id != null)
+            appointmentInfo = AppointmentDAO.getAppointmentInfo(appointment_id);
 
          ses.setAttribute("appointmentInfo", appointmentInfo);
          resp.sendRedirect("./jsp/tutoriaProfesor.jsp");

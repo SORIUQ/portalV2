@@ -1,4 +1,4 @@
-	drop database portalacademico;
+drop database portalacademico;
     create database if not exists portalAcademico;
 
 	use portalAcademico;
@@ -73,6 +73,7 @@
 		student_id int,
 		day varchar(10) not null,
 		hour varchar(10),
+        room varchar(50),
 		
 		constraint foreign_key_appointment_teacherId foreign key (teacher_id) references user_obj(id),
 		constraint foreign_key_appointment_studentId foreign key (student_id) references user_obj(id)
@@ -87,8 +88,8 @@
 		caption_img longtext,
 		date_new timestamp,
 		id_school int,
+        
 		constraint foreing_key_news foreign key (id_school) references school(id)
- 
 	);
 
 	create table if not exists news_school(
@@ -133,6 +134,15 @@
         
         constraint fk_school_course_school_id foreign key (school_id) references school(id),
         constraint fk_school_course_course_id foreign key (course_id) references course(id)
+    );
+    
+    create table if not exists internship(
+		tutor int primary key,
+        student int,
+        grade decimal(3,2),
+        
+        constraint fk_prac_tutor foreign key (tutor) references user_obj (id),
+        constraint fk_prac_student foreign key (student) references user_obj (id)
     );
 
 	/* Procedures and functions */
@@ -247,34 +257,66 @@
 	end//
 
 
-	delimiter //
-	create trigger user_subjects
-	after insert on user_obj
-	for each row
-	begin
-	declare teacher_id int;
-	declare numSubject int;
-	declare cont int;
-    declare cont2 int;
-	declare subjectBuilder int;
-    declare numTeachers int;
-    
-	set cont = 0;
-	set cont2 = 0;
-	 if (new.user_type = "01") then
-		set numSubject = (select count(*) from course_subject where course_id=new.course_id);
-        set numTeachers = (select count(*) from user_obj where (course_id=new.course_id and school_id=new.school_id and user_type="02"));
-        while (cont2<numTeachers) do
-			set teacher_id = (select id from user_obj where (course_id=new.course_id and school_id=new.school_id and user_type="02") limit cont2,1);
-			while (cont<numSubject) do
-				set subjectBuilder = (select subject_id from course_subject where course_id=new.course_id limit cont,1);
-				INSERT INTO GRADES(teacher, student, subject_id, grade) values (teacher_id, new.id, subjectBuilder, null);
-				set cont = cont + 1;
-			end while;
-            set cont2 = cont2 + 1;
-        end while;
-	  end if;
-	end//
+	DELIMITER //
+	CREATE TRIGGER user_subjects
+	AFTER INSERT ON user_obj
+	FOR EACH ROW
+	BEGIN
+		DECLARE teacher_id INT;
+		DECLARE subjectBuilder INT;
+		DECLARE done INT DEFAULT 0;
+		DECLARE done2 INT DEFAULT 0;
+		
+		DECLARE teacher_cursor CURSOR FOR 
+			SELECT id 
+			FROM user_obj 
+			WHERE course_id = NEW.course_id AND school_id = NEW.school_id AND user_type = "02";
+		
+		DECLARE subject_cursor CURSOR FOR 
+			SELECT subject_id 
+			FROM course_subject 
+			WHERE course_id = NEW.course_id;
+
+		DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+		IF NEW.user_type = '01' THEN
+			OPEN teacher_cursor;
+				teacher_loop: LOOP
+					FETCH teacher_cursor INTO teacher_id;
+					IF done THEN
+						LEAVE teacher_loop;
+					END IF;
+					
+					SET done2 = 0; -- Reset the second handler flag
+					
+					BEGIN
+						DECLARE CONTINUE HANDLER FOR NOT FOUND SET done2 = 1;
+						
+						OPEN subject_cursor;
+						
+						subject_loop: LOOP
+							FETCH subject_cursor INTO subjectBuilder;
+							IF done2 THEN
+								LEAVE subject_loop;
+							END IF;
+							
+							INSERT INTO GRADES (teacher, student, subject_id, grade) 
+							VALUES (teacher_id, NEW.id, subjectBuilder, NULL);
+						END LOOP subject_loop;
+						
+						CLOSE subject_cursor;
+					END;
+					
+				END LOOP teacher_loop;
+			CLOSE teacher_cursor;
+		END IF;
+	END;
+//
+DELIMITER ;
+
+//
+
+DELIMITER ;
 
 	delimiter //
 	create function getAllCoursesFromTeacherId(teacherId int) returns longtext no sql
@@ -329,27 +371,46 @@
     begin
 		if new.user_type = "02" then
         INSERT INTO appointment values 
-			(CONCAT('L5_', NEW.id), NEW.id, NULL, "20", "17:00"),
-            (CONCAT('M5_', NEW.id), NEW.id, NULL, "21", "17:00"),
-            (CONCAT('X5_', NEW.id), NEW.id, NULL, "22", "17:00"),
-            (CONCAT('J5_', NEW.id), NEW.id, NULL, "23", "17:00"),
-            (CONCAT('V5_', NEW.id), NEW.id, NULL, "24", "17:00"),
-            (CONCAT('L6_', NEW.id), NEW.id, NULL, "20", "18:00"),
-            (CONCAT('M6_', NEW.id), NEW.id, NULL, "21", "18:00"),
-            (CONCAT('X6_', NEW.id), NEW.id, NULL, "22", "18:00"),
-            (CONCAT('J6_', NEW.id), NEW.id, NULL, "23", "18:00"),
-            (CONCAT('V6_', NEW.id), NEW.id, NULL, "24", "18:00"),
-            (CONCAT('L8_', NEW.id), NEW.id, NULL, "20", "19:00"),
-            (CONCAT('M8_', NEW.id), NEW.id, NULL, "21", "19:00"),
-            (CONCAT('X8_', NEW.id), NEW.id, NULL, "22", "19:00"),
-            (CONCAT('J8_', NEW.id), NEW.id, NULL, "23", "19:00"),
-            (CONCAT('V8_', NEW.id), NEW.id, NULL, "24", "19:00");
+			(CONCAT('L5_', NEW.id), NEW.id, NULL, "20", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('M5_', NEW.id), NEW.id, NULL, "21", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('X5_', NEW.id), NEW.id, NULL, "22", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('J5_', NEW.id), NEW.id, NULL, "23", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('V5_', NEW.id), NEW.id, NULL, "24", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('L6_', NEW.id), NEW.id, NULL, "20", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('M6_', NEW.id), NEW.id, NULL, "21", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('X6_', NEW.id), NEW.id, NULL, "22", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('J6_', NEW.id), NEW.id, NULL, "23", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('V6_', NEW.id), NEW.id, NULL, "24", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('L7_', NEW.id), NEW.id, NULL, "20", "19:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('M7_', NEW.id), NEW.id, NULL, "21", "19:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('X7_', NEW.id), NEW.id, NULL, "22", "19:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('J7_', NEW.id), NEW.id, NULL, "23", "19:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('V7_', NEW.id), NEW.id, NULL, "24", "19:00", CONCAT("Despacho de ", New.user_name));
         end if;
     end//
     
-
+	delimiter //
+    create trigger internship
+    after insert on user_obj
+    for each row
+    begin
+		declare tutor1 int;
+		declare tutor2 int;
+		declare tutorInsert int;
+		if new.user_type = "01" then
+			set tutor1 = (select id from user_obj where user_type = "03" limit 0,1);
+            set tutor2 = (select id from user_obj where user_type = "03" limit 1,1);
+            if new.id % 2 = 0 then
+				set tutorInsert = (tutor2);
+			else
+				set tutorInsert = (tutor1);
+            end if;
+            
+            insert into internship values(tutorInsert, new.id, null);
+        end if;
+    end//
+    SELECT su.id,su.subject_name FROM course_subject AS cs INNER JOIN _subject as su on cs.subject_id = su.id WHERE cs.course_id = 1;
 	delimiter ;
-
 	/* Creation of Schools */
 	call insertSchool("Cesur Málaga Este", "+34952598720", "info@cesurformacion.com", "08:00-14:00", "Málaga","https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10757.374130614628!2d-4.372041717464043!3d36.71808277803187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7259120bfc4db3%3A0xec0ecedd8dc61902!2sCESUR%20M%C3%A1laga%20Este%20Formaci%C3%B3n%20Profesional!5e0!3m2!1ses!2ses!4v1715334512514!5m2!1ses!2ses");
 	call insertSchool("IES Pablo Picasso", "+34951298666", "info@fpiespablopicasso.es", "8:30-14:30", "Málaga","https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6395.717928363966!2d-4.455162806420868!3d36.725948300000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f70c3d574e37%3A0x67343146876c734b!2sIES%20Pablo%20Picasso!5e0!3m2!1ses!2ses!4v1715335018709!5m2!1ses!2ses");
@@ -357,7 +418,7 @@
 	call insertSchool("CPIFP Alan Turing", "+34951040449", "29020231.info@g.educaand.es", "09:00-14:00", "Málaga","https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3197.2394272377824!2d-4.554430616275409!3d36.740823696739334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f10963ce0f3d%3A0x310ae7d4bb2e8f7b!2sCPIFP%20Alan%20Turing!5e0!3m2!1ses!2ses!4v1715335096355!5m2!1ses!2ses");
 	call insertSchool("IES San José", "+34952305100", "sanjose@fundacionloyola.es", "09:00-13:00", "Málaga","https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60854.997797710945!2d-4.459410649332534!3d36.715431468654785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f711c56e8bed%3A0x6de2361e88593aeb!2sColegio%20Diocesano%20San%20Jos%C3%A9%20Obrero!5e0!3m2!1ses!2ses!4v1715335137121!5m2!1ses!2ses");
 	/* Creation of subjects */
-	INSERT INTO `_subject` VALUES 
+	INSERT INTO _subject VALUES 
 	(1,'Programacion',8,256),
 	(2,'Entornos de Desarrollo',3,96),
 	(3,'Bases de Datos',6,192),
@@ -368,12 +429,13 @@
 	(8, "Sistemas operativos monopuestos", 8, 140),
 	(9, "Implantacion de sistemas operativos", 8, 256),
 	(10, "Planificacion y administracion de redes", 6, 192),
-	(11, "Fundamentos de hardware", 8, 256);
+	(11, "Fundamentos de hardware", 8, 256),
+    (12, "Prácticas", 18, 180);
 	/* Creacion de cursos */
-	INSERT INTO `course` VALUES
+	INSERT INTO course VALUES
 	 (1,'Desarrollo de aplicaciones Multiplataforma', "DAM", 'La competencia general de este título consiste en desarrollar, implantar, documentar y mantener aplicaciones informáticas multiplataforma, utilizando tecnologías y entornos de desarrollo específicos, garantizando el acceso a los datos de forma segura y cumpliendo los criterios de «usabilidad» y calidad exigidas en los estándares establecidos.'),
 	 (2,'Desarrollo de Aplicaciones Web',"DAW",'La competencia general de este título consiste en desarrollar, implantar, y mantener aplicaciones web, con independencia del modelo empleado y utilizando tecnologías específicas, garantizando el acceso a los datos de forma segura y cumpliendo los criterios de accesibilidad, usabilidad y calidad exigidas en los estándares establecidos.'),
-	 (3,'Administración de sistemas infomrmáticos y redes',"ASIR",'La competencia general de este título consiste en instalar, configurar y mantener sistemas microinformáticos, aislados o en red, así como redes locales en pequeños entornos, asegurando su funcionalidad y aplicando los protocolos de calidad, seguridad y respeto al medio ambiente establecidos.');
+	 (3,'Administración de sistemas informáticos y redes',"ASIR",'La competencia general de este título consiste en instalar, configurar y mantener sistemas microinformáticos, aislados o en red, así como redes locales en pequeños entornos, asegurando su funcionalidad y aplicando los protocolos de calidad, seguridad y respeto al medio ambiente establecidos.');
 	/* Procedures for user_credentials and user_obj inserts */
     /* Profesores de Cesur */ -- Insertar 1 profesor mas por modulo
 	call insertUserCredentials("jon@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
@@ -446,10 +508,10 @@
 	call insertUserCredentials("Tania@gmail.com", "$2a$10$CQE2rHI0O21C2AOD3nsi/uYBfIDidxajgGFnnqd3yzrDhsOmcLuCe"); /* TanTan007 */
 	call insertUser("Tania", "La Rubia Alvarez", "1995-04-29", "09876543D", "03", "Tania@gmail.com", "$2a$10$CQE2rHI0O21C2AOD3nsi/uYBfIDidxajgGFnnqd3yzrDhsOmcLuCe",null,null);
 	/* INSERT DE RELACIONES DE CURSOS */
-	INSERT INTO `course_subject` VALUES 
-	(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),
-	(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),
-	(3,3),(3,4),(3,6),(3,9),(3,10),(3,11);
+	INSERT INTO course_subject VALUES 
+	(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,12),
+	(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,12),
+	(3,3),(3,4),(3,6),(3,9),(3,10),(3,11),(3,12);
 	/* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS CESUR */
     INSERT INTO teacher_subject values (1,3),(2,6),(3,5),(4,4),(5,1),(6,2);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS PICASO */
@@ -461,7 +523,7 @@
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS SAN JOSE */
     INSERT INTO teacher_subject values (25,3),(26,6),(27,5),(29,4),(30,1),(31,2);
     /* INSERT DE COLEGIOS Y MODULOS RELACION */
-    INSERT INTO school_course values (1,1),(1,2),(1,3),(2,1),(3,1),(3,2),(4,1),(4,2),(4,3),(5,1);
+    INSERT INTO school_course values (1,1),(1,2),(1,3),(2,1),(3,1),(3,2),(3,3),(4,1),(4,2),(4,3),(5,1);
     /* INSERT DE LAS NOTICIAS */
     call insertNew("Cesur detecta una alta demanda de formación en informática",
 	'Son alumnos del ciclo de grado Superior en Desarrollo de Aplicaciones Multiplataforma',
@@ -499,7 +561,15 @@
     Por ello, como eje central e importante estos días para mostrar nuestra identidad, desde Pastoral se dispondrá de una Carpa Ignaciana donde poder conocer la vida de San Ignacio de una manera lúdica. Se complementarán con actividades festivas desde el martes 12 con el pregón de bachillerato y las prolongamos hasta el viernes día 15.<br/><br/>
     El martes 12 a las 13:30h se realiza el pregón de Bachillerato. Y el miércoles a las 11h se realizará una introducción a las Fiestas Patronales y Semana Ignaciana por parte del profesor jesuita del centro Crisanto Abeso y el coordinador de Pastoral, Antonio J. Reyes antes de vivir el cañonazo de inicio de los días de fiesta.",
     "../images/sanJoseNoticia.jpg", "",5);
-SELECT distinct * FROM user_obj WHERE (user_type = '02' and course_id = 1 and school_id = 4);
+    
+    -- call insertUserCredentials("test@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
+	-- call insertUser("Test", "Test", "1985-04-29", "77228963T", "01" , "test@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le",1,1);
+	-- call insertUserCredentials("test2@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
+	-- call insertUser("Test2", "Test2", "1985-04-29", "71228963T", "01" , "test2@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le",1,2);
+	-- call insertUserCredentials("test3@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
+	-- call insertUser("Test3", "Test3", "1985-04-29", "73228963T", "01" , "test3@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le",1,3);
+    
+   
     /* Selects */
 	select * from credentials;
 	select * from user_obj;
@@ -510,7 +580,9 @@ SELECT distinct * FROM user_obj WHERE (user_type = '02' and course_id = 1 and sc
 	select * from news;
 	select * from grades;
 	select * from teacher_subject;
+    select * from school_course;
     select * from appointment;
+    select * from internship;
 
 	/* Drop Functions */
 	drop function checkIfSubjectExists;
@@ -528,5 +600,3 @@ SELECT distinct * FROM user_obj WHERE (user_type = '02' and course_id = 1 and sc
 	drop database portalacademico;
 
 	drop trigger user_subjects;
-
-

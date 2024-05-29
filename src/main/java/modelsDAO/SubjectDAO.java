@@ -1,6 +1,7 @@
 package modelsDAO;
 
 import connections.Conector;
+import models.Internship;
 import models.Subject;
 import models.User;
 
@@ -171,6 +172,39 @@ public class SubjectDAO {
     }
 
     return subjects;
+  }
 
+  public static List<Internship> getStudentsInInternshipByMentorId(int id) {
+    Connection conn = null;
+    List<Internship> studentsInternshipInfo = new ArrayList<>();
+
+    try {
+      conn = new Conector().getMySqlConnection();
+      try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM internship WHERE tutor = ?;")) {
+        ps.setInt(1, id);
+        try (ResultSet rs = ps.executeQuery()) {
+          while (rs.next()) {
+            int mentorId = rs.getInt("tutor");
+            int studentId = rs.getInt("student");
+            float grade = rs.getFloat("grade");
+            User mentor = UserDAO.getUserInfoById(mentorId);
+            User student = UserDAO.getUserInfoById(studentId);
+            studentsInternshipInfo.add(new Internship(mentor, student, grade));
+          }
+        }
+      }
+    } catch (SQLException | ClassNotFoundException e) {
+      e.printStackTrace();
+    } finally {
+      if (conn != null) {
+        try {
+          conn.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+    return studentsInternshipInfo;
   }
 }

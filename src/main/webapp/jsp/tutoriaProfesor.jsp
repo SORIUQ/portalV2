@@ -26,7 +26,7 @@
 <title>Reservas</title>
 </head>
 <body onload="detColoresTutorias(<%=activeUser.getSchool_id()%>)">
-	<h4>RESERVAS DISPONIBLES</h4>
+	<h4>TUTORIAS</h4>
 	<div class="legend">
                 <div>
                     <span class="ocupado"></span> Ocupados

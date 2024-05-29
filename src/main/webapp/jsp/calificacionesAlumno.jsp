@@ -56,15 +56,28 @@
         <p></p>
     <%} else if (allGrades.isEmpty()) {%>
         <h2>No hay notas para esta asignatura</h2>
-    <%} else {
-        for (Grade g : allGrades) {
-            if (g.getGrade() != null) {%>
-                <p><%=g.getGrade_desc()%> --- <%=g.getGrade()%></p>
+    <%} else {%>
+
+        <div class="estilo-notas">
+            <h4>Nombre examen</h4>
+            <h4>Nota</h4>
+        </div>
+        <div id="frame2">
+        <%for (Grade g : allGrades) { %>
+            <%if (g.getGrade() != null) {%>
+            <div class="estilo-notas2">
+                <p><%=g.getGrade_desc()%></p>
+                <p><%=g.getGrade()%></p>
+            </div>
             <%} else {%>
-                <p><%=g.getGrade_desc()%> --- Nota no disponible</p>
+                <div class="estilo-notas2">
+                    <p><%=g.getGrade_desc()%></p>
+                    <p>Nota no disponible</p>
+                </div>
             <%}
-        }
-    }%>
+        }%>
+        </div>
+    <%}%>
 
 <script type="text/javascript" src="../scripts/script.js"></script>
 </body>

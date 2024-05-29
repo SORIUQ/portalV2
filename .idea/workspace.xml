@@ -5,16 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad31cd45-267c-42e3-9e5e-59a2371d9970" name="Changes" comment="Intento de subir todo">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_29_05_2024_20_22__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_29_05_2024_20_22__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelsDAO/AppointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelsDAO/AppointmentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/RegisterServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/RegisterServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/portal.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/portal.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/calificacionesAlumno.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/calificacionesAlumno.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/datosPersonales.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/datosPersonales.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/reservas.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/reservas.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/styleLogin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/styleLogin.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/tutoriaProfesor.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/tutoriaProfesor.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/styleCalificaciones.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/styleCalificaciones.css" afterDir="false" />
     </list>
     <list id="1fe0b899-3038-48b8-87e0-66268c59aaa5" name="Changes by jose.prados.morente" comment="" />
     <list id="823f53df-cbc9-46fe-bb4a-02ada9923f2f" name="Changes by rsolo" comment="" />
@@ -100,8 +96,8 @@
       <predefined_log_file id="Tomcat Catalina Log" />
       <predefined_log_file id="Tomcat Manager Log" />
       <predefined_log_file id="Tomcat Host Manager Log" />
-      <option name="adminPort" value="8010" />
-      <option name="catalinaBase" value="C:\Users\rsolo\.SmartTomcat\portal\portal" />
+      <option name="adminPort" value="8009" />
+      <option name="catalinaBase" value="C:\Users\j.penalver.quiros\.SmartTomcat\portalv2\portal" />
       <option name="contextPath" value="/portal" />
       <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
       <option name="envOptions">
@@ -111,7 +107,7 @@
       <option name="tomcatInfo">
         <TomcatInfo>
           <option name="name" value="Apache Tomcat/10.1.20" />
-          <option name="path" value="$PROJECT_DIR$/../portalAcademico/server/apache-tomcat-10.1.20" />
+          <option name="path" value="$PROJECT_DIR$/../../../../Dev/servers/apache-tomcat-10.1.20" />
           <option name="version" value="10.1.20.0" />
         </TomcatInfo>
       </option>

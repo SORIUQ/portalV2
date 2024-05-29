@@ -1,13 +1,13 @@
 <%@page import="com.mysql.cj.util.Util"%>
 <%@page import="org.apache.tomcat.dbcp.dbcp2.Utils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ page import="models.*,java.util.List,utils.*"%>
 <%@ page import="modelsDAO.UserDAO"%>
-<%@ page import="modelsDAO.AppointmentDAO" %>
+<%@ page import="modelsDAO.AppointmentDAO"%>
 
 <%
-	User activeUser= (User) request.getSession().getAttribute("user");
+	User activeUser = (User) request.getSession().getAttribute("user");
 	if (activeUser.getUserType().equals("02")) {response.sendRedirect("./tutoriaProfesor.jsp");}
 	List<User> teachers = UserDAO.getAllNameTeachers(activeUser.getCourse_id(), activeUser.getSchool_id());
 	List<Appointment> appointments = (List<Appointment>) session.getAttribute("appointments");
@@ -19,16 +19,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<% if (activeUser.getUserType().equals("01")) { %>
-	<link href="../styles/styleReserva.css" rel="stylesheet">
-	<% } %>
-	<link
-			href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
-			rel="stylesheet">
-	<meta charset="UTF-8">
-	<title>Tutorías</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<% if (activeUser.getUserType().equals("01")) { %>
+<link href="../styles/styleReserva.css" rel="stylesheet">
+<% } %>
+<link
+	href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
+	rel="stylesheet">
+<meta charset="UTF-8">
+<title>Tutorías</title>
 </head>
 <body onload="detColoresTutorias(<%=activeUser.getSchool_id()%>)">
 <h4>RESERVAS DISPONIBLES</h4>
@@ -41,18 +41,17 @@
 	</select>
 	<input id="buttonSubmit" type="submit" class="buttonSubmit">
 </form>
-
-<% if (okMsg != null) {%>
+	<% if (okMsg != null) {%>
 	<p class="okMsg"><%=okMsg%></p>
-<%}%>
+	<%}%>
 
-<% if (errorMsg != null) {%>
+	<% if (errorMsg != null) {%>
 	<p class="errorMsg"><%=errorMsg%></p>
-<%}%>
+	<%}%>
 
-<div id="reservas">	
-	<% if (appointments != null) {%>
-	
+	<div id="reservas">
+		<% if (appointments != null) {%>
+
 		<div class="informacion">
 			<div class="informacionConcreta">
 				<h3>Asignatura: <span class="Letras"><%= UserDAO.getSubjectTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span></h3>
@@ -60,18 +59,21 @@
 				<p><strong>Horario:</strong> de lunes a viernes de 17:00 a 20:00</p>
 			</div>
 			<div class="legend">
-	                <div>
-	                    <span class="ocupado"></span> Ocupados
-	                </div>
-	                <div>
-	                    <span class="libre"></span> Libres
-	                </div>
-	            </div>
-        </div>
+				<div>
+					<span class="ocupado"></span> Ocupados
+				</div>
+				<div>
+					<span class="libre"></span> Libres
+				</div>
+				<div>
+					<span class="tuReserva"></span> Tu Reserva
+				</div>
+			</div>
+		</div>
 		<form action="../appointments" method="post">
 			<table class="tablaReservas">
 				<tr>
-					<th> </th>
+					<th></th>
 					<th>Lunes</th>
 					<th>Martes</th>
 					<th>Miércoles</th>
@@ -81,32 +83,44 @@
 				<tr>
 					<td>17:00 - 18:00</td>
 					<%for (Appointment a : AppointmentDAO.getAppointments1700(appointments)) {%>
-						<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
-							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
-						<%} else {%>
-							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID"></td>
-						<%}%>
+					<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
+					<td>
+					    <input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled data-student-id="<%=a.getStudentID()%>">
+					</td>
+					<%} else {%>
+					<td>
+					    <input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" data-student-id="0">
+					</td>
+					<%}%>
 					<%}%>
 				</tr>
 				<tr>
 					<td>18:00 - 19:00</td>
 					<%for (Appointment a : AppointmentDAO.getAppointments1800(appointments)) {%>
-						<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
-							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
-						<%} else {%>
-							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID"></td>
-						<%}%>
+					<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
+					<td>
+					    <input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled data-student-id="<%=a.getStudentID()%>">
+					</td>
+					<%} else {%>
+					<td>
+					    <input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" data-student-id="0">
+					</td>
+					<%}%>
 					<%}%>
 				</tr>
 				<tr>
 					<td>19:00 - 20:00</td>
-					<%for (Appointment a : AppointmentDAO.getAppointments1900(appointments)){%>
-						<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
-							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
-						<%} else {%>
-							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID"></td>
-						<%}
-					}%>
+					<%for (Appointment a : AppointmentDAO.getAppointments1900(appointments)) {%>
+					<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
+					<td>
+					    <input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled data-student-id="<%=a.getStudentID()%>">
+					</td>
+					<%} else {%>
+					<td>
+					    <input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" data-student-id="0">
+					</td>
+					<%}%>
+					<%}%>
 				</tr>
 			</table>
 			<div class="opcionReservar">
@@ -117,21 +131,25 @@
 			<button class="botonCancelar" type="submit">Cancelar Reserva</button>
 		</form>
 
-	<%}%>
-</div>
+		<%}%>
+	</div>
 
-<script type="text/javascript">
+	<script type="text/javascript">
+	const radios = document.querySelectorAll('input[type="radio"]');
+	const idUsuario = document.getElementById('idUsuario').value;
 
-const radios = document.querySelectorAll('input[type="radio"]');
-
-radios.forEach(radio => {
-    if (radio.disabled) {
-        radio.closest('td').classList.add('ocupado');
-    }
-});
-
-
-</script>
+	radios.forEach(radio => {
+	    const studentId = radio.getAttribute('data-student-id');
+	    
+	    if (radio.disabled) {
+	        radio.closest('td').classList.add('ocupado');
+	    }
+	    
+	    if(studentId == idUsuario) {
+	        radio.closest('td').classList.add('tuReserva');
+	    }
+	});
+	</script>
 	<script type="text/javascript" src="../scripts/script.js"></script>
 </body>
 </html>

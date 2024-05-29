@@ -137,11 +137,10 @@ public class UserDAO {
     }
 
     /**
-     * Método que se utiliza para rescatar los estudiantes de un profesor y el id de una asignatura.
+     * Método que se utiliza para rescatar los estudiantes de un profesor a partir de su ID.
      * @author Ricardo
      * @param teacher Usuario del profesor.
-     * @param subject_id Id de la asignatura que se quiere consultar.
-     * @return List<User> (Lista de los estudiantes)
+     * @return List<User> (Lista de los estudiantes del profesor)
      */
     public static List<User> getStudentsFromTeacherAndSubjectId(User teacher, int subject_id) {
         Connection con = null;
@@ -294,7 +293,7 @@ public class UserDAO {
                 try {
                     con.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -331,7 +330,7 @@ public class UserDAO {
                 try {
                     con.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -437,7 +436,7 @@ public class UserDAO {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					e.printStackTrace();
 				}
 			}
 		}
@@ -463,7 +462,7 @@ public class UserDAO {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					e.printStackTrace();
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-	drop database portalacademico;
+drop database portalacademico;
     create database if not exists portalAcademico;
 
 	use portalAcademico;
@@ -73,6 +73,7 @@
 		student_id int,
 		day varchar(10) not null,
 		hour varchar(10),
+        room varchar(50),
 		
 		constraint foreign_key_appointment_teacherId foreign key (teacher_id) references user_obj(id),
 		constraint foreign_key_appointment_studentId foreign key (student_id) references user_obj(id)
@@ -87,8 +88,8 @@
 		caption_img longtext,
 		date_new timestamp,
 		id_school int,
+        
 		constraint foreing_key_news foreign key (id_school) references school(id)
- 
 	);
 
 	create table if not exists news_school(
@@ -113,8 +114,10 @@
 		teacher int not null,
 		student int not null,
 		subject_id int not null,
-		grade decimal(3,2) constraint check_grade check (grade >= 0 and grade <= 10),
+		grade decimal(4,2),
+        grade_description varchar(50),
 		
+        constraint check_grade check (grade >= 0 and grade <= 10),
 		constraint foreign_key_userTypeTeacher foreign key (teacher) references user_obj(id),
 		constraint foreign_key_userTypeStudent foreign key (student) references user_obj(id)
 	);
@@ -134,8 +137,16 @@
         constraint fk_school_course_school_id foreign key (school_id) references school(id),
         constraint fk_school_course_course_id foreign key (course_id) references course(id)
     );
-
     
+    create table if not exists internship(
+		tutor int,
+        student int,
+        grade decimal(4,2),
+        
+        constraint fk_prac_tutor foreign key (tutor) references user_obj (id),
+        constraint fk_prac_student foreign key (student) references user_obj (id)
+    );
+
 	/* Procedures and functions */
 	delimiter //
 	create function checkIfExistsUserCredentials(user_email varchar(255), user_pass varchar(255)) returns boolean no sql
@@ -248,34 +259,66 @@
 	end//
 
 
-	delimiter //
-	create trigger user_subjects
-	after insert on user_obj
-	for each row
-	begin
-	declare teacher_id int;
-	declare numSubject int;
-	declare cont int;
-    declare cont2 int;
-	declare subjectBuilder int;
-    declare numTeachers int;
-    
-	set cont = 0;
-	set cont2 = 0;
-	 if (new.user_type = "01") then
-		set numSubject = (select count(*) from course_subject where course_id=new.course_id);
-        set numTeachers = (select count(*) from user_obj where (course_id=new.course_id and school_id=new.school_id and user_type="02"));
-        while (cont2<numTeachers) do
-			set teacher_id = (select id from user_obj where (course_id=new.course_id and school_id=new.school_id and user_type="02") limit cont2,1);
-			while (cont<numSubject) do
-				set subjectBuilder = (select subject_id from course_subject where course_id=new.course_id limit cont,1);
-				INSERT INTO GRADES(teacher, student, subject_id, grade) values (teacher_id, new.id, subjectBuilder, null);
-				set cont = cont + 1;
-			end while;
-            set cont2 = cont2 + 1;
-        end while;
-	  end if;
-	end//
+	DELIMITER //
+	CREATE TRIGGER user_subjects
+	AFTER INSERT ON user_obj
+	FOR EACH ROW
+	BEGIN
+		DECLARE teacher_id INT;
+		DECLARE subjectBuilder INT;
+		DECLARE done INT DEFAULT 0;
+		DECLARE done2 INT DEFAULT 0;
+		
+		DECLARE teacher_cursor CURSOR FOR 
+			SELECT id 
+			FROM user_obj 
+			WHERE course_id = NEW.course_id AND school_id = NEW.school_id AND user_type = "02";
+		
+		DECLARE subject_cursor CURSOR FOR 
+			SELECT subject_id 
+			FROM course_subject 
+			WHERE course_id = NEW.course_id;
+
+		DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+		IF NEW.user_type = '01' THEN
+			OPEN teacher_cursor;
+				teacher_loop: LOOP
+					FETCH teacher_cursor INTO teacher_id;
+					IF done THEN
+						LEAVE teacher_loop;
+					END IF;
+					
+					SET done2 = 0; -- Reset the second handler flag
+					
+					BEGIN
+						DECLARE CONTINUE HANDLER FOR NOT FOUND SET done2 = 1;
+						
+						OPEN subject_cursor;
+						
+						subject_loop: LOOP
+							FETCH subject_cursor INTO subjectBuilder;
+							IF done2 THEN
+								LEAVE subject_loop;
+							END IF;
+							
+							INSERT INTO GRADES (teacher, student, subject_id, grade, grade_description) 
+							VALUES (teacher_id, NEW.id, subjectBuilder, NULL, NULL);
+						END LOOP subject_loop;
+						
+						CLOSE subject_cursor;
+					END;
+					
+				END LOOP teacher_loop;
+			CLOSE teacher_cursor;
+		END IF;
+	END;
+//
+DELIMITER ;
+
+//
+
+DELIMITER ;
 
 	delimiter //
 	create function getAllCoursesFromTeacherId(teacherId int) returns longtext no sql
@@ -348,8 +391,29 @@
         end if;
     end//
     
-	delimiter ;
+	delimiter //
+	create trigger internship
+	after insert on user_obj
+	for each row
+	begin
+		declare tutor1 int;
+		declare tutor2 int;
+		declare tutorInsert int;
+		if new.user_type = "01" then
+			set tutor1 = (select id from user_obj where user_type = "03" order by id limit 0,1);
+			set tutor2 = (select id from user_obj where user_type = "03" order by id limit 1,1);
+			if new.id % 2 = 0 then
+				set tutorInsert = tutor2;
+			else
+				set tutorInsert = tutor1;
+			end if;
+			
+			insert into internship values(tutorInsert, new.id, null);
+		end if;
+	end//
 
+
+	delimiter ;
 	/* Creation of Schools */
 	call insertSchool("Cesur Málaga Este", "+34952598720", "info@cesurformacion.com", "08:00-14:00", "Málaga","https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10757.374130614628!2d-4.372041717464043!3d36.71808277803187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7259120bfc4db3%3A0xec0ecedd8dc61902!2sCESUR%20M%C3%A1laga%20Este%20Formaci%C3%B3n%20Profesional!5e0!3m2!1ses!2ses!4v1715334512514!5m2!1ses!2ses");
 	call insertSchool("IES Pablo Picasso", "+34951298666", "info@fpiespablopicasso.es", "8:30-14:30", "Málaga","https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6395.717928363966!2d-4.455162806420868!3d36.725948300000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f70c3d574e37%3A0x67343146876c734b!2sIES%20Pablo%20Picasso!5e0!3m2!1ses!2ses!4v1715335018709!5m2!1ses!2ses");
@@ -357,7 +421,7 @@
 	call insertSchool("CPIFP Alan Turing", "+34951040449", "29020231.info@g.educaand.es", "09:00-14:00", "Málaga","https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3197.2394272377824!2d-4.554430616275409!3d36.740823696739334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f10963ce0f3d%3A0x310ae7d4bb2e8f7b!2sCPIFP%20Alan%20Turing!5e0!3m2!1ses!2ses!4v1715335096355!5m2!1ses!2ses");
 	call insertSchool("IES San José", "+34952305100", "sanjose@fundacionloyola.es", "09:00-13:00", "Málaga","https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60854.997797710945!2d-4.459410649332534!3d36.715431468654785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f711c56e8bed%3A0x6de2361e88593aeb!2sColegio%20Diocesano%20San%20Jos%C3%A9%20Obrero!5e0!3m2!1ses!2ses!4v1715335137121!5m2!1ses!2ses");
 	/* Creation of subjects */
-	INSERT INTO `_subject` VALUES 
+	INSERT INTO _subject VALUES 
 	(1,'Programacion',8,256),
 	(2,'Entornos de Desarrollo',3,96),
 	(3,'Bases de Datos',6,192),
@@ -368,12 +432,13 @@
 	(8, "Sistemas operativos monopuestos", 8, 140),
 	(9, "Implantacion de sistemas operativos", 8, 256),
 	(10, "Planificacion y administracion de redes", 6, 192),
-	(11, "Fundamentos de hardware", 8, 256);
+	(11, "Fundamentos de hardware", 8, 256),
+    (12, "Prácticas", 18, 180);
 	/* Creacion de cursos */
-	INSERT INTO `course` VALUES
+	INSERT INTO course VALUES
 	 (1,'Desarrollo de aplicaciones Multiplataforma', "DAM", 'La competencia general de este título consiste en desarrollar, implantar, documentar y mantener aplicaciones informáticas multiplataforma, utilizando tecnologías y entornos de desarrollo específicos, garantizando el acceso a los datos de forma segura y cumpliendo los criterios de «usabilidad» y calidad exigidas en los estándares establecidos.'),
 	 (2,'Desarrollo de Aplicaciones Web',"DAW",'La competencia general de este título consiste en desarrollar, implantar, y mantener aplicaciones web, con independencia del modelo empleado y utilizando tecnologías específicas, garantizando el acceso a los datos de forma segura y cumpliendo los criterios de accesibilidad, usabilidad y calidad exigidas en los estándares establecidos.'),
-	 (3,'Administración de sistemas infomrmáticos y redes',"ASIR",'La competencia general de este título consiste en instalar, configurar y mantener sistemas microinformáticos, aislados o en red, así como redes locales en pequeños entornos, asegurando su funcionalidad y aplicando los protocolos de calidad, seguridad y respeto al medio ambiente establecidos.');
+	 (3,'Administración de sistemas informáticos y redes',"ASIR",'La competencia general de este título consiste en instalar, configurar y mantener sistemas microinformáticos, aislados o en red, así como redes locales en pequeños entornos, asegurando su funcionalidad y aplicando los protocolos de calidad, seguridad y respeto al medio ambiente establecidos.');
 	/* Procedures for user_credentials and user_obj inserts */
     /* Profesores de Cesur */ -- Insertar 1 profesor mas por modulo
 	call insertUserCredentials("jon@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
@@ -393,14 +458,6 @@
 	call insertUser("Francisco", "Perez Trabuco", "1982-11-12", "98736410L", "02", "Francisco@gmail.com", "$2a$10$JPLdWVEyoNhQhlaU8MsNvOmIVPgVuvv4W0TA6f5.jKihNpGK8knXq",2,1);
     call insertUserCredentials("marco.rivera@gmail.com", "$2a$10$GVhNjO9qMhDGPg.m6A6K7.wgrXKR8kpSUvs2.Ts/EVF.mTO6UoGfe"); /* Marco1234 */
 	call insertUser("Marco", "Rivera González", "1990-05-23", "51587689T", "02", "marco.rivera@gmail.com", "$2a$10$GVhNjO9qMhDGPg.m6A6K7.wgrXKR8kpSUvs2.Ts/EVF.mTO6UoGfe", 2, 1);
-    call insertUserCredentials("manolito@gmail.es", "$2a$10$gdYhX1FMCnqgkQuiqD5ZR.v2BKqQkMC1FieI4QQ/54TlBbbHs.boW"); /* Manolo1234 */
-	call insertUser("Manolo", "Romeo Santos", "1980-11-12", "31905928Y", "02", "manolito@gmail.es", "$2a$10$gdYhX1FMCnqgkQuiqD5ZR.v2BKqQkMC1FieI4QQ/54TlBbbHs.boW",2,2);
-    call insertUserCredentials("ana.martinez@yahoo.com", "$2a$10$Ht4WgvEVXwzSVZvOcN7q9.Qbt9fLK3wajJMREHvwAwDLH8ZCHjzNK"); /* Ana56781 */
-	call insertUser("Ana", "Martínez López", "1985-03-14", "95392883S", "02", "ana.martinez@yahoo.com", "$2a$10$Ht4WgvEVXwzSVZvOcN7q9.Qbt9fLK3wajJMREHvwAwDLH8ZCHjzNK", 2, 2);
-    call insertUserCredentials("ignacio@hotmail.com", "$2a$10$ICiXygfTa5Hn5ep.8gwmzuTsj.nn0bi3I8WwVSPhGNCTB7RfUZlPa"); /* Ignacio1234 */
-	call insertUser("Ignacio", "Martinez Orozco", "1985-07-20", "50793526G", "02", "ignacio@hotmail.com", "$2a$10$ICiXygfTa5Hn5ep.8gwmzuTsj.nn0bi3I8WwVSPhGNCTB7RfUZlPa",2,3);
-    call insertUserCredentials("juan.gomez@hotmail.com", "$2a$10$F5JhHafm/ayj2zx6.dvEKOpHnS6sUuNP/wHOXdj6eKulQdscUv3iK"); /* Juan0912 */
-	call insertUser("Juan", "Gómez Pérez", "1978-07-19", "03403804B", "02", "juan.gomez@hotmail.com", "$2a$10$F5JhHafm/ayj2zx6.dvEKOpHnS6sUuNP/wHOXdj6eKulQdscUv3iK", 2, 3);
      /* Profesores de Belen */
 	call insertUserCredentials("guille@yahoo.es", "$2a$10$rkNrx7AVnB1HgEcFRhyAU.FQ/wmjOlbyk13WoSWzC5DyAMBcwGaDK"); /* Guille1990 */
 	call insertUser("Guillermo", "Huertas Romero", "1990-05-01", "47739814W", "02", "guille@yahoo.es", "$2a$10$rkNrx7AVnB1HgEcFRhyAU.FQ/wmjOlbyk13WoSWzC5DyAMBcwGaDK",3,1);
@@ -432,36 +489,28 @@
 	call insertUser("Lorena", "Montiel Frias", "1987-03-19", "68797512G", "02", "lorenaDoc@gmail.com", "$2a$10$6tYROejoBQbaj5yO7NnxUe96iPfQ7wl2VWf/q3QyMeNaeYoezCEMW", 5, 1);
     call insertUserCredentials("fernando.santos@hotmail.com", "$2a$10$iGfUJDCvZF8SsrcrCNtAdudRCR0RaJibromJ.7SQDWTCfyaqq8u7C"); /* Fer78901 */
 	call insertUser("Fernando", "Santos Morales", "1986-09-25", "27065670Y", "02", "fernando.santos@hotmail.com", "$2a$10$iGfUJDCvZF8SsrcrCNtAdudRCR0RaJibromJ.7SQDWTCfyaqq8u7C", 5, 1);
-    call insertUserCredentials("jules@gmail.com", "$2a$10$14GHq3E81STLFVntY6vU1O3uCEKLRBJoq0lWHa1OD2drQk.zDraZy"); /* Jules1234 */
-	call insertUser("Julian", "Ferrer Salcedo", "1987-06-25", "34588381S", "02", "jules@gmail.com", "$2a$10$14GHq3E81STLFVntY6vU1O3uCEKLRBJoq0lWHa1OD2drQk.zDraZy", 5, 2);
-    call insertUserCredentials("marta.suarez@gmail.com", "$2a$10$bVBQ3NVRjKdpLOItFJwpJ.VaCfnzpJAONb/jAYC738CnvM8WEuB.a"); /* Marta0987 */
-	call insertUser("Marta", "Suárez Gómez", "1993-01-21", "97227922E", "02", "marta.suarez@gmail.com", "$2a$10$bVBQ3NVRjKdpLOItFJwpJ.VaCfnzpJAONb/jAYC738CnvM8WEuB.a", 5, 2);
-    call insertUserCredentials("jacinto@hotmail.com", "$2a$10$dWhbVGmsZRbom2ECWRr4.ecSA6Gi8mcU4jpNn3m3aRFPuQ3IPoQ/2"); /* Jacin1234 */
-	call insertUser("Jacinto", "Peris Stivaliz", "1992-03-03", "38825794T", "02", "jacinto@hotmail.com", "$2a$10$dWhbVGmsZRbom2ECWRr4.ecSA6Gi8mcU4jpNn3m3aRFPuQ3IPoQ/2", 5, 3);
-    call insertUserCredentials("alejandro.lopez@yahoo.com", "$2a$10$nmwsvMCczldfdlnMvBp.QuwLrvt.hqKS.aH7pEXiBaIiA6JWI.9Dm"); /* Alex5678 */
-	call insertUser("Alejandro", "López Vega", "1984-10-03", "64834083G", "02", "alejandro.lopez@yahoo.com", "$2a$10$nmwsvMCczldfdlnMvBp.QuwLrvt.hqKS.aH7pEXiBaIiA6JWI.9Dm", 5, 3);
 	/* Inserts de credenciales y usuarios de type acc */
 	call insertUserCredentials("Laura@gmail.com", "$2a$10$GuYsBZYvEDr18OapLN58WuqjriUtoz/SIiB4n3hhxUCWShszjvYCu"); /* Lau10295 */
 	call insertUser("Laura", "Gasset Vargas", "1990-04-23", "12345678A", "03", "Laura@gmail.com", "$2a$10$GuYsBZYvEDr18OapLN58WuqjriUtoz/SIiB4n3hhxUCWShszjvYCu",null,null);
 	call insertUserCredentials("Tania@gmail.com", "$2a$10$CQE2rHI0O21C2AOD3nsi/uYBfIDidxajgGFnnqd3yzrDhsOmcLuCe"); /* TanTan007 */
 	call insertUser("Tania", "La Rubia Alvarez", "1995-04-29", "09876543D", "03", "Tania@gmail.com", "$2a$10$CQE2rHI0O21C2AOD3nsi/uYBfIDidxajgGFnnqd3yzrDhsOmcLuCe",null,null);
 	/* INSERT DE RELACIONES DE CURSOS */
-	INSERT INTO `course_subject` VALUES 
-	(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),
-	(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),
-	(3,3),(3,4),(3,6),(3,9),(3,10),(3,11);
+	INSERT INTO course_subject VALUES 
+	(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,12),
+	(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,12),
+	(3,3),(3,4),(3,6),(3,9),(3,10),(3,11),(3,12);
 	/* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS CESUR */
-    INSERT INTO teacher_subject values (1,3),(1,6),(1,5),(2,4),(2,1),(2,2);
+    INSERT INTO teacher_subject values (1,1),(1,2),(1,3),(2,4),(2,5),(2,6),(3,1),(3,2),(3,3),(4,4),(4,5),(4,6),(5,3),(5,4),(5,6),(6,9),(6,10),(6,11);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS PICASO */
-    INSERT INTO teacher_subject values (7,3),(7,6),(7,5),(8,4),(8,1),(8,2);
+    INSERT INTO teacher_subject values (7,1),(7,2),(7,3),(8,4),(8,5),(8,6);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS BELEN */
-    INSERT INTO teacher_subject values (13,3),(13,6),(13,5),(16,4),(16,1),(16,2);
+    INSERT INTO teacher_subject values (9,1),(9,2),(9,3),(10,4),(10,5),(10,6),(11,1),(11,2),(11,3),(12,4),(12,5),(12,6),(13,3),(13,4),(13,6),(14,9),(14,10),(14,11);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS CPIFP */
-    INSERT INTO teacher_subject values (19,3),(19,6),(19,5),(20,4),(20,1),(20,2);
+    INSERT INTO teacher_subject values (15,1),(15,2),(15,3),(16,4),(16,5),(16,6),(17,1),(17,2),(17,3),(18,4),(18,5),(18,6),(19,3),(19,4),(19,6),(20,9),(20,10),(20,11);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS SAN JOSE */
-    INSERT INTO teacher_subject values (25,3),(25,6),(25,5),(29,4),(29,1),(29,2);
+    INSERT INTO teacher_subject values (21,1),(21,2),(21,3),(22,4),(22,5),(22,6);
     /* INSERT DE COLEGIOS Y MODULOS RELACION */
-    INSERT INTO school_course values (1,1),(1,2),(1,3),(2,1),(3,1),(3,2),(4,1),(4,2),(4,3),(5,1);
+    INSERT INTO school_course values (1,1),(1,2),(1,3),(2,1),(3,1),(3,2),(3,3),(4,1),(4,2),(4,3),(5,1);
     /* INSERT DE LAS NOTICIAS */
     call insertNew("Cesur detecta una alta demanda de formación en informática",
 	'Son alumnos del ciclo de grado Superior en Desarrollo de Aplicaciones Multiplataforma',
@@ -499,7 +548,40 @@
     Por ello, como eje central e importante estos días para mostrar nuestra identidad, desde Pastoral se dispondrá de una Carpa Ignaciana donde poder conocer la vida de San Ignacio de una manera lúdica. Se complementarán con actividades festivas desde el martes 12 con el pregón de bachillerato y las prolongamos hasta el viernes día 15.<br/><br/>
     El martes 12 a las 13:30h se realiza el pregón de Bachillerato. Y el miércoles a las 11h se realizará una introducción a las Fiestas Patronales y Semana Ignaciana por parte del profesor jesuita del centro Crisanto Abeso y el coordinador de Pastoral, Antonio J. Reyes antes de vivir el cañonazo de inicio de los días de fiesta.",
     "../images/sanJoseNoticia.jpg", "",5);
-SELECT distinct * FROM user_obj WHERE (user_type = '02' and course_id = 1 and school_id = 4);
+
+    call insertNew("El Instituto Celebra su Primer Festival de Innovación y Tecnología",
+	'Un evento que acercó a los alumnos a las últimas novedades tecnológicas.',
+    'El Instituto CESUR se convirtió en el epicentro de la innovación y la tecnología este fin de semana, al celebrar su primer Festival de Innovación y Tecnología. Este evento, que reunió a estudiantes, profesores y expertos del sector, fue una plataforma vibrante para exhibir proyectos de vanguardia y promover la educación STEM (Ciencia, Tecnología, Ingeniería y Matemáticas).<br/><br/>
+    El torneo, organizado por el Departamento de Educación Física en colaboración con el Consejo de Estudiantes, contó con más de 50 participantes de todos los niveles académicos. Los competidores se enfrentaron en diversas categorías que incluían desde trucos básicos hasta presentaciones coreografiadas que deslumbraron a la audiencia.<br/><br/>
+    La gran final, celebrada en el gimnasio del instituto, fue un verdadero espectáculo. Los finalistas, seleccionados tras intensas rondas preliminares, demostraron un dominio impresionante del trompo, realizando trucos como el "volcán", el "columpio" y el "caminante". El jurado, compuesto por profesores y exalumnos expertos en el arte del trompo, tuvo una difícil tarea para decidir el ganador.',
+    "https://th.bing.com/th/id/OIP.WG6EV6fMekJbGhlYQup4-wHaEH?rs=1&pid=ImgDetMain", "Evento tecnológico",1);
+    
+    call insertNew("Torneo de Trompos Revoluciona el Instituto",
+	'Una jornada llena de sorpresas, expectación y muchos premios',
+    'El Instituto Pablo Picasso fue el escenario de un evento sin precedentes el pasado fin de semana, cuando se llevó a cabo el primer Torneo de Trompos de la institución. La competición, que atrajo a estudiantes, padres y profesores por igual, se convirtió en una celebración de destreza, creatividad y espíritu comunitario.<br/><br/>
+    El festival contó con una amplia variedad de actividades, incluyendo exposiciones de proyectos estudiantiles, competencias tecnológicas y talleres interactivos. Más de 30 proyectos fueron presentados por los estudiantes de diferentes niveles, destacando creaciones como robots autónomos, aplicaciones móviles para la gestión sostenible de recursos y prototipos de energías renovables.<br/><br/>
+    La competencia de robótica fue uno de los puntos culminantes del festival. Equipos de estudiantes compitieron en desafíos que pusieron a prueba sus habilidades en programación y diseño mecánico.',
+    "https://th.bing.com/th/id/OIP.GBafUQycOAEt34nzbt5BoQHaEH?rs=1&pid=ImgDetMain", "Ganador del torneo",2);
+	
+    call insertNew("Matanza en el IES Belen.",
+	'Un individuo deja a 10 muertos y otros 5 heridos de gravedad durante un examen',
+    'El dia 27 de mayo de 2024, mientras los alumnos estaban realizando un examen de programacion entre las doce y las tres de la tarde de dicho dia, un individuo de identidad desconocida se presentó en el aula y empezó a masacrar a los alumnos para luego darse a la fuga. Durante su breve intervención en el centro, muchos testigos de clases contiguas alegan haber escuchado a una voz femenina gritando: "Si no habeis practicado los mapas, no lo vais a poder sacar".<br/><br/>
+    Tras preguntar a varios de los presentes durante dicho acto se ha conseguido la descripción del fugado. Una mujer de entre treinta y cuarenta años con pelo negro y gafas rojas. Se ruega que si se avista a esta persona se avise a las autoridades.',
+    "../images/imagenNoticiaBelen2.jpg", "",3);
+    
+    call insertNew("El Instituto Alan Turing Inaugura un Laboratorio de Inteligencia Artificial de Última Generación",
+	'Un proyecto que marca un antes y un despues en el desarrollo de IAs en nuestro país',
+	'El Instituto Alan Turing ha dado un importante paso hacia el futuro de la educación tecnológica con la inauguración de su nuevo Laboratorio de Inteligencia Artificial (IA) de última generación. Este proyecto, que ha sido posible gracias a una colaboración con varias empresas tecnológicas líderes, tiene como objetivo proporcionar a los estudiantes las herramientas y el conocimiento necesarios para destacarse en el campo de la IA y la ciencia de datos.<br/><br/>
+    El nuevo laboratorio está equipado con tecnología de punta, incluyendo servidores de alto rendimiento, estaciones de trabajo avanzadas y software especializado en aprendizaje automático y análisis de datos. Los estudiantes ahora tienen acceso a recursos que les permiten realizar proyectos complejos, desde el desarrollo de algoritmos de aprendizaje profundo hasta la creación de aplicaciones de IA prácticas.',
+    "https://th.bing.com/th/id/OIP.ec6cf0uqubzwatGdFm8SKAHaEE?rs=1&pid=ImgDetMain", "",4);
+    
+    call insertNew("El Instituto San José Lanza un Programa Pionero de Sostenibilidad Ambiental",
+	'Una iniciativa para acercar a los alumnos hacia el problema medioambiental actual',
+    'El Instituto San José ha dado un paso significativo hacia la educación ambiental con el lanzamiento de su innovador Programa de Sostenibilidad Ambiental. Este proyecto, que involucra a toda la comunidad educativa, tiene como objetivo concienciar a los estudiantes sobre la importancia de la conservación del medio ambiente y fomentar prácticas sostenibles dentro y fuera del aula.<br/><br/>
+    El programa incluye una serie de iniciativas que abarcan desde la creación de un huerto escolar ecológico hasta la implementación de un sistema de reciclaje en todas las instalaciones del instituto. Los estudiantes participan activamente en talleres sobre compostaje, reducción de residuos y energía renovable, impartidos por expertos en medio ambiente.<br/><br/>
+    Uno de los proyectos más destacados es la instalación de paneles solares en el techo del edificio principal, lo que permitirá al instituto generar una parte de su energía de manera limpia y sostenible. Además, se han colocado puntos de recarga para bicicletas eléctricas en el aparcamiento del centro, fomentando el uso de medios de transporte alternativos y sostenibles.',
+    "https://www.rosario3.com/__export/1629172974999/sites/rosario3/img/2021/08/17/aula_sustentable_def.jpg_1192065467.jpg", "",5);
+
     /* Selects */
 	select * from credentials;
 	select * from user_obj;
@@ -510,8 +592,11 @@ SELECT distinct * FROM user_obj WHERE (user_type = '02' and course_id = 1 and sc
 	select * from news;
 	select * from grades;
 	select * from teacher_subject;
+    select * from school_course;
     select * from appointment;
-
+    select * from internship;
+    
+	update internship set grade = 8.5 where student = 33;
 	/* Drop Functions */
 	drop function checkIfSubjectExists;
 	drop function checkIfExistsUserCredentials;
@@ -527,6 +612,4 @@ SELECT distinct * FROM user_obj WHERE (user_type = '02' and course_id = 1 and sc
 	/* Drop database*/
 	drop database portalacademico;
 
-drop table grades;
 	drop trigger user_subjects;
-

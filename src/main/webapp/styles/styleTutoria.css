@@ -51,26 +51,34 @@ input[type="radio"] {
 	width: -webkit-fill-available;
 	height: -webkit-fill-available;
 	margin: -9.5px;
-	box-sizing: border-box;
 	appearance: none;
 	-webkit-appearance: none;
+	box-sizing: border-box;
 }
 
 input[type="radio"]:checked {
+	transition: 0.2s ease;
 	background-color: #a100ff;
-	box-shadow: 0px 3px 2px 3px black;
+	box-shadow: 1px 3px 0px 2px #3f0361;
+	border: 2px solid #520181;
+	border-radius: 4px;
+	margin-left: -13px;
 }
+
 
 .btnComprobar {
 	display: flex;
 	justify-content: center;
-	align-items:center;
+	align-items: center;
 	width: 80vw;
 	height: 10vh;
+	
 }
 
+
 .btnComprobar input{
-	width: fit-content;
+	width: 10vw;
+	height: 6vh;
 	background: #a100ff;
 	color: white;
 	border-radius: 7px;
@@ -102,3 +110,103 @@ input[type="radio"]:checked {
 .legend .libre {
 	background-color: white;
 }
+
+h4{
+	margin-top:5vh;
+	font-size: 1.85rem;
+	color:white;
+	width:80vw;
+	text-align:center;
+	margin-bottom: 2vh;
+	box-shadow: 0px 3px 5px 0px rgba(26,83,102,1);
+}
+
+
+td.cesurColor {
+	border: 2px solid #244AA4;
+}
+
+td.belenColor {
+	border: 2px solid #de6c02;
+}
+
+td.picassoColor {
+	border: 2px solid #5b2593;
+}
+
+td.joseColor {
+	border: 2px solid #006B99;
+}
+
+td.turingColor {
+	border: 2px solid #378eb6;
+}
+
+h4.belenColor {
+	background-color: #de6c02;
+	box-shadow: 0px 3px 5px 0px #8a4605;
+}
+
+h4.picassoColor {
+	background-color: #5b2593;
+	box-shadow: 0px 3px 5px 0px #3e1864;
+}
+
+h4.joseColor {
+	background-color: #006B99;
+	box-shadow: 0px 3px 5px 0px #004964;
+}
+
+h4.turingColor {
+	background-color: #378eb6;
+	box-shadow: 0px 3px 5px 0px #245a75;
+}
+
+h4.cesurColor  {
+	background-color: #244AA4;
+	box-shadow: 0px 3px 5px 0px #1b3679;
+}
+
+
+.ocupado.belenColor {
+	background-color: #de6c02;
+}
+
+.ocupado.picassoColor {
+	background-color: #5b2593;
+}
+
+.ocupado.joseColor {
+	background-color: #006B99;
+}
+
+.ocupado.turingColor {
+	background-color: #378eb6;
+}
+
+.ocupado.cesurColor  {
+	background-color: #244AA4;
+}
+
+
+
+.btnComprobar.picassoColor input{
+	background-color: #5b2593;
+}	
+
+.btnComprobar.cesurColor input{
+	background-color: #244AA4;
+}	
+
+.btnComprobar.turingColor input{
+	background-color: #378eb6;
+}	
+
+.btnComprobar.joseColor input{
+	background-color: #006B99;
+}	
+
+.btnComprobar.belenColor input{
+	background-color: #de6c02;
+}	
+

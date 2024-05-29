@@ -27,7 +27,7 @@ public class NewsDAO {
         try {
             con = new Conector().getMySqlConnection();
             try {
-                PreparedStatement ps = con.prepareStatement("select id, title, caption, img_url, caption_img, content, date_new  from news where id_school = ?;");
+                PreparedStatement ps = con.prepareStatement("select id, title, caption, img_url, caption_img, content, date_new  from news where id_school = ? order by date_new desc ;");
                 
                 ps.setInt(1, id_school);
                 

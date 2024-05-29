@@ -49,7 +49,7 @@
         <h2>No hay notas para esta asignatura</h2>
     <%} else {
         for (Grade g : allGrades) {%>
-        <p>a</p>
+        <p><%=g.getGrade_desc()%> --- <%=g.getGrade()%></p>
         <%}
     }%>
 

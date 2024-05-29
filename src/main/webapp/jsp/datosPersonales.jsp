@@ -29,7 +29,7 @@
 <title>Datos Personales</title>
 </head>
 
-<body onload="detColoresdp(<%=activeUser.getSchool_id()%>">
+<body onload="detColoresdp(<%=activeUser.getSchool_id()%>)">
 	<h1 class="h1dp">Datos Personales</h1>
 
 	<div class="tarjetaPersonal">

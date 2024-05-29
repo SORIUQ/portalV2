@@ -25,8 +25,8 @@
 	rel="stylesheet">
 <title>Reservas</title>
 </head>
-<body>
-	<h1>RESERVAS DISPONIBLES</h1>
+<body onload="detColoresTutorias(<%=activeUser.getSchool_id()%>)">
+	<h4>RESERVAS DISPONIBLES</h4>
 	<div class="legend">
                 <div>
                     <span class="ocupado"></span> Ocupados
@@ -90,9 +90,10 @@
 			<p>Estudiante: <%=appointmentInfo.get("studentName") + " " + appointmentInfo.get("studentSurname")%></p>
 			<p>Hora: <%=appointmentInfo.get("time")%></p>
 			<p>Día: <%=appointmentInfo.get("date")%></p>
-			<!-- <p>Despacho: appointmentInfo.get("room")</p> -->
+			<p>Despacho: <%=appointmentInfo.get("room")%></p>
 		<%}%>
 	</div>
 	<script type="text/javascript" src="../scripts/tutorias.js"></script>
+	<script type="text/javascript" src="../scripts/script.js"></script>
 </body>
 </html>

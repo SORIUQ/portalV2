@@ -20,12 +20,12 @@ User user = (User) request.getSession().getAttribute("user");
 		alumnoElegido = UserDAO.getUserInfo((Integer)session.getAttribute("studentSelected"));
 	Double notaMedia = 0.0;
 	if (gradesSubjectList != null) {
-	for (Grade item : gradesSubjectList){
-		notaMedia += Double.valueOf(String.valueOf(item.getGrade()));
+		for (Grade item : gradesSubjectList){
+			notaMedia += Double.valueOf(String.valueOf(item.getGrade()));
+		}
+		notaMedia = notaMedia/gradesSubjectList.size();
 	}
-
-	notaMedia = notaMedia/gradesSubjectList.size();
-}
+	String teacherGradesError = (String) session.getAttribute("teacherGradesError");
 %>
 
 <!DOCTYPE html>
@@ -48,6 +48,8 @@ User user = (User) request.getSession().getAttribute("user");
 			<h2><%=UserDAO.getCourseFromTeacherId(user.getId())%></h2>
 			<% if (subjectSelected != null) {%>
 			<h3><%=subjectSelected%></h3>
+			<%} else if (teacherGradesError != null) {%>
+				<h3><%=teacherGradesError%></h3>
 			<%}%>
 		</div>
 		<div>

@@ -162,8 +162,8 @@ public class GradeDAO {
                 ps.setInt(1,teacher_id);
                 ps.setInt(2,student_id);
                 ps.setInt(3,subject_id);
-                ps.setString(4,description);
-                ps.setDouble(5,grade);
+                ps.setDouble(4,grade);
+                ps.setString(5,description);
                 int result = ps.executeUpdate();
                 if (result != 0) {
                     ses.setAttribute("insertGradeError",null);

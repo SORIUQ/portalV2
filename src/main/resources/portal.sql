@@ -111,16 +111,16 @@ drop database portalacademico;
 	);
 
 	create table if not exists grades(
-        teacher int not null,
-        student int not null,
-        subject_id int not null,
-        grade decimal(4,2),
+		teacher int not null,
+		student int not null,
+		subject_id int not null,
+		grade decimal(4,2),
         grade_description varchar(50),
-
+		
         constraint check_grade check (grade >= 0 and grade <= 10),
-        constraint foreign_key_userTypeTeacher foreign key (teacher) references user_obj(id),
-        constraint foreign_key_userTypeStudent foreign key (student) references user_obj(id)
-    );
+		constraint foreign_key_userTypeTeacher foreign key (teacher) references user_obj(id),
+		constraint foreign_key_userTypeStudent foreign key (student) references user_obj(id)
+	);
     
     create table if not exists teacher_subject(
 		user_id int not null,
@@ -302,8 +302,8 @@ drop database portalacademico;
 								LEAVE subject_loop;
 							END IF;
 							
-							INSERT INTO GRADES (teacher, student, subject_id, grade) 
-							VALUES (teacher_id, NEW.id, subjectBuilder, NULL);
+							INSERT INTO GRADES (teacher, student, subject_id, grade, grade_description) 
+							VALUES (teacher_id, NEW.id, subjectBuilder, NULL, NULL);
 						END LOOP subject_loop;
 						
 						CLOSE subject_cursor;
@@ -581,7 +581,7 @@ DELIMITER ;
     El programa incluye una serie de iniciativas que abarcan desde la creación de un huerto escolar ecológico hasta la implementación de un sistema de reciclaje en todas las instalaciones del instituto. Los estudiantes participan activamente en talleres sobre compostaje, reducción de residuos y energía renovable, impartidos por expertos en medio ambiente.<br/><br/>
     Uno de los proyectos más destacados es la instalación de paneles solares en el techo del edificio principal, lo que permitirá al instituto generar una parte de su energía de manera limpia y sostenible. Además, se han colocado puntos de recarga para bicicletas eléctricas en el aparcamiento del centro, fomentando el uso de medios de transporte alternativos y sostenibles.',
     "https://www.rosario3.com/__export/1629172974999/sites/rosario3/img/2021/08/17/aula_sustentable_def.jpg_1192065467.jpg", "",5);
-    
+
     /* Selects */
 	select * from credentials;
 	select * from user_obj;
@@ -595,7 +595,7 @@ DELIMITER ;
     select * from school_course;
     select * from appointment;
     select * from internship;
-    
+
 	/* Drop Functions */
 	drop function checkIfSubjectExists;
 	drop function checkIfExistsUserCredentials;

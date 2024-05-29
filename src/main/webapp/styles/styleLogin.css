@@ -130,3 +130,8 @@ body {
 	color: red;
 	font-weight: 500;
 }
+
+.okMsg {
+	color: darkgreen;
+	font-weight: 500;
+}

@@ -31,6 +31,7 @@ public class RegisterServlet extends HttpServlet {
         String userPass = req.getParameter("user_password");
         String hashedPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
         String userExists = "El usuario ya esta registrado";
+        String userCreated = "";
 
         try {
             con = new Conector().getMySqlConnection();
@@ -42,13 +43,16 @@ public class RegisterServlet extends HttpServlet {
                         userExists += "<br/>Email ya existe";
                     if (dnieExists)
                         userExists += "<br/>DNIE ya existe";
-                    ses.setAttribute("userExists", userExists);
+                    ses.setAttribute("userExists",userExists);
+                    ses.setAttribute("errorMsgLogin",null);
+                    ses.setAttribute("userRegistered",null);
                 } else {
                     UserDAO.insertCredentials(con, userEmail, hashedPass);
                     UserDAO.insertUserInDB(con, userName, userLastName, userBirthday, userDnie, userEmail, hashedPass, userSchool, userCourse);
-                    userExists = "¡Usuario registrado con éxito!";
-                    ses.setAttribute("userExists", userExists);
+                    userCreated = "¡Usuario registrado con éxito!";
+                    ses.setAttribute("userExists", null);
                     ses.setAttribute("errorMsgLogin", null);
+                    ses.setAttribute("userRegistered",userCreated);
                 }
                 res.sendRedirect("./jsp/login.jsp");
             }

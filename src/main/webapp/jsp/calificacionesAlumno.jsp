@@ -43,8 +43,9 @@
         <input type="submit" value="Comprobar">
     </select>
     <%if (errorMsgCaliUser!=null){%>
-	<p class="errorMsg"><%=errorMsgCaliUser %>
- <%}%>
+        <p class="errorMsg"><%=errorMsgCaliUser %></p>
+        <%session.setAttribute("errorMsgCaliUser",null);
+    }%>
 </form>
 
 </div>

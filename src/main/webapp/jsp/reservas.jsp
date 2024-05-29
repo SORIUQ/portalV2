@@ -10,8 +10,8 @@
 	if (activeUser.getUserType().equals("02")) {response.sendRedirect("./tutoriaProfesor.jsp");}
 	List<User> teachers = UserDAO.getAllNameTeachers(activeUser.getCourse_id(), activeUser.getSchool_id());
 	List<Appointment> appointments = (List<Appointment>) session.getAttribute("appointments");
-	String okMsg = (String) session.getAttribute("okMsg");
-	String errorMsg = (String) session.getAttribute("errorMsg");
+	String okMsg = (String) session.getAttribute("appointmentOk");
+	String errorMsg = (String) session.getAttribute("appointmentError");
 	String subject = "";
 %>
 
@@ -42,12 +42,14 @@
 	<input id="buttonSubmit" type="submit" class="buttonSubmit">
 </form>
 	<% if (okMsg != null) {%>
-	<p class="okMsg"><%=okMsg%></p>
-	<%}%>
+		<p class="okMsg"><%=okMsg%></p>
+		<%session.setAttribute("appointmentOk", null);
+	}%>
 
 	<% if (errorMsg != null) {%>
-	<p class="errorMsg"><%=errorMsg%></p>
-	<%}%>
+		<p class="errorMsg"><%=errorMsg%></p>
+		<%session.setAttribute("appointmentError", null);
+	}%>
 
 	<div id="reservas">
 		<% if (appointments != null) {%>

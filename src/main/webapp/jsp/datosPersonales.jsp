@@ -80,11 +80,13 @@
 	</button>
 	<% if (errorMsgMail!=null){ %>
 		<p class="errorMsg"><%=errorMsgMail %></p>
-	<% } %>
+		<%session.setAttribute("errorMsgMail", null);
+	}%>
 
 	<% if (okMsgMail!=null){ %>
 		<p class="okMsg"><%=okMsgMail %></p>
-	<% } %>
+		<%session.setAttribute("okMsgMail", null);
+	}%>
 	</div>
 	<div id="inputMail" class="hiddenPass">
 	<form action="../mailChange" method="POST">
@@ -104,11 +106,13 @@
 	</button>
 	<% if (errorMsg!=null){ %>
 		<p class="errorMsg"><%=errorMsg %></p>
-	<% } %>
+		<%session.setAttribute("errorMsg", null);
+	} %>
 
 	<% if (okMsg!=null){ %>
 		<p class="okMsg"><%=okMsg %></p>
-	<% } %>
+		<%session.setAttribute("okMsg", null);
+	} %>
 	</div>
 	<div id="inputPass" class="hiddenPass">
 	<form action="../passChange" method="POST">
@@ -128,7 +132,7 @@
 			</p>
 		</div>
 		<br>
-		<button id="botonInput" class="buttonInput" type="submit" disabled="true">Hecho</button>
+		<button id="botonInput" class="buttonInput" type="submit" disabled>Hecho</button>
 	</form>
 	</div>
 	<script src="../scripts/passChange.js"></script>

@@ -32,11 +32,16 @@
                     <br>
                     <%if (session.getAttribute("errorMsgLogin") != null) {%>
                         <p class="errorMsg"><%=session.getAttribute("errorMsgLogin")%></p>
-                    <%}%>
+                        <%session.setAttribute("errorMsg",null);
+                    }%>
                     <%if (session.getAttribute("userExists") != null) {%>
                         <p class="errorMsg"><%=session.getAttribute("userExists")%></p>
                         <%session.setAttribute("userExists",null);
                         }%>
+                    <%if (session.getAttribute("userRegistered") != null) {%>
+                        <p class="okMsg"><%=session.getAttribute("userRegistered")%></p>
+                        <%session.setAttribute("userRegistered",null);
+                    }%>
                     <div class="input-submit">
                         <input type="submit" value="Acceder">
                     </div>

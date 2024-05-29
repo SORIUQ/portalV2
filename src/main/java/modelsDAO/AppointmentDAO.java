@@ -125,11 +125,11 @@ public class AppointmentDAO {
                 stmt.setString(2, appointment_id);
                 int results = stmt.executeUpdate();
                 if (results != 0) {
-                    ses.setAttribute("okMsg", "Se ha hecho la reserva con éxito");
-                    ses.setAttribute("errorMsg", null);
+                    ses.setAttribute("appointmentOk", "Se ha hecho la reserva con éxito");
+                    ses.setAttribute("appointmentError", null);
                 } else {
-                    ses.setAttribute("errorMsg","No se ha podido realizar la reserva");
-                    ses.setAttribute("okMsg",null);
+                    ses.setAttribute("appointmentError","No se ha podido realizar la reserva");
+                    ses.setAttribute("appointmentOk",null);
                 }
 
             } catch (SQLException | ClassNotFoundException e) {
@@ -145,8 +145,8 @@ public class AppointmentDAO {
             }
 
         } else {
-            ses.setAttribute("errorMsg","Ya tienes una reserva hecha");
-            ses.setAttribute("okMsg",null);
+            ses.setAttribute("appointmentError","Ya tienes una reserva hecha");
+            ses.setAttribute("appointmentOk",null);
         }
     }
 

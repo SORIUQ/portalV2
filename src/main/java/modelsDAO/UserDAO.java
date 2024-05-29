@@ -137,30 +137,33 @@ public class UserDAO {
     }
 
     /**
-     * Método que se utiliza para rescatar los estudiantes de un profesor a partir de su ID.
+     * Método que se utiliza para rescatar los estudiantes de un profesor y el id de una asignatura.
      * @author Ricardo
      * @param teacher Usuario del profesor.
-     * @return List<User> (Lista de los estudiantes del profesor)
+     * @param subject_id Id de la asignatura que se quiere consultar.
+     * @return List<User> (Lista de los estudiantes)
      */
-    public static List<User> getStudentsFromTeacher(User teacher) {
+    public static List<User> getStudentsFromTeacherAndSubjectId(User teacher, int subject_id) {
         Connection con = null;
         List<User> students = new ArrayList<>();
 
         try {
             con = new Conector().getMySqlConnection();
             if (con != null) {
-                PreparedStatement ps = con.prepareStatement("SELECT * FROM user_obj WHERE course_id = ? and school_id = ? and user_type = '01'");
-                ps.setInt(1, teacher.getCourse_id());
-                ps.setInt(2,teacher.getSchool_id());
+                PreparedStatement ps = con.prepareStatement("SELECT distinct u.id,u.user_type,u.user_name,u.school_id,u.course_id " +
+                                                                "FROM user_obj as u INNER JOIN grades as g ON u.id = g.student " +
+                                                                "WHERE u.school_id = ? and g.subject_id = ? and u.user_type = '01'");
+                ps.setInt(1,teacher.getSchool_id());
+                ps.setInt(2,subject_id);
 
                 ResultSet resultSet = ps.executeQuery();
                 while (resultSet.next()) {
                     User user = new User();
-                    user.setId(resultSet.getInt("id"));
-                    user.setUserType(resultSet.getString("user_type"));
-                    user.setName(resultSet.getString("user_name"));
-                    user.setSchool_id(resultSet.getInt("school_id"));
-                    user.setCourse_id((Integer) resultSet.getObject("course_id"));
+                    user.setId(resultSet.getInt("u.id"));
+                    user.setUserType(resultSet.getString("u.user_type"));
+                    user.setName(resultSet.getString("u.user_name"));
+                    user.setSchool_id(resultSet.getInt("u.school_id"));
+                    user.setCourse_id((Integer) resultSet.getObject("u.course_id"));
                     students.add(user);
                 }
             }
@@ -343,9 +346,9 @@ public class UserDAO {
      * 
      * @return nombre de la asignatura del profesor
      */
-    public static String getSubjectTeacher(int id_teacher) {
+    public static String getSubjectsTeacher(int id_teacher) {
       
-      String subject = "";
+      String subjects = "";
       Connection con = null;
 
       try {
@@ -359,7 +362,7 @@ public class UserDAO {
           ResultSet rs = ps.executeQuery();
           
           while (rs.next()) {
-             subject = rs.getString(1);
+             subjects += (rs.getString(1) + ", ");
           }
 
       } catch (ClassNotFoundException | SQLException e) {
@@ -374,7 +377,7 @@ public class UserDAO {
           }
       }
 
-      return subject;
+      return subjects.substring(0,subjects.length() - 2);
   }
     
     
@@ -383,7 +386,7 @@ public class UserDAO {
      * @param id_teacher id del usuario asignado como profesor
      * @author Óscar
      * 
-     * @return nombre de la escuela  del profesor
+     * @return nombre de la escuela del profesor
      */
     public static String getNameSchoolTeacher(int id_teacher) {
       

@@ -135,6 +135,7 @@
         constraint fk_school_course_course_id foreign key (course_id) references course(id)
     );
 
+    
 	/* Procedures and functions */
 	delimiter //
 	create function checkIfExistsUserCredentials(user_email varchar(255), user_pass varchar(255)) returns boolean no sql
@@ -329,25 +330,24 @@
     begin
 		if new.user_type = "02" then
         INSERT INTO appointment values 
-			(CONCAT('L5_', NEW.id), NEW.id, NULL, "20", "17:00"),
-            (CONCAT('M5_', NEW.id), NEW.id, NULL, "21", "17:00"),
-            (CONCAT('X5_', NEW.id), NEW.id, NULL, "22", "17:00"),
-            (CONCAT('J5_', NEW.id), NEW.id, NULL, "23", "17:00"),
-            (CONCAT('V5_', NEW.id), NEW.id, NULL, "24", "17:00"),
-            (CONCAT('L6_', NEW.id), NEW.id, NULL, "20", "18:00"),
-            (CONCAT('M6_', NEW.id), NEW.id, NULL, "21", "18:00"),
-            (CONCAT('X6_', NEW.id), NEW.id, NULL, "22", "18:00"),
-            (CONCAT('J6_', NEW.id), NEW.id, NULL, "23", "18:00"),
-            (CONCAT('V6_', NEW.id), NEW.id, NULL, "24", "18:00"),
-            (CONCAT('L8_', NEW.id), NEW.id, NULL, "20", "19:00"),
-            (CONCAT('M8_', NEW.id), NEW.id, NULL, "21", "19:00"),
-            (CONCAT('X8_', NEW.id), NEW.id, NULL, "22", "19:00"),
-            (CONCAT('J8_', NEW.id), NEW.id, NULL, "23", "19:00"),
-            (CONCAT('V8_', NEW.id), NEW.id, NULL, "24", "19:00");
+			(CONCAT('L5_', NEW.id), NEW.id, NULL, "20", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('M5_', NEW.id), NEW.id, NULL, "21", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('X5_', NEW.id), NEW.id, NULL, "22", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('J5_', NEW.id), NEW.id, NULL, "23", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('V5_', NEW.id), NEW.id, NULL, "24", "17:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('L6_', NEW.id), NEW.id, NULL, "20", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('M6_', NEW.id), NEW.id, NULL, "21", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('X6_', NEW.id), NEW.id, NULL, "22", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('J6_', NEW.id), NEW.id, NULL, "23", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('V6_', NEW.id), NEW.id, NULL, "24", "18:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('L7_', NEW.id), NEW.id, NULL, "20", "19:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('M7_', NEW.id), NEW.id, NULL, "21", "19:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('X7_', NEW.id), NEW.id, NULL, "22", "19:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('J7_', NEW.id), NEW.id, NULL, "23", "19:00", CONCAT("Despacho de ", New.user_name)),
+            (CONCAT('V7_', NEW.id), NEW.id, NULL, "24", "19:00", CONCAT("Despacho de ", New.user_name));
         end if;
     end//
     
-
 	delimiter ;
 
 	/* Creation of Schools */
@@ -451,15 +451,15 @@
 	(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),
 	(3,3),(3,4),(3,6),(3,9),(3,10),(3,11);
 	/* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS CESUR */
-    INSERT INTO teacher_subject values (1,3),(2,6),(3,5),(4,4),(5,1),(6,2);
+    INSERT INTO teacher_subject values (1,3),(1,6),(1,5),(2,4),(2,1),(2,2);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS PICASO */
-    INSERT INTO teacher_subject values (7,3),(8,6),(9,5),(10,4),(11,1),(12,2);
+    INSERT INTO teacher_subject values (7,3),(7,6),(7,5),(8,4),(8,1),(8,2);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS BELEN */
-    INSERT INTO teacher_subject values (13,3),(14,6),(15,5),(16,4),(17,1),(18,2);
+    INSERT INTO teacher_subject values (13,3),(13,6),(13,5),(16,4),(16,1),(16,2);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS CPIFP */
-    INSERT INTO teacher_subject values (19,3),(20,6),(21,5),(22,4),(23,1),(24,2);
+    INSERT INTO teacher_subject values (19,3),(19,6),(19,5),(20,4),(20,1),(20,2);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS SAN JOSE */
-    INSERT INTO teacher_subject values (25,3),(26,6),(27,5),(29,4),(30,1),(31,2);
+    INSERT INTO teacher_subject values (25,3),(25,6),(25,5),(29,4),(29,1),(29,2);
     /* INSERT DE COLEGIOS Y MODULOS RELACION */
     INSERT INTO school_course values (1,1),(1,2),(1,3),(2,1),(3,1),(3,2),(4,1),(4,2),(4,3),(5,1);
     /* INSERT DE LAS NOTICIAS */
@@ -527,6 +527,6 @@ SELECT distinct * FROM user_obj WHERE (user_type = '02' and course_id = 1 and sc
 	/* Drop database*/
 	drop database portalacademico;
 
+drop table grades;
 	drop trigger user_subjects;
-
 

@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.Grade;
-import models.Subject;
 import models.User;
 import modelsDAO.GradeDAO;
 
@@ -31,8 +30,4 @@ public class StudentGradesServlet extends HttpServlet {
         resp.sendRedirect("./jsp/calificacionesAlumno.jsp");
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
 }

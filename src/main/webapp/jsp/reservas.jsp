@@ -1,5 +1,4 @@
 <%@page import="com.mysql.cj.util.Util"%>
-<%@page import="org.apache.tomcat.dbcp.dbcp2.Utils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 <%@ page import="models.*,java.util.List,utils.*"%>
@@ -55,7 +54,7 @@
 	
 		<div class="informacion">
 			<div class="informacionConcreta">
-				<h3>Asignatura: <span style="color:#a100ff; font-size: 18px;"><%= UserDAO.getSubjectTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span></h3>
+				<h3>Asignatura: <span style="color:#a100ff; font-size: 18px;"><%= UserDAO.getSubjectsTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span></h3>
 				<h3>Lugar: <span style="color:#a100ff; font-size: 18px;"><%= UserDAO.getNameSchoolTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span> </h3>
 				<p><strong>Horario:</strong> de lunes a viernes de 17:00 a 20:00</p>
 			</div>
@@ -81,7 +80,9 @@
 				<tr>
 					<td>17:00 - 18:00</td>
 					<%for (Appointment a : AppointmentDAO.getAppointments1700(appointments)) {%>
-						<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
+						<%if (a.getStudentID() != null && a.getStudentID() != 0 && a.getStudentID() == activeUser.getId()) {%>
+							<td class="tuReserva"><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
+						<%}else if (a.getStudentID() != null && a.getStudentID() != 0) {%>
 							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
 						<%} else {%>
 							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID"></td>
@@ -91,7 +92,9 @@
 				<tr>
 					<td>18:00 - 19:00</td>
 					<%for (Appointment a : AppointmentDAO.getAppointments1800(appointments)) {%>
-						<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
+						<%if (a.getStudentID() != null && a.getStudentID() != 0 && a.getStudentID() == activeUser.getId()) {%>
+							<td class="tuReserva"><input class="tuReserva" type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
+						<%}else if (a.getStudentID() != null && a.getStudentID() != 0) {%>
 							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
 						<%} else {%>
 							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID"></td>
@@ -101,7 +104,9 @@
 				<tr>
 					<td>19:00 - 20:00</td>
 					<%for (Appointment a : AppointmentDAO.getAppointments1900(appointments)){%>
-						<%if (a.getStudentID() != null && a.getStudentID() != 0) {%>
+						<%if (a.getStudentID() != null && a.getStudentID() != 0 && a.getStudentID() == activeUser.getId()) {%>
+						<td class="tuReserva"><input class="tuReserva" type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
+						<%}else if (a.getStudentID() != null && a.getStudentID() != 0) {%>
 							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID" disabled></td>
 						<%} else {%>
 							<td><input type="radio" id="<%=a.getId()%>" value="<%=a.getId()%>" name="hourSelectedID"></td>

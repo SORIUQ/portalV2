@@ -1,11 +1,14 @@
 package models;
 
+import java.math.BigDecimal;
+
 public class Grade {
 
     private int subject_id;
     private int teacher_id;
     private int student_id;
-    private Double grade;
+    private BigDecimal grade;
+    private String grade_desc;
 
     public Grade() {
 
@@ -35,11 +38,19 @@ public class Grade {
         this.student_id = student_id;
     }
 
-    public Double getGrade() {
+    public BigDecimal getGrade() {
         return grade;
     }
 
-    public void setGrade(Double grade) {
+    public void setGrade(BigDecimal grade) {
         this.grade = grade;
+    }
+
+    public String getGrade_desc() {
+        return grade_desc;
+    }
+
+    public void setGrade_desc(String grade_desc) {
+        this.grade_desc = grade_desc;
     }
 }

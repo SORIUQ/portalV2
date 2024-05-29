@@ -11,18 +11,6 @@ public class Appointment {
     public Appointment() {
     }
 
-//    public Appointment(String id, int teacherID, Integer studentID, String date, String time) {
-//        this.id = id;
-//        this.teacherID = teacherID;
-//        this.studentID = studentID;
-//        this.date = date;
-//        this.time = time;
-//    }
-
-//    public Appointment(String json) {
-//
-//    }
-
     public String getId() {
         return id;
     }

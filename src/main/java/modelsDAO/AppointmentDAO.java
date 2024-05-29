@@ -201,7 +201,7 @@ public class AppointmentDAO {
         try {
             con = new Conector().getMySqlConnection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM appointment AS ap INNER JOIN user_obj AS u ON ap.student_id = u.id WHERE id = '" + appointment_id + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM appointment AS ap INNER JOIN user_obj AS u ON ap.student_id = u.id WHERE ap.id = '" + appointment_id + "'");
             if (rs.next()) {
                 appointmentInfo.put("studentName", rs.getString("u.user_name"));
                 appointmentInfo.put("studentSurname", rs.getString("u.user_surname"));

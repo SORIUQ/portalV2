@@ -49,8 +49,6 @@ input[type="radio"] {
 	box-sizing: border-box;
 	appearance: none;
 	-webkit-appearance: none;
-	height: -webkit-fill-available;
-	margin: -9.5px;
 }
 
 input[type="radio"]:checked {

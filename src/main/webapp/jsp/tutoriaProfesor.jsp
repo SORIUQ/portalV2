@@ -90,7 +90,7 @@
 			<p>Estudiante: <%=appointmentInfo.get("studentName") + " " + appointmentInfo.get("studentSurname")%></p>
 			<p>Hora: <%=appointmentInfo.get("time")%></p>
 			<p>Día: <%=appointmentInfo.get("date")%></p>
-			<!-- <p>Despacho: appointmentInfo.get("room")</p> -->
+			<p>Despacho: <%=appointmentInfo.get("room")%></p>
 		<%}%>
 	</div>
 	<script type="text/javascript" src="../scripts/tutorias.js"></script>

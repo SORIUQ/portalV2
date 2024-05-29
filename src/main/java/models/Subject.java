@@ -15,6 +15,7 @@ public class Subject {
 
     public Subject() {}
 
+
     public Integer getSubjectId() {
         return subjectId;
     }

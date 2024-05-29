@@ -299,7 +299,7 @@ public class UserDAO {
     }
 
     
-    public static List<User> getStudentsFromTeacherId(int teacherId) {
+   /* public static List<User> getStudentsFromTeacherId(int teacherId) {
         Connection con = null;
         String query = "SELECT * FROM user_obj WHERE id IN (SELECT student FROM grades WHERE teacher = ?)";
 
@@ -335,6 +335,8 @@ public class UserDAO {
 
 		return estudiantes;
     }
+    */
+
 
     /**
      * Método que recupera la asignatura de un profesor desde base de datos
@@ -345,37 +347,37 @@ public class UserDAO {
      */
     public static String getSubjectTeacher(int id_teacher) {
       
-      String subject = "";
-      Connection con = null;
+        String subject = "";
+        Connection con = null;
 
-      try {
-          con = new Conector().getMySqlConnection();
-          PreparedStatement ps = con.prepareStatement(
-              "  select su.subject_name from _subject su\r\n"
-              + "    inner join teacher_subject te on te.subject_id = su.id\r\n"
-              + "    inner join user_obj us on us.id = te.user_id\r\n"
-              + "    where te.user_id = ?; ");
-          ps.setInt(1,id_teacher);
-          ResultSet rs = ps.executeQuery();
-          
-          while (rs.next()) {
-             subject = rs.getString(1);
-          }
+        try {
+            con = new Conector().getMySqlConnection();
+            PreparedStatement ps = con.prepareStatement(
+                "  select su.subject_name from _subject su\r\n"
+                + "    inner join teacher_subject te on te.subject_id = su.id\r\n"
+                + "    inner join user_obj us on us.id = te.user_id\r\n"
+                + "    where te.user_id = ?; ");
+            ps.setInt(1,id_teacher);
+            ResultSet rs = ps.executeQuery();
 
-      } catch (ClassNotFoundException | SQLException e) {
-          e.printStackTrace();
-      } finally {
-          if (con != null) {
-              try {
-                  con.close();
-              } catch (SQLException e) {
-                  e.printStackTrace();
-              }
-          }
-      }
+            while (rs.next()) {
+               subject = rs.getString(1);
+            }
 
-      return subject;
-  }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return subject;
+    }
     
     
     /**
@@ -383,7 +385,7 @@ public class UserDAO {
      * @param id_teacher id del usuario asignado como profesor
      * @author Óscar
      * 
-     * @return nombre de la escuela  del profesor
+     * @return nombre de la escuela del profesor
      */
     public static String getNameSchoolTeacher(int id_teacher) {
       

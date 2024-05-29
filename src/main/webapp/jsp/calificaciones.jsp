@@ -1,31 +1,26 @@
-<%@ page import="models.User"%>
-<%@ page import="modelsDAO.UserDAO"%>
-<%@ page import="models.Course"%>
-<%@ page import="modelsDAO.CourseDAO"%>
-<%@ page import="models.Subject"%>
-<%@ page import="modelsDAO.SubjectDAO"%>
-<%@ page import="java.util.List"%>
+<%@ page import="models.User" %>
+<%@ page import="java.util.List" %>
+<%@ page import="modelsDAO.UserDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 
 <%
 User user = (User) request.getSession().getAttribute("user");
 	if (user.getUserType().equals("01")) {
 		response.sendRedirect("./calificacionesAlumno.jsp");
 	}
+
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="../styles/styleCalificaciones.css" rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
-	rel="stylesheet">
-<meta charset="UTF-8">
-<title>Calificaciones</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="../styles/styleCalificaciones.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title></title>
 </head>
 
 <body onload="detColoresCalificaciones(<%=user.getSchool_id()%>)">
@@ -104,6 +99,5 @@ User user = (User) request.getSession().getAttribute("user");
 
 	<script type="text/javascript" src="../scripts/script.js"></script>
 	<script type="text/javascript" src="../scripts/calificaciones.js"></script>
-
 </body>
 </html>

@@ -595,8 +595,7 @@ DELIMITER ;
     select * from school_course;
     select * from appointment;
     select * from internship;
-    
-	update internship set grade = 8.5 where student = 33;
+
 	/* Drop Functions */
 	drop function checkIfSubjectExists;
 	drop function checkIfExistsUserCredentials;

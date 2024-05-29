@@ -45,10 +45,9 @@ User user = (User) request.getSession().getAttribute("user");
 	<h4>Calificaciones del centro escolar</h4>
 	<div class="general">
 		<div class="curso">
-			<h2><%=UserDAO.getCourseFromTeacherId(user.getId())%></h2>
 			<% if (subjectSelected != null) {%>
 			<h3><%=subjectSelected%></h3>
-			<%} else if (teacherGradesError != null) {%>
+			<%}else if (teacherGradesError != null) {%>
 				<h3><%=teacherGradesError%></h3>
 			<%}%>
 		</div>

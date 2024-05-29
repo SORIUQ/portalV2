@@ -4,34 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad31cd45-267c-42e3-9e5e-59a2371d9970" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/.classpath" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_8_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/.jsdtscope" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.apt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.m2e.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.wst.common.component" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.wst.common.project.facet.core.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.wst.jsdt.ui.superType.container" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.wst.jsdt.ui.superType.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.wst.validation.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/RegisterServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/RegisterServlet.java" afterDir="false" />
+    <list default="true" id="ad31cd45-267c-42e3-9e5e-59a2371d9970" name="Changes" comment="Intento de subir todo">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/StudentGradesServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/StudentGradesServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/portal.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/portal.sql" afterDir="false" />
+    </list>
+    <list id="1fe0b899-3038-48b8-87e0-66268c59aaa5" name="Changes by jose.prados.morente" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/calificaciones.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/calificaciones.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/calificacionesAlumno.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/calificacionesAlumno.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/styleCalificaciones.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/styleCalificaciones.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/styleReserva.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/styleReserva.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +19,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="pruebas" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory"><![CDATA[{
@@ -49,10 +34,29 @@
 }]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/GSonata/portalJoseito.git",
+    "url": "https://github.com/Ricardoncio/portalV2.git",
     "accountId": "18c06126-1588-48e4-9aa5-282047a2ba97"
   }
 }]]></component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/servlets/ShowGradesTeacherServlet.java">
+      <ranges>
+        <range start1="16" end1="16" start2="16" end2="18" changelist="1fe0b899-3038-48b8-87e0-66268c59aaa5" />
+        <range start1="19" end1="20" start2="21" end2="21" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
+        <range start1="21" end1="23" start2="22" end2="23" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
+        <range start1="29" end1="30" start2="29" end2="30" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
+        <range start1="32" end1="33" start2="32" end2="32" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
+        <range start1="34" end1="34" start2="33" end2="34" changelist="ad31cd45-267c-42e3-9e5e-59a2371d9970" />
+      </ranges>
+    </file>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 1
 }]]></component>
@@ -64,8 +68,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "pruebas",
+    "Smart Tomcat.Unnamed.executor": "Run",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -115,11 +124,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716997664028</updated>
-      <workItem from="1716997665075" duration="42000" />
+      <workItem from="1716997665075" duration="1814000" />
     </task>
+    <task id="LOCAL-00001" summary="Intento de subir todo">
+      <option name="closed" value="true" />
+      <created>1716998006303</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716998006303</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Intento de subir todo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Intento de subir todo" />
   </component>
 </project>

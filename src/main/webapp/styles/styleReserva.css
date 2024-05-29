@@ -58,7 +58,7 @@ input[type="radio"]:checked {
 	box-shadow: 0px 3px 2px 3px black;
 }
 
-#buttonSubmit {
+.buttonSubmit {
 	background-color: #a100ff;
 	color: white;
 	font-size: 15px;
@@ -83,19 +83,19 @@ input[type="radio"]:checked {
 
 .botonReserva {
 	background-color: #a100ff;
-	
 	color: white;
 	border-radius: 8px;
 	border: 2px solid black;
 	padding: 5px;
 	width: 10vw;
+	height: 6vh;
 }
 
 .botonReserva:hover {
 	transition: 0.3s ease;
 	background: white;
-	color: #a100ff;
-	border: 2px solid #a100ff;
+	color: black;
+	border: 2px solid black;
 }
 
 .botonCancelar {
@@ -105,6 +105,7 @@ input[type="radio"]:checked {
 	border-radius: 8px;
 	padding: 5px;
 	width: 10vw;
+	height: 6vh;
 }
 
 .botonCancelar:hover {
@@ -159,3 +160,90 @@ input[type="radio"]:checked {
 .legend .libre {
 	background-color: white;
 }
+
+
+h4{
+	margin-top:5vh;
+	font-size: 1.85rem;
+	color:white;
+	width:80vw;
+	text-align:center;
+	margin-bottom: 2vh;
+	box-shadow: 0px 3px 5px 0px rgba(26,83,102,1);
+}
+
+td.cesurColor,  .profesorSelect.cesurColor {
+	border: 2px solid #244AA4;
+}
+
+td.belenColor,  .profesorSelect.belenColor {
+	border: 2px solid #de6c02;
+}
+
+td.picassoColor,  .profesorSelect.picassoColor {
+	border: 2px solid #5b2593;
+}
+
+td.joseColor,  .profesorSelect.joseColor {
+	border: 2px solid #006B99;
+}
+
+td.turingColor,  .profesorSelect.turingColor{
+	border: 2px solid #378eb6;
+}
+
+
+.Letras.belenColor {
+	color: #de6c02;
+	font-size: 18px
+}
+
+.Letras.cesurColor {
+	color: #244AA4;
+	font-size: 18px
+}
+
+.Letras.turingColor {
+	color: #378eb6;
+	font-size: 18px
+}
+
+.Letras.joseColor {
+	color: #006B99;
+	font-size: 18px
+}
+
+.Letras.picassoColor {
+	color: #5b2593;
+	font-size: 18px
+}
+
+
+
+
+.buttonSubmit.belenColor, .ocupado.belenColor, .botonReserva.belenColor, h4.belenColor {
+	background-color: #de6c02;
+}
+
+.buttonSubmit.picassoColor, .ocupado.picassoColor, .botonReserva.picassoColor, h4.picassoColor {
+	background-color: #5b2593;
+}
+
+.buttonSubmit.joseColor, .ocupado.joseColor, .botonReserva.joseColor, h4.joseColor {
+	background-color: #006B99;
+}
+
+.buttonSubmit.turingColor, .ocupado.turingColor, .botonReserva.turingColor, h4.turingColor {
+	background-color: #378eb6;
+}
+
+.buttonSubmit.cesurColor, .ocupado.cesurColor, .botonReserva.cesurColor, h4.cesurColor  {
+	background-color: #244AA4;
+}
+
+
+
+
+
+
+

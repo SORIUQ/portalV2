@@ -285,4 +285,39 @@ function detColoresTutorias(id){
     addClassToElements(profesorSelect, color);
 }
 
+function detColoresModulo(id){
 
+    var underline = document.getElementsByClassName("underline");
+    var p = document.getElementsByTagName("p");
+    var th = document.getElementsByTagName("th");
+    var color;
+
+    switch(id){
+        case 1 :
+            color = 'cesurColor';
+            break;
+
+        case 2 :
+            color = 'picassoColor';
+            break;
+
+        case 3 :
+            color = 'belenColor';
+            break;
+
+        case 4 :
+            color = 'turingColor';
+            break;
+
+        case 5 :
+            color = 'joseColor';
+            break;
+
+        default : break;
+    }
+
+
+    addClassToElements(underline, color);
+    addClassToElements(p, color);
+    addClassToElements(th, color);
+}

@@ -27,6 +27,7 @@
     <list id="823f53df-cbc9-46fe-bb4a-02ada9923f2f" name="Changes by rsolo" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/calificacionesAlumno.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/calificacionesAlumno.jsp" afterDir="false" />
     </list>
+    <list id="1fe0b899-3038-48b8-87e0-66268c59aaa5" name="Changes by jose.prados.morente" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -90,7 +91,7 @@
     "Smart Tomcat.Unnamed.executor": "Run",
     "git-widget-placeholder": "pruebas",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/albertoguzman/Code/portalV2/src/main/resources",
+    "last_opened_file_path": "C:/Users/jorge/Desktop/portalv2Fork",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",

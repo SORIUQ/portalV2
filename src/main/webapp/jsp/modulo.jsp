@@ -23,14 +23,15 @@
 	User activeUser = (User) request.getSession().getAttribute("user");
 %>
 
-<body>
+<body onload="detColoresModulo(<%=activeUser.getSchool_id()%>)">
 <% 	if (activeUser.getUserType().equals("02")) { %>
 <h3> Los profesores/as no tienen módulo asignado</h3> <% } else {%>
 <%
-	Course course = CourseDAO.createCourse(activeUser.getCourse_id()); %>
+	Course course = CourseDAO.createCourse(activeUser.getCourse_id());
+%>
 <div class="contenedorPrincipal">
 	<h2><%= course.getNameCourse() %></h2>
-	<div id="descriptionUnderline"> <h3> Descripción</h3> </div>
+	<div id="descriptionUnderline" class="underline"> <h3> Descripción</h3> </div>
 	<p><%= course.getCourseDescription() %></p>
 	<table id="courseTable">
 		<tr>
@@ -55,5 +56,7 @@
 		<% } }%>
 	</table>
 </div>
+
+<script type="text/javascript" src="../scripts/script.js"></script>
 </body>
 </html>

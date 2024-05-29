@@ -33,7 +33,6 @@ h2{
 	align-items: center;
 	height: 30px;
 	width: 120px;
-	border-bottom: solid #A100FF 2px;
 	margin-bottom: 20px;
 }
 
@@ -65,4 +64,69 @@ p {
 
 .tableContent {
 	text-align: center;
+}
+
+th.belenColor {
+	background-color: #FF8005;
+}
+
+th.picassoColor {
+	background-color: #461B70;
+}
+
+th.joseColor {
+	background-color: #006B99;
+}
+
+th.turingColor {
+	background-color: #43A7DB;
+}
+
+th.cesurColor  {
+	background-color: #244AA4;
+}
+
+p.belenColor {
+	border-left: solid #FF8005 3px;
+	border-right: solid #FF8005 3px;
+}
+
+p.picassoColor {
+	border-left: solid #461B70 3px;
+	border-right: solid #461B70 3px;
+}
+
+p.joseColor {
+	border-left: solid #006B99 3px;
+	border-right: solid #006B99 3px;
+}
+
+p.turingColor {
+	border-left: solid #43A7DB 3px;
+	border-right: solid #43A7DB 3px;
+}
+
+p.cesurColor  {
+	border-left: solid #244AA4 3px;
+	border-right: solid #244AA4 3px;
+}
+
+.underline.belenColor {
+	border-bottom: solid #FF8005 2px;
+}
+
+.underline.picassoColor {
+	border-bottom: solid #461B70 2px;
+}
+
+.underline.joseColor {
+	border-bottom: solid #006B99 2px;
+}
+
+.underline.turingColor {
+	border-bottom: solid #43A7DB 2px;
+}
+
+.underline.cesurColor  {
+	border-bottom: solid #244AA4 2px;
 }

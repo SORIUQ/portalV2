@@ -136,6 +136,17 @@ drop database portalacademico;
         constraint fk_school_course_course_id foreign key (course_id) references course(id)
     );
 
+ 
+    create table if not exists internship(
+		tutor int primary key,
+        student int,
+        grade decimal(3,2),
+        
+        constraint fk_prac_tutor foreign key (tutor) references user_obj (id),
+        constraint fk_prac_student foreign key (student) references user_obj (id)
+    );
+
+
 	/* Procedures and functions */
 	delimiter //
 	create function checkIfExistsUserCredentials(user_email varchar(255), user_pass varchar(255)) returns boolean no sql
@@ -381,6 +392,28 @@ DELIMITER ;
     end//
     
 
+	delimiter //
+    create trigger internship
+    after insert on user_obj
+    for each row
+    begin
+		declare tutor1 int;
+		declare tutor2 int;
+		declare tutorInsert int;
+		if new.user_type = "01" then
+			set tutor1 = (select id from user_obj where user_type = "03" limit 0,1);
+            set tutor2 = (select id from user_obj where user_type = "03" limit 1,1);
+            if new.id % 2 = 0 then
+				set tutorInsert = (tutor2);
+			else
+				set tutorInsert = (tutor1);
+            end if;
+            
+            insert into internship values(tutorInsert, new.id, null);
+        end if;
+    end//
+    SELECT su.id,su.subject_name FROM course_subject AS cs INNER JOIN _subject as su on cs.subject_id = su.id WHERE cs.course_id = 1;
+
 	delimiter ;
 	/* Creation of Schools */
 	call insertSchool("Cesur Málaga Este", "+34952598720", "info@cesurformacion.com", "08:00-14:00", "Málaga","https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10757.374130614628!2d-4.372041717464043!3d36.71808277803187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7259120bfc4db3%3A0xec0ecedd8dc61902!2sCESUR%20M%C3%A1laga%20Este%20Formaci%C3%B3n%20Profesional!5e0!3m2!1ses!2ses!4v1715334512514!5m2!1ses!2ses");
@@ -400,7 +433,9 @@ DELIMITER ;
 	(8, "Sistemas operativos monopuestos", 8, 140),
 	(9, "Implantacion de sistemas operativos", 8, 256),
 	(10, "Planificacion y administracion de redes", 6, 192),
-	(11, "Fundamentos de hardware", 8, 256);
+	(11, "Fundamentos de hardware", 8, 256),
+  (12, "Prácticas", 18, 180);
+
 	/* Creacion de cursos */
 	INSERT INTO course VALUES
 	 (1,'Desarrollo de aplicaciones Multiplataforma', "DAM", 'La competencia general de este título consiste en desarrollar, implantar, documentar y mantener aplicaciones informáticas multiplataforma, utilizando tecnologías y entornos de desarrollo específicos, garantizando el acceso a los datos de forma segura y cumpliendo los criterios de «usabilidad» y calidad exigidas en los estándares establecidos.'),
@@ -479,9 +514,9 @@ DELIMITER ;
 	call insertUser("Tania", "La Rubia Alvarez", "1995-04-29", "09876543D", "03", "Tania@gmail.com", "$2a$10$CQE2rHI0O21C2AOD3nsi/uYBfIDidxajgGFnnqd3yzrDhsOmcLuCe",null,null);
 	/* INSERT DE RELACIONES DE CURSOS */
 	INSERT INTO course_subject VALUES 
-	(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),
-	(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),
-	(3,3),(3,4),(3,6),(3,9),(3,10),(3,11);
+	(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,12),
+	(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,12),
+	(3,3),(3,4),(3,6),(3,9),(3,10),(3,11),(3,12);
 	/* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS CESUR */
     INSERT INTO teacher_subject values (1,3),(2,6),(3,5),(4,4),(5,1),(6,2);
     /* INSERT DE RELACIONES DE PROFESORES CON ASIGNATURAS PICASO */
@@ -531,13 +566,13 @@ DELIMITER ;
     Por ello, como eje central e importante estos días para mostrar nuestra identidad, desde Pastoral se dispondrá de una Carpa Ignaciana donde poder conocer la vida de San Ignacio de una manera lúdica. Se complementarán con actividades festivas desde el martes 12 con el pregón de bachillerato y las prolongamos hasta el viernes día 15.<br/><br/>
     El martes 12 a las 13:30h se realiza el pregón de Bachillerato. Y el miércoles a las 11h se realizará una introducción a las Fiestas Patronales y Semana Ignaciana por parte del profesor jesuita del centro Crisanto Abeso y el coordinador de Pastoral, Antonio J. Reyes antes de vivir el cañonazo de inicio de los días de fiesta.",
     "../images/sanJoseNoticia.jpg", "",5);
-    
-    call insertUserCredentials("test@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
-	call insertUser("Test", "Test", "1985-04-29", "77228963T", "01" , "test@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le",1,1);
-    call insertUserCredentials("test2@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
-	call insertUser("Test2", "Test2", "1985-04-29", "71228963T", "01" , "test2@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le",1,2);
-    call insertUserCredentials("test3@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
-	call insertUser("Test3", "Test3", "1985-04-29", "73228963T", "01" , "test3@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le",1,3);
+   
+    -- call insertUserCredentials("test@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
+	-- call insertUser("Test", "Test", "1985-04-29", "77228963T", "01" , "test@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le",1,1);
+	-- call insertUserCredentials("test2@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
+	-- call insertUser("Test2", "Test2", "1985-04-29", "71228963T", "01" , "test2@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le",1,2);
+	-- call insertUserCredentials("test3@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le"); /* Pass12345 */
+	-- call insertUser("Test3", "Test3", "1985-04-29", "73228963T", "01" , "test3@gmail.com", "$2a$10$JgcLiA0DonrhMyyQj3w.U.rKCsGPFLntCBzguLpJDH6nvRek1I5Le",1,3);
    
     /* Selects */
 	select * from credentials;
@@ -549,8 +584,10 @@ DELIMITER ;
 	select * from news;
 	select * from grades;
 	select * from teacher_subject;
-    select * from school_course;
-    select * from appointment;
+  select * from school_course;
+  select * from appointment;
+  select * from internship;
+
 
 	/* Drop Functions */
 	drop function checkIfSubjectExists;

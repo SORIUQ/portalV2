@@ -30,18 +30,18 @@
 <meta charset="UTF-8">
 <title>Tutorías</title>
 </head>
-<body>
-	<button id="idUsuario" style="display:none;" value="<%= activeUser.getId() %>"></button>
-	<h1>RESERVAS DISPONIBLES</h1>
-	<form action="../appointments" method="get">
-		<select id="profesorSelect" name="selectedTeacherID">
-			<option disabled selected>Seleccione profesor/a</option>
-			<%for (User teacher : teachers) {%>
+<body onload="detColoresTutorias(<%=activeUser.getSchool_id()%>)">
+<button id="idUsuario" style="display:none;" value="<%= activeUser.getId() %>"></button>
+<h4>RESERVAS DISPONIBLES</h4>
+<form action="../appointments" method="get" >
+	<select id="profesorSelect" name="selectedTeacherID" class="profesorSelect">
+		<option disabled selected>Seleccione profesor/a</option>
+		<%for (User teacher : teachers) {%>
 			<option value="<%=teacher.getId()%>"><%=teacher.getName()%></option>
-			<%}%>
-		</select> <input id="buttonSubmit" type="submit">
-	</form>
-
+		<%}%>
+	</select>
+	<input id="buttonSubmit" type="submit" class="buttonSubmit">
+</form>
 	<% if (okMsg != null) {%>
 	<p class="okMsg"><%=okMsg%></p>
 	<%}%>
@@ -55,15 +55,9 @@
 
 		<div class="informacion">
 			<div class="informacionConcreta">
-				<h3>
-					Asignatura: <span style="color: #a100ff; font-size: 18px;"><%= UserDAO.getSubjectTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span>
-				</h3>
-				<h3>
-					Lugar: <span style="color: #a100ff; font-size: 18px;"><%= UserDAO.getNameSchoolTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span>
-				</h3>
-				<p>
-					<strong>Horario:</strong> de lunes a viernes de 17:00 a 20:00
-				</p>
+				<h3>Asignatura: <span class="Letras"><%= UserDAO.getSubjectTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span></h3>
+				<h3>Lugar: <span class="Letras"><%= UserDAO.getNameSchoolTeacher(Integer.parseInt((String) session.getAttribute("selectedTeacherID"))) %></span> </h3>
+				<p><strong>Horario:</strong> de lunes a viernes de 17:00 a 20:00</p>
 			</div>
 			<div class="legend">
 				<div>
@@ -157,5 +151,6 @@
 	    }
 	});
 	</script>
+	<script type="text/javascript" src="../scripts/script.js"></script>
 </body>
 </html>

@@ -209,7 +209,6 @@ function detColorInicio(id){
 function detColoresCalificaciones(id){
 
     var h4 = document.getElementsByTagName("h4");
-	var boton = document.getElementsByClassName("boton");
     var color;
 
     switch(id){
@@ -238,3 +237,52 @@ function detColoresCalificaciones(id){
 
     addClassToElements(h4, color);
 }
+
+
+function detColoresTutorias(id){
+
+    var td = document.getElementsByTagName("td");
+	var h4 = document.getElementsByTagName("h4");
+	var boton = document.getElementsByClassName("btnComprobar");
+	var ocupado = document.getElementsByClassName("ocupado");
+	var botonReserva = document.getElementsByClassName("botonReserva");
+	var Letras = document.getElementsByClassName("Letras");
+	var buttonSubmit = document.getElementsByClassName("buttonSubmit");
+	var profesorSelect = document.getElementsByClassName("profesorSelect");
+    var color;
+
+    switch(id){
+        case 1 :
+            color = 'cesurColor';
+            break;
+
+        case 2 :
+            color = 'picassoColor';
+            break;
+
+        case 3 :
+            color = 'belenColor';
+            break;
+
+        case 4 :
+            color = 'turingColor';
+            break;
+
+        case 5 :
+            color = 'joseColor';
+            break;
+
+        default : break;
+    }
+
+	addClassToElements(h4, color);
+    addClassToElements(td, color);
+    addClassToElements(ocupado, color);
+    addClassToElements(botonReserva, color);
+    addClassToElements(boton, color);
+    addClassToElements(Letras, color);
+    addClassToElements(buttonSubmit, color);
+    addClassToElements(profesorSelect, color);
+}
+
+

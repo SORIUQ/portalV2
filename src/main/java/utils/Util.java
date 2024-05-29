@@ -63,7 +63,7 @@ public class Util {
         }
 
 		if (!error.isEmpty())
-			session.setAttribute("error",error);
+			session.setAttribute("errorMsgLogin",error);
 		return landing;
     }
 

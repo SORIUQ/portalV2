@@ -48,6 +48,7 @@ public class RegisterServlet extends HttpServlet {
                     UserDAO.insertUserInDB(con, userName, userLastName, userBirthday, userDnie, userEmail, hashedPass, userSchool, userCourse);
                     userExists = "¡Usuario registrado con éxito!";
                     ses.setAttribute("userExists", userExists);
+                    ses.setAttribute("errorMsgLogin", null);
                 }
                 res.sendRedirect("./jsp/login.jsp");
             }

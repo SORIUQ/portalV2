@@ -30,8 +30,8 @@
                         <input id="input2" type="password" name="password" required> <label for="input2">Contraseña</label>
                     </div>
                     <br>
-                    <%if (session.getAttribute("error") != null) {%>
-                        <p class="errorMsg"><%=session.getAttribute("error")%></p>
+                    <%if (session.getAttribute("errorMsgLogin") != null) {%>
+                        <p class="errorMsg"><%=session.getAttribute("errorMsgLogin")%></p>
                     <%}%>
                     <%if (session.getAttribute("userExists") != null) {%>
                         <p class="errorMsg"><%=session.getAttribute("userExists")%></p>

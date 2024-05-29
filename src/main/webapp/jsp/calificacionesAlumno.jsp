@@ -15,6 +15,8 @@
     List<Subject> asignaturasAlumno = SubjectDAO.getAllSubjectsByUser(user);
     String nombreSelected = (String) session.getAttribute("nombreSelected");
     List <Grade> allGrades = (List<Grade>) session.getAttribute("grades");
+    String errorMsgCaliUser = (String)session.getAttribute("errorMsgCaliUser");
+   
 %>
 
 <html>
@@ -31,6 +33,7 @@
 <body onload="detColoresCalificaciones(<%=user.getSchool_id()%>)">
 <h4>Calificaciones de <%=user.getName()%></h4>
 
+<div class="divCali">
 <form action="../studentGrades" method="GET">
     <select class="asignaturas" name="subjectSelected" id="select">
         <option value="0" disabled selected>-- Seleccione una asignatura --</option>
@@ -39,7 +42,12 @@
         <%}%>
         <input type="submit" value="Comprobar">
     </select>
+    <%if (errorMsgCaliUser!=null){%>
+	<p class="errorMsg"><%=errorMsgCaliUser %>
+ <%}%>
 </form>
+
+</div>
     <%if (nombreSelected != null) {%>
         <h4><%=nombreSelected%></h4>
     <%}%>

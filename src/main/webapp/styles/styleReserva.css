@@ -130,9 +130,6 @@ input[type="radio"]:checked {
 	background-color: white;
 }
 
-.tuReserva{
-	background-color: #FFAF45;
-}
 
 .informacion {
 	display: flex;
@@ -247,6 +244,9 @@ td.turingColor,  .profesorSelect.turingColor{
 	background-color: #244AA4;
 }
 
+.tuReserva{
+	background-color: #FFAF45 !important;
+}
 
 
 

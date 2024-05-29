@@ -19,7 +19,7 @@ public class ShowGradesTeacherServlet extends HttpServlet {
         HttpSession ses = req.getSession();
         User activeUser = (User) ses.getAttribute("user");
         int subject_id = (Integer) ses.getAttribute("subjectSelectedID");
-        if (ses.getAttribute("studentSelected") != null) {
+        if (req.getParameter("studentSelected") != null) {
             Integer student_id = (Integer) ses.getAttribute("studentSelected");
             if (req.getParameter("studentSelected") != null && ses.getAttribute("studentSelected") != req.getParameter("studentSelected")) {
                 student_id = Integer.parseInt(req.getParameter("studentSelected"));

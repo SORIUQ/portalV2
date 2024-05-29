@@ -55,13 +55,13 @@ User user = (User) request.getSession().getAttribute("user");
 		<div>
 			<form method="GET" action="../teacherGrades">
 				<select class="asignaturas" name="subjectSelected" id="select">
-					<option value=\"0\" disabled selected>-- Seleccione una asignatura --</option>
+					<option value="0" disabled selected>-- Seleccione una asignatura --</option>
 					<%List<Subject> subjects = SubjectDAO.getAllSubjectsByUser(user);
 					for (Subject subject : subjects) {%>
 						<option value="<%=subject.getSubjectId()%>"><%=subject.getName()%></option>
 					<%}%>
-					<input type="submit" value="Comprobar">
 				</select>
+				<input type="submit" value="Comprobar">
 			</form>
 		</div>
 	</div>
@@ -80,25 +80,29 @@ User user = (User) request.getSession().getAttribute("user");
 				<br><input type="submit" id="btnElegir" value="Elegir Alumno">
 			</form>
 		</div>
+
 		<div class="calificaciones">
 			<h4>Calificaciones</h4>
 			<%if (alumnoElegido != null) {%>
-			<h3><%=alumnoElegido.get("name")%>  <%=alumnoElegido.get("surname")%></h3>
+			<h3><%=alumnoElegido.get("name")%> <%=alumnoElegido.get("surname")%></h3>
 			<div id="frame">
 				<div id="contenido">
-					<%if (gradesSubjectList != null) {
-						%><table>
+					<%if (gradesSubjectList != null) {%>
+						<table>
 						<%for (int i = 0; i < gradesSubjectList.size(); i++) {
 							Grade item = gradesSubjectList.get(i);%>
 						<tr id=<%="nota" + item.getStudent_id() + i%>>
-							<td class="deleteCell"> <form action="../deleteGrade?gradeTeacherId=<%=item.getTeacher_id()%>&gradeStudentId=<%=item.getStudent_id()%>&gradeSubjectId=<%=item.getSubject_id()%>&gradeDescription=<%=item.getGrade_desc()%>&grade=<%=item.getGrade()%>"
-														  method="POST">
-								<button class="deleteNote" value="">❌</button> </form></td>
+							<td class="deleteCell">
+								<form action="../deleteGrade?gradeTeacherId=<%=item.getTeacher_id()%>&gradeStudentId=<%=item.getStudent_id()%>&gradeSubjectId=<%=item.getSubject_id()%>&gradeDescription=<%=item.getGrade_desc()%>&grade=<%=item.getGrade()%>" method="POST">
+									<button class="deleteNote" value="">❌</button>
+								</form>
+							</td>
 							<td class="infoGrade"><%=item.getGrade_desc()%></td>
 							<td class="numberGrade"><%=item.getGrade()%></td>
 						</tr>
+						<%}%>
+						</table>
 					<%}%>
-					</table><%}%>
 			    </div>
 				<div class="parteBaja">
 					<p> <b>NOTA MEDIA DE LA ASIGNATURA : <%=notaMedia%></b></p>
@@ -112,16 +116,10 @@ User user = (User) request.getSession().getAttribute("user");
 						</form>
 					</div>
 				</div>
-		</div>
-
-
-			</div>
+		    </div>
 			<%}%>
 		</div>
 	</div>
-
-
-
 
 	<script type="text/javascript" src="../scripts/script.js"></script>
 	<!--<script type="text/javascript" src="../scripts/calificaciones.js"></script> -->

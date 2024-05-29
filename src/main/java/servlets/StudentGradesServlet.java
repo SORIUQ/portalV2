@@ -22,16 +22,22 @@ public class StudentGradesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession ses = req.getSession();
         User activeUser = (User) ses.getAttribute("user");
-        List<Subject> subjects = SubjectDAO.getSubjectsFromStudentGrades(activeUser);
-        ses.setAttribute("subjects",subjects);
+        if (req.getParameter("subjectSelected")!= null) {
         Integer subject_id = Integer.parseInt(req.getParameter("subjectSelected"));
         if (subject_id != null){
             ses.setAttribute("nombreSelected",GradeDAO.getSubjectNameFromId(subject_id));
         }
+        List<Subject> subjects = SubjectDAO.getSubjectsFromStudentGrades(activeUser);
+        ses.setAttribute("subjects",subjects);
         List<Grade> grades = GradeDAO.getGradesFromSubjectId(subject_id, activeUser);
 
         ses.setAttribute("grades",grades);
+    	ses.setAttribute("errorMsgCaliUser", null);
         resp.sendRedirect("./jsp/calificacionesAlumno.jsp");
+        } else {
+        	ses.setAttribute("errorMsgCaliUser", "Seleccione una asignatura");
+        	resp.sendRedirect("./jsp/calificacionesAlumno.jsp");
+        }
     }
 
 }
